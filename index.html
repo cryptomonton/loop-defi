@@ -73,7 +73,10 @@
   .axis span{position:absolute;right:0;transform:translateY(-50%);white-space:nowrap}
   .cols{flex:1;display:flex;gap:clamp(10px,2.5vw,22px)}
   .col{flex:1;display:flex;flex-direction:column}
-  .col .lev{font-family:var(--mono);font-weight:700;font-size:15px;text-align:center;margin-bottom:8px}
+  .col .lev{font-family:var(--mono);font-weight:700;font-size:15px;text-align:center;margin-bottom:2px}
+  .col .hf{font-family:var(--mono);font-size:11.5px;text-align:center;color:var(--muted);margin-bottom:8px}
+  .col .hf b{color:var(--text);font-weight:600}
+  .col.s3 .hf b{color:var(--warn)}
   .col.s1 .lev{color:var(--safe)}.col.s2 .lev{color:var(--warn)}.col.s3 .lev{color:var(--danger)}
   .bar{position:relative;flex:1;background:var(--surface-2);border-radius:9px;overflow:hidden}
   .bar .fill{position:absolute;top:0;left:0;right:0;border-radius:9px 9px 0 0;transform-origin:top;
@@ -153,22 +156,22 @@
           <span style="top:46.2%">−30%</span><span style="top:69.2%">−45%</span><span style="top:92.3%">−60%</span>
         </div>
         <div class="cols">
-          <div class="col s1"><div class="lev">1,5x</div><div class="bar">
+          <div class="col s1"><div class="lev">1,5x</div><div class="hf">HF <b>2,22</b></div><div class="bar">
             <div class="fill" style="height:84.6%"></div><div class="liqline" style="top:84.6%"></div>
             <div class="liqtag up" style="top:84.6%"><span class="dp">−55%</span><span class="pr">$28,89</span></div></div>
             <div class="foot">colchón amplio</div></div>
-          <div class="col s2"><div class="lev">2x</div><div class="bar">
+          <div class="col s2"><div class="lev">2x</div><div class="hf">HF <b>1,48</b></div><div class="bar">
             <div class="fill" style="height:49.9%"></div><div class="liqline" style="top:49.9%"></div>
             <div class="liqtag" style="top:49.9%"><span class="dp">−32%</span><span class="pr">$43,34</span></div></div>
             <div class="foot">equilibrado</div></div>
-          <div class="col s3"><div class="lev">2,44x máx</div><div class="bar">
+          <div class="col s3"><div class="lev">2,44x máx</div><div class="hf">HF <b>1,25</b></div><div class="bar">
             <div class="fill" style="height:31.2%"></div><div class="liqline" style="top:31.2%"></div>
             <div class="liqtag" style="top:31.2%"><span class="dp">−20%</span><span class="pr">$51,13</span></div></div>
             <div class="foot">techo · arriesgado</div></div>
         </div>
       </div>
       <div class="carry"><span class="cl">Carry neto/año:</span> 1,5x <b>−0,83%</b> · 2x <b>−3,58%</b> · 2,44x <b>−6,00%</b></div>
-      <p class="calc"><b>Cálculo.</b> Liquidación = (L−1)/(0,74·L) × $64,14. Carry neto = L×1,93% (staking) − (L−1)×7,44% (USDC). El staking recorta el coste del largo: a 1,5x queda casi neutral (−0,83%).</p>
+      <p class="calc"><b>Cálculo.</b> Liquidación = (L−1)/(0,74·L) × $64,14. Carry neto = L×1,93% (staking) − (L−1)×7,44% (USDC). El staking recorta el coste del largo: a 1,5x queda casi neutral (−0,83%). <b>HF</b> al entrar = 0,74·L/(L−1); decae hasta 1 justo en la línea roja.</p>
     </div>
 
     <!-- BTC -->
@@ -188,22 +191,22 @@
           <span style="top:46.2%">−30%</span><span style="top:69.2%">−45%</span><span style="top:92.3%">−60%</span>
         </div>
         <div class="cols">
-          <div class="col s1"><div class="lev">1,5x</div><div class="bar">
+          <div class="col s1"><div class="lev">1,5x</div><div class="hf">HF <b>2,58</b></div><div class="bar">
             <div class="fill" style="height:94.2%"></div><div class="liqline" style="top:94.2%"></div>
             <div class="liqtag up" style="top:94.2%"><span class="dp">−61%</span><span class="pr">$24.300</span></div></div>
             <div class="foot">colchón amplio</div></div>
-          <div class="col s2"><div class="lev">2x</div><div class="bar">
+          <div class="col s2"><div class="lev">2x</div><div class="hf">HF <b>1,72</b></div><div class="bar">
             <div class="fill" style="height:64.4%"></div><div class="liqline" style="top:64.4%"></div>
             <div class="liqtag" style="top:64.4%"><span class="dp">−42%</span><span class="pr">$36.450</span></div></div>
             <div class="foot">equilibrado</div></div>
-          <div class="col s3"><div class="lev">2,5x</div><div class="bar">
+          <div class="col s3"><div class="lev">2,5x</div><div class="hf">HF <b>1,43</b></div><div class="bar">
             <div class="fill" style="height:46.5%"></div><div class="liqline" style="top:46.5%"></div>
             <div class="liqtag" style="top:46.5%"><span class="dp">−30%</span><span class="pr">$43.740</span></div></div>
             <div class="foot">arriesgado</div></div>
         </div>
       </div>
       <div class="carry"><span class="cl">Carry neto/año:</span> 1,5x <b>−1,98%</b> · 2x <b>−3,95%</b> · 2,5x <b>−5,93%</b></div>
-      <p class="calc"><b>Cálculo.</b> Liquidación = (L−1)/(0,86·L) × $62.700. Carry = (L−1)×3,95% USDC (el colateral no renta). Penalización si te liquidan ≈ 5% (LIF ~1,05).</p>
+      <p class="calc"><b>Cálculo.</b> Liquidación = (L−1)/(0,86·L) × $62.700. Carry = (L−1)×3,95% USDC (el colateral no renta). Penalización si te liquidan ≈ 5% (LIF ~1,05). <b>HF</b> al entrar = 0,86·L/(L−1); decae hasta 1 justo en la línea roja.</p>
     </div>
 
     <!-- ETH -->
@@ -223,22 +226,22 @@
           <span style="top:46.2%">−30%</span><span style="top:69.2%">−45%</span><span style="top:92.3%">−60%</span>
         </div>
         <div class="cols">
-          <div class="col s1"><div class="lev">1,5x</div><div class="bar">
+          <div class="col s1"><div class="lev">1,5x</div><div class="hf">HF <b>2,58</b></div><div class="bar">
             <div class="fill" style="height:94.2%"></div><div class="liqline" style="top:94.2%"></div>
             <div class="liqtag up" style="top:94.2%"><span class="dp">−61%</span><span class="pr">$626</span></div></div>
             <div class="foot">colchón amplio</div></div>
-          <div class="col s2"><div class="lev">2x</div><div class="bar">
+          <div class="col s2"><div class="lev">2x</div><div class="hf">HF <b>1,72</b></div><div class="bar">
             <div class="fill" style="height:64.4%"></div><div class="liqline" style="top:64.4%"></div>
             <div class="liqtag" style="top:64.4%"><span class="dp">−42%</span><span class="pr">$940</span></div></div>
             <div class="foot">equilibrado</div></div>
-          <div class="col s3"><div class="lev">2,5x</div><div class="bar">
+          <div class="col s3"><div class="lev">2,5x</div><div class="hf">HF <b>1,43</b></div><div class="bar">
             <div class="fill" style="height:46.5%"></div><div class="liqline" style="top:46.5%"></div>
             <div class="liqtag" style="top:46.5%"><span class="dp">−30%</span><span class="pr">$1.128</span></div></div>
             <div class="foot">arriesgado</div></div>
         </div>
       </div>
       <div class="carry"><span class="cl">Carry neto/año:</span> 1,5x <b>−2,58%</b> · 2x <b>−5,16%</b> · 2,5x <b>−7,74%</b></div>
-      <p class="calc"><b>Cálculo.</b> Liquidación = (L−1)/(0,86·L) × $1.616. Carry = (L−1)×5,16% USDC (el colateral no renta). Mismo LLTV que BTC: idéntico % de caída, distinto precio.</p>
+      <p class="calc"><b>Cálculo.</b> Liquidación = (L−1)/(0,86·L) × $1.616. Carry = (L−1)×5,16% USDC (el colateral no renta). Mismo LLTV que BTC: idéntico % de caída, distinto precio. <b>HF</b> al entrar = 0,86·L/(L−1); decae hasta 1 justo en la línea roja.</p>
     </div>
 
   </div>
