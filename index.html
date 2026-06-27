@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loop · HyperLend + Morpho · kHYPE · BTC · ETH</title>
+<style>
+  :root{
+    --ink:#0A0F11;--surface:#121A1B;--surface-2:#1A2426;--line:#283435;
+    --mint:#4FE3C1;--gold:#F4A93C;--eth:#8AA0FF;--khype:#A6E15A;
+    --safe:#4FE3C1;--warn:#F2B441;--danger:#FF5D5D;
+    --text:#E9F1EF;--muted:#7C8B89;--r:14px;
+    --display:'Space Grotesk','Segoe UI Variable Display','Segoe UI',system-ui,-apple-system,sans-serif;
+    --body:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,system-ui,sans-serif;
+    --mono:ui-monospace,'SF Mono','Cascadia Code',Consolas,'Liberation Mono',monospace;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{-webkit-text-size-adjust:100%}
+  body{background:var(--ink);color:var(--text);font-family:var(--body);line-height:1.55;
+    padding:clamp(20px,4vw,56px);
+    background-image:radial-gradient(820px 460px at 88% -8%,rgba(79,227,193,.06),transparent 60%)}
+  .wrap{max-width:980px;margin:0 auto}
+
+  .eyebrow{font-family:var(--mono);font-size:12px;letter-spacing:.24em;text-transform:uppercase;
+    color:var(--mint);display:flex;align-items:center;gap:10px}
+  .eyebrow::before{content:"";width:24px;height:1px;background:var(--mint)}
+  h1{font-family:var(--display);font-weight:700;font-size:clamp(29px,5.2vw,50px);
+    line-height:1.05;letter-spacing:-.02em;margin:16px 0 14px}
+  h1 em{font-style:normal;color:var(--mint)}
+  .lede{color:var(--muted);max-width:62ch;font-size:clamp(15px,1.6vw,17px)}
+  .setup{margin-top:16px;font-family:var(--mono);font-size:12.5px;color:var(--muted);
+    border-left:2px solid var(--mint);padding:8px 0 8px 14px;line-height:1.55;max-width:64ch}
+  .setup b{color:var(--text)}
+
+  /* asset tabs (CSS only) */
+  input[name=asset]{position:absolute;opacity:0;pointer-events:none}
+  .asset-tabs{display:flex;gap:8px;margin:34px 0 0}
+  .asset-tabs label{flex:1;text-align:center;padding:14px 10px;border:1px solid var(--line);
+    border-radius:12px 12px 0 0;border-bottom:none;background:var(--surface-2);cursor:pointer;
+    font-family:var(--mono);font-size:14px;font-weight:600;letter-spacing:.04em;color:var(--muted);
+    transition:color .15s,background .15s}
+  .asset-tabs label small{display:block;font-size:10px;font-weight:400;letter-spacing:.08em;margin-top:3px;opacity:.7}
+  #tab-hype:checked~.asset-tabs .th{color:var(--mint);background:var(--surface);border-bottom:1px solid var(--surface)}
+  #tab-khype:checked~.asset-tabs .tk{color:var(--khype);background:var(--surface);border-bottom:1px solid var(--surface)}
+  #tab-btc:checked~.asset-tabs .tb{color:var(--gold);background:var(--surface);border-bottom:1px solid var(--surface)}
+  #tab-eth:checked~.asset-tabs .te{color:var(--eth);background:var(--surface);border-bottom:1px solid var(--surface)}
+  .asset-tabs label:focus-within{outline:2px solid var(--mint);outline-offset:2px}
+
+  .panels{border:1px solid var(--line);border-radius:0 0 var(--r) var(--r);background:var(--surface);
+    padding:clamp(22px,3vw,30px);margin-bottom:30px}
+  .panel{display:none}
+  #tab-hype:checked~.panels .panel-hype{display:block}
+  #tab-khype:checked~.panels .panel-khype{display:block}
+  #tab-btc:checked~.panels .panel-btc{display:block}
+  #tab-eth:checked~.panels .panel-eth{display:block}
+
+  /* per-asset stat strip */
+  .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:30px}
+  .stat{background:var(--surface);padding:14px 16px}
+  .stat .k{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .stat .v{font-family:var(--mono);font-size:18px;font-weight:600;margin-top:5px}
+  .v.hype{color:var(--mint)}.v.btc{color:var(--gold)}.v.eth{color:var(--eth)}.v.khype{color:var(--khype)}
+  .stat .vsub{font-family:var(--mono);font-size:11px;color:var(--danger);margin-top:3px;white-space:nowrap}
+  @media(max-width:680px){.stats{grid-template-columns:repeat(2,1fr)}.stat:last-child{grid-column:1/-1}}
+
+  .ph{font-family:var(--display);font-size:20px;font-weight:600;letter-spacing:-.01em;margin-bottom:4px}
+  .psub{color:var(--muted);font-size:13.5px;margin-bottom:28px;max-width:60ch}
+
+  /* ladder with % drop axis */
+  .ladder{display:flex;gap:14px;height:300px}
+  .axis{width:48px;flex-shrink:0;position:relative;font-family:var(--mono);font-size:11px;color:var(--muted)}
+  .axis span{position:absolute;right:0;transform:translateY(-50%);white-space:nowrap}
+  .cols{flex:1;display:flex;gap:clamp(10px,2.5vw,22px)}
+  .col{flex:1;display:flex;flex-direction:column}
+  .col .lev{font-family:var(--mono);font-weight:700;font-size:15px;text-align:center;margin-bottom:8px}
+  .col.s1 .lev{color:var(--safe)}.col.s2 .lev{color:var(--warn)}.col.s3 .lev{color:var(--danger)}
+  .bar{position:relative;flex:1;background:var(--surface-2);border-radius:9px;overflow:hidden}
+  .bar .fill{position:absolute;top:0;left:0;right:0;border-radius:9px 9px 0 0;transform-origin:top;
+    animation:drop 1s cubic-bezier(.16,1,.3,1)}
+  @keyframes drop{from{transform:scaleY(0)}}
+  .col.s1 .fill{background:linear-gradient(180deg,rgba(79,227,193,.7),rgba(79,227,193,.16))}
+  .col.s2 .fill{background:linear-gradient(180deg,rgba(242,180,65,.7),rgba(242,180,65,.16))}
+  .col.s3 .fill{background:linear-gradient(180deg,rgba(255,93,93,.7),rgba(255,93,93,.18))}
+  .liqline{position:absolute;left:0;right:0;height:2px;background:var(--danger)}
+  .liqtag{position:absolute;left:0;right:0;text-align:center;font-family:var(--mono);padding-top:6px;line-height:1.3}
+  .liqtag .dp{display:block;font-size:14px;font-weight:600;color:var(--danger)}
+  .liqtag .pr{display:block;font-size:11.5px;color:var(--text)}
+  .liqtag.up{padding-top:0;padding-bottom:5px;transform:translateY(-100%)}
+  .col .foot{font-family:var(--mono);font-size:11px;color:var(--muted);text-align:center;margin-top:10px}
+  .calc{margin-top:24px;padding-top:18px;border-top:1px solid var(--line);font-size:13px;color:var(--muted);line-height:1.55}
+  .calc b{color:var(--text)}
+  .carry{margin-top:20px;font-family:var(--mono);font-size:12.5px;color:var(--muted);
+    display:flex;flex-wrap:wrap;gap:4px 14px;align-items:baseline}
+  .carry .cl{color:var(--text);font-weight:600}
+  .carry b{color:var(--danger);font-weight:600}
+
+  /* shared bottom */
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:40px}
+  @media(max-width:680px){.grid2{grid-template-columns:1fr}}
+  .pcard{border:1px solid var(--line);border-radius:var(--r);padding:22px;background:var(--surface)}
+  .pcard.warn{border-color:rgba(255,93,93,.4);background:linear-gradient(180deg,rgba(255,93,93,.06),transparent)}
+  .pcard h3{font-family:var(--display);font-size:17px;font-weight:600;margin-bottom:12px}
+  .pcard.warn h3{color:var(--danger)}
+  .pcard p{font-size:13.5px;color:var(--muted);line-height:1.6}
+  .pcard p b{color:var(--text)}
+  .formula{font-family:var(--mono);font-size:13.5px;background:var(--surface-2);border:1px solid var(--line);
+    border-radius:10px;padding:13px 15px;margin:2px 0 12px;color:var(--text)}
+  .formula .mint{color:var(--mint)}
+
+  footer{color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padding-top:18px;
+    font-family:var(--mono);letter-spacing:.02em;line-height:1.6}
+  @media(prefers-reduced-motion:reduce){.fill{animation:none}}
+  :focus-visible{outline:2px solid var(--mint);outline-offset:3px;border-radius:4px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Loop · HyperLend + Morpho</div>
+    <h1>El loop de lending, activo por activo: <em>dónde está tu liquidación</em></h1>
+    <p class="lede">Depositas el activo, pides USDC, recompras y repites para multiplicar exposición. Mejor sede por activo: <b>kHYPE en HyperLend</b> (nativo, sin puentes); <b>BTC y ETH en Morpho</b> (LLTV 86%, mucho más colchón). El eje muestra cuánto puede caer el precio antes de liquidarte.</p>
+    <p class="setup"><b>Montaje:</b> colateral en el activo · <b>deuda en USDC</b> (en ambas sedes). Es un largo apalancado: la deuda queda fija en USD y la liquidación salta cuando el precio del colateral cae.</p>
+  </header>
+
+  <input type="radio" name="asset" id="tab-khype" checked>
+  <input type="radio" name="asset" id="tab-btc">
+  <input type="radio" name="asset" id="tab-eth">
+
+  <div class="asset-tabs">
+    <label class="tk" for="tab-khype" tabindex="0">kHYPE<small>HyperLend · staking 1,93%</small></label>
+    <label class="tb" for="tab-btc" tabindex="0">BTC<small>Morpho · 86%</small></label>
+    <label class="te" for="tab-eth" tabindex="0">ETH<small>Morpho · 86%</small></label>
+  </div>
+
+  <div class="panels">
+
+    <!-- kHYPE -->
+    <div class="panel panel-khype">
+      <div class="stats">
+        <div class="stat"><div class="k">Precio</div><div class="v khype">$64,14</div></div>
+        <div class="stat"><div class="k">Umbral liq.</div><div class="v">74%</div></div>
+        <div class="stat"><div class="k">Borrow USDC</div><div class="v">7,44%</div></div>
+        <div class="stat"><div class="k">Renta colateral</div><div class="v khype">1,93%</div></div>
+        <div class="stat"><div class="k">Apal. máx.</div><div class="v">2,44x</div><div class="vsub">liq. $51,13</div></div>
+      </div>
+      <div class="ph">kHYPE — colchón por apalancamiento</div>
+      <div class="psub">kHYPE es HYPE stakeado: sigue su precio y, además, el colateral renta <b style="color:var(--khype)">1,93% de staking nativo</b>, que abarata el carry del largo. Umbral del 74%. Es el activo más volátil de los tres, así que el colchón se consume más rápido.</div>
+      <div class="ladder">
+        <div class="axis">
+          <span style="top:0%">0%</span><span style="top:23.1%">−15%</span>
+          <span style="top:46.2%">−30%</span><span style="top:69.2%">−45%</span><span style="top:92.3%">−60%</span>
+        </div>
+        <div class="cols">
+          <div class="col s1"><div class="lev">1,5x</div><div class="bar">
+            <div class="fill" style="height:84.6%"></div><div class="liqline" style="top:84.6%"></div>
+            <div class="liqtag up" style="top:84.6%"><span class="dp">−55%</span><span class="pr">$28,89</span></div></div>
+            <div class="foot">colchón amplio</div></div>
+          <div class="col s2"><div class="lev">2x</div><div class="bar">
+            <div class="fill" style="height:49.9%"></div><div class="liqline" style="top:49.9%"></div>
+            <div class="liqtag" style="top:49.9%"><span class="dp">−32%</span><span class="pr">$43,34</span></div></div>
+            <div class="foot">equilibrado</div></div>
+          <div class="col s3"><div class="lev">2,44x máx</div><div class="bar">
+            <div class="fill" style="height:31.2%"></div><div class="liqline" style="top:31.2%"></div>
+            <div class="liqtag" style="top:31.2%"><span class="dp">−20%</span><span class="pr">$51,13</span></div></div>
+            <div class="foot">techo · arriesgado</div></div>
+        </div>
+      </div>
+      <div class="carry"><span class="cl">Carry neto/año:</span> 1,5x <b>−0,83%</b> · 2x <b>−3,58%</b> · 2,44x <b>−6,00%</b></div>
+      <p class="calc"><b>Cálculo.</b> Liquidación = (L−1)/(0,74·L) × $64,14. Carry neto = L×1,93% (staking) − (L−1)×7,44% (USDC). El staking recorta el coste del largo: a 1,5x queda casi neutral (−0,83%).</p>
+    </div>
+
+    <!-- BTC -->
+    <div class="panel panel-btc">
+      <div class="stats">
+        <div class="stat"><div class="k">Precio</div><div class="v btc">$62.700</div></div>
+        <div class="stat"><div class="k">LLTV</div><div class="v">86%</div></div>
+        <div class="stat"><div class="k">Borrow USDC</div><div class="v">3,95%</div></div>
+        <div class="stat"><div class="k">Renta colateral</div><div class="v">0%</div></div>
+        <div class="stat"><div class="k">Apal. máx.</div><div class="v">~7,1x</div><div class="vsub">liq. inmediata</div></div>
+      </div>
+      <div class="ph">BTC — Morpho Blue (cbBTC/USDC)</div>
+      <div class="psub">LLTV del 86%: mucho más colchón que HyperLend (a 2x liquida a −42% en vez de −24%). El cbBTC no renta y pagas 3,95% de borrow USDC. El protocolo permite hasta ~7x, pero a 2,5x ya solo aguantas −30%; más allá es temerario.</div>
+      <div class="ladder">
+        <div class="axis">
+          <span style="top:0%">0%</span><span style="top:23.1%">−15%</span>
+          <span style="top:46.2%">−30%</span><span style="top:69.2%">−45%</span><span style="top:92.3%">−60%</span>
+        </div>
+        <div class="cols">
+          <div class="col s1"><div class="lev">1,5x</div><div class="bar">
+            <div class="fill" style="height:94.2%"></div><div class="liqline" style="top:94.2%"></div>
+            <div class="liqtag up" style="top:94.2%"><span class="dp">−61%</span><span class="pr">$24.300</span></div></div>
+            <div class="foot">colchón amplio</div></div>
+          <div class="col s2"><div class="lev">2x</div><div class="bar">
+            <div class="fill" style="height:64.4%"></div><div class="liqline" style="top:64.4%"></div>
+            <div class="liqtag" style="top:64.4%"><span class="dp">−42%</span><span class="pr">$36.450</span></div></div>
+            <div class="foot">equilibrado</div></div>
+          <div class="col s3"><div class="lev">2,5x</div><div class="bar">
+            <div class="fill" style="height:46.5%"></div><div class="liqline" style="top:46.5%"></div>
+            <div class="liqtag" style="top:46.5%"><span class="dp">−30%</span><span class="pr">$43.740</span></div></div>
+            <div class="foot">arriesgado</div></div>
+        </div>
+      </div>
+      <div class="carry"><span class="cl">Carry neto/año:</span> 1,5x <b>−1,98%</b> · 2x <b>−3,95%</b> · 2,5x <b>−5,93%</b></div>
+      <p class="calc"><b>Cálculo.</b> Liquidación = (L−1)/(0,86·L) × $62.700. Carry = (L−1)×3,95% USDC (el colateral no renta). Penalización si te liquidan ≈ 5% (LIF ~1,05).</p>
+    </div>
+
+    <!-- ETH -->
+    <div class="panel panel-eth">
+      <div class="stats">
+        <div class="stat"><div class="k">Precio</div><div class="v eth">$1.616</div></div>
+        <div class="stat"><div class="k">LLTV</div><div class="v">86%</div></div>
+        <div class="stat"><div class="k">Borrow USDC</div><div class="v">5,16%</div></div>
+        <div class="stat"><div class="k">Renta colateral</div><div class="v">0%</div></div>
+        <div class="stat"><div class="k">Apal. máx.</div><div class="v">~7,1x</div><div class="vsub">liq. inmediata</div></div>
+      </div>
+      <div class="ph">ETH — Morpho Blue (WETH/USDC)</div>
+      <div class="psub">Mismo LLTV del 86% que BTC, así que idéntico % de caída, solo cambia el precio. Borrow más caro (5,16%) y el WETH no renta. Si quisieras abaratar el carry, <b>wstETH/USDC en Morpho</b> (también 86%) te daría el staking de Lido (~3%) sin perder LLTV.</div>
+      <div class="ladder">
+        <div class="axis">
+          <span style="top:0%">0%</span><span style="top:23.1%">−15%</span>
+          <span style="top:46.2%">−30%</span><span style="top:69.2%">−45%</span><span style="top:92.3%">−60%</span>
+        </div>
+        <div class="cols">
+          <div class="col s1"><div class="lev">1,5x</div><div class="bar">
+            <div class="fill" style="height:94.2%"></div><div class="liqline" style="top:94.2%"></div>
+            <div class="liqtag up" style="top:94.2%"><span class="dp">−61%</span><span class="pr">$626</span></div></div>
+            <div class="foot">colchón amplio</div></div>
+          <div class="col s2"><div class="lev">2x</div><div class="bar">
+            <div class="fill" style="height:64.4%"></div><div class="liqline" style="top:64.4%"></div>
+            <div class="liqtag" style="top:64.4%"><span class="dp">−42%</span><span class="pr">$940</span></div></div>
+            <div class="foot">equilibrado</div></div>
+          <div class="col s3"><div class="lev">2,5x</div><div class="bar">
+            <div class="fill" style="height:46.5%"></div><div class="liqline" style="top:46.5%"></div>
+            <div class="liqtag" style="top:46.5%"><span class="dp">−30%</span><span class="pr">$1.128</span></div></div>
+            <div class="foot">arriesgado</div></div>
+        </div>
+      </div>
+      <div class="carry"><span class="cl">Carry neto/año:</span> 1,5x <b>−2,58%</b> · 2x <b>−5,16%</b> · 2,5x <b>−7,74%</b></div>
+      <p class="calc"><b>Cálculo.</b> Liquidación = (L−1)/(0,86·L) × $1.616. Carry = (L−1)×5,16% USDC (el colateral no renta). Mismo LLTV que BTC: idéntico % de caída, distinto precio.</p>
+    </div>
+
+  </div>
+
+  <div class="grid2">
+    <div class="pcard">
+      <h3>Tu coste real (y el carry)</h3>
+      <div class="formula">carry neto/año = <span class="mint">L × renta colateral</span> − (L−1) × borrow USDC</div>
+      <p>Borrow USDC por sede: <b>HyperLend 7,44%</b> (kHYPE) · <b>Morpho 3,95%</b> (BTC) y <b>5,16%</b> (ETH). La renta del colateral resta: kHYPE 1,93% (staking), BTC/ETH 0%. Por eso kHYPE tiene buen carry pese al borrow caro de HyperLend, y BTC es el más barato de mantener. Tasas variables: confírmalas antes de entrar.</p>
+    </div>
+    <div class="pcard warn">
+      <h3>Volatilidad: el factor oculto</h3>
+      <p>El LLTV del 86% de Morpho (BTC/ETH) da el mayor colchón de todos, y el 74% de kHYPE también es alto. Pero <b>kHYPE sigue el precio de HYPE, que se mueve mucho más que BTC o ETH</b>. Un −20% puede pasar en un día; en BTC es mucho menos probable. Lee cada colchón junto a la volatilidad del activo, no en aislado.</p>
+    </div>
+  </div>
+
+  <footer>
+    Recomendación práctica: en activos volátiles, apalancar 1,5x–2x deja un colchón sano frente a las mechas. · Deuda USDC en ambas sedes (HyperLend 7,44% · Morpho 3,95% BTC / 5,16% ETH). · Sedes: kHYPE en HyperLend; BTC/ETH en Morpho (LLTV 86%). · Precios: kHYPE $64,14 (oráculo HyperLend) · BTC ~$62.700 · ETH ~$1.616 (Morpho/spot); el precio de liquidación escala con tu entrada real. · No es asesoramiento financiero. Tasas y parámetros dinámicos: verifica en la app antes de operar.
+  </footer>
+
+</div>
+</body>
+</html>
