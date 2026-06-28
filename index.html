@@ -74,9 +74,6 @@
   .cols{flex:1;display:flex;gap:clamp(10px,2.5vw,22px)}
   .col{flex:1;display:flex;flex-direction:column}
   .col .lev{font-family:var(--mono);font-weight:700;font-size:15px;text-align:center;margin-bottom:2px}
-  .col .hf{font-family:var(--mono);font-size:11.5px;text-align:center;color:var(--muted);margin-bottom:8px}
-  .col .hf b{color:var(--text);font-weight:600}
-  .col.s3 .hf b{color:var(--warn)}
   .col.s1 .lev{color:var(--safe)}.col.s2 .lev{color:var(--warn)}.col.s3 .lev{color:var(--danger)}
   .bar{position:relative;flex:1;background:var(--surface-2);border-radius:9px;overflow:hidden}
   .bar .fill{position:absolute;top:0;left:0;right:0;border-radius:9px 9px 0 0;transform-origin:top;
@@ -116,41 +113,31 @@
   @media(prefers-reduced-motion:reduce){.fill{animation:none}}
   :focus-visible{outline:2px solid var(--mint);outline-offset:3px;border-radius:4px}
 
-  /* ── mode tabs: Simulación vs Loop real ── */
   input[name=mode]{position:absolute;opacity:0;pointer-events:none}
-  .mode-tabs{display:flex;gap:10px;margin:30px 0 26px}
-  .mode-tabs label{flex:1;text-align:center;padding:15px 14px;border:1px solid var(--line);
-    border-radius:12px;background:var(--surface);cursor:pointer;display:flex;flex-direction:column;gap:3px;
-    font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:-.01em;color:var(--muted);
-    transition:color .15s,border-color .15s,background .15s}
+  .mode-tabs{display:flex;gap:10px;margin:30px 0 26px;flex-wrap:wrap}
+  .mode-tabs label{flex:1;min-width:140px;text-align:center;padding:15px 14px;border:1px solid var(--line);border-radius:12px;background:var(--surface);cursor:pointer;display:flex;flex-direction:column;gap:3px;font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:-.01em;color:var(--muted);transition:.15s}
   .mode-tabs label small{font-family:var(--mono);font-size:10.5px;font-weight:400;letter-spacing:.05em;opacity:.7}
   #mode-sim:checked~.mode-tabs .ms{color:var(--text);border-color:var(--muted);background:var(--surface-2)}
-  #mode-real:checked~.mode-tabs .mr{color:var(--mint);border-color:var(--mint);
-    background:linear-gradient(180deg,rgba(79,227,193,.08),transparent)}
+  #mode-real:checked~.mode-tabs .mr{color:var(--mint);border-color:var(--mint);background:linear-gradient(180deg,rgba(79,227,193,.08),transparent)}
+  #mode-calc:checked~.mode-tabs .mc{color:var(--gold);border-color:var(--gold);background:linear-gradient(180deg,rgba(244,169,60,.08),transparent)}
   .mode-tabs label:focus-within{outline:2px solid var(--mint);outline-offset:2px}
   .mode-content{display:none}
   #mode-sim:checked~.sim-content{display:block}
   #mode-real:checked~.real-content{display:block}
-
-  /* ── real loop: portfolio summary ── */
-  .port{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
-    border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:18px 0 26px}
+  #mode-calc:checked~.calc-content{display:block}
+  .port{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:18px 0 26px}
   .port .stat{background:var(--surface);padding:16px 18px}
   .port .k{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
   .port .v{font-family:var(--mono);font-size:20px;font-weight:600;margin-top:5px;color:var(--text)}
   .port .v.mint{color:var(--mint)}
   .port .vsub{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:3px}
   @media(max-width:680px){.port{grid-template-columns:repeat(2,1fr)}}
-
-  /* ── real position cards ── */
-  .pos{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);
-    padding:22px clamp(18px,3vw,26px);margin-bottom:16px}
+  .pos{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:22px clamp(18px,3vw,26px);margin-bottom:16px}
   .pos-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px}
   .pos-head .name{font-family:var(--display);font-size:19px;font-weight:600}
   .pos-head .name.khype{color:var(--khype)}.pos-head .name.btc{color:var(--gold)}.pos-head .name.eth{color:var(--eth)}
   .pos-head .venue{font-family:var(--mono);font-size:11.5px;color:var(--muted);letter-spacing:.03em}
-  .pos-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);
-    border:1px solid var(--line);border-radius:9px;overflow:hidden;margin:16px 0}
+  .pos-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:9px;overflow:hidden;margin:16px 0}
   .pos-grid .c{background:var(--surface);padding:11px 13px}
   .pos-grid .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
   .pos-grid .val{font-family:var(--mono);font-size:15px;font-weight:600;margin-top:4px;color:var(--text)}
@@ -158,18 +145,41 @@
   @media(max-width:680px){.pos-grid{grid-template-columns:repeat(2,1fr)}.pos-grid .c:last-child{grid-column:1/-1}}
   .barcap{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--muted);margin-bottom:5px}
   .liqbar{position:relative;height:32px;border-radius:8px;background:var(--surface-2);margin:0 0 4px}
-  .liqbar .safe{position:absolute;top:0;bottom:0;left:0;border-radius:8px;transform-origin:left;
-    background:linear-gradient(90deg,rgba(79,227,193,.16),rgba(79,227,193,.5));animation:grow 1s cubic-bezier(.16,1,.3,1)}
+  .liqbar .safe{position:absolute;top:0;bottom:0;left:0;border-radius:8px;transform-origin:left;background:linear-gradient(90deg,rgba(79,227,193,.16),rgba(79,227,193,.5));animation:grow 1s cubic-bezier(.16,1,.3,1)}
   @keyframes grow{from{transform:scaleX(0)}}
   .liqbar .mark{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--danger)}
-  .liqbar .droplab{position:absolute;top:50%;transform:translate(-112%,-50%);
-    font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--danger)}
-  .liqbar .axend{position:absolute;right:8px;top:50%;transform:translateY(-50%);
-    font-family:var(--mono);font-size:10px;color:var(--muted)}
+  .liqbar .droplab{position:absolute;top:50%;transform:translate(-112%,-50%);font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--danger)}
+  .liqbar .axend{position:absolute;right:8px;top:50%;transform:translateY(-50%);font-family:var(--mono);font-size:10px;color:var(--muted)}
   .pos-foot{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.55}
   .pos-foot b{color:var(--text)}
-  .realnote{font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.6;
-    border-left:2px solid var(--mint);padding:8px 0 8px 14px;margin:6px 0 34px}
+  .realnote{font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.6;border-left:2px solid var(--mint);padding:8px 0 8px 14px;margin:6px 0 34px}
+  .col .hf{font-family:var(--mono);font-size:11.5px;text-align:center;color:var(--muted);margin-bottom:8px}
+  .col .hf b{color:var(--text);font-weight:600}
+  .col.s3 .hf b{color:var(--warn)}
+  .calc-presets{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:18px}
+  .calc-presets button{font-family:var(--mono);font-size:13px;padding:9px 16px;border-radius:9px;border:1px solid var(--line);background:var(--surface-2);color:var(--muted);cursor:pointer;transition:.15s}
+  .calc-presets button:hover{color:var(--text)}
+  .calc-presets button.on{color:var(--ink);background:var(--gold);border-color:var(--gold);font-weight:600}
+  .calc-block{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:18px clamp(16px,3vw,22px);margin-bottom:16px}
+  .calc-block h4{font-family:var(--mono);font-size:11px;font-weight:600;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;margin-bottom:14px}
+  .calc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  @media(max-width:680px){.calc-grid{grid-template-columns:repeat(2,1fr)}}
+  .calc-grid label{display:flex;flex-direction:column;gap:5px;font-family:var(--mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+  .calc-grid input{font-family:var(--mono);font-size:15px;font-weight:600;color:var(--text);background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:9px 11px;width:100%}
+  .calc-grid input:focus{outline:none;border-color:var(--gold)}
+  .calc-out{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+  @media(max-width:680px){.calc-out{grid-template-columns:1fr}}
+  .calc-col{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden}
+  .calc-col-h{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:12px 16px;border-bottom:1px solid var(--line);background:var(--surface-2)}
+  .calc-col-h.after{color:var(--gold)}
+  .crow{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid var(--line);font-family:var(--mono);font-size:12.5px}
+  .crow:last-child{border-bottom:none}
+  .crow span{color:var(--muted)}
+  .crow b{color:var(--text);font-weight:600}
+  .calc-target{font-family:var(--mono);font-size:13px;color:var(--muted);border:1px dashed var(--line);border-radius:10px;padding:14px 16px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+  .calc-target input{font-family:var(--mono);font-size:14px;font-weight:600;color:var(--text);background:var(--surface-2);border:1px solid var(--line);border-radius:8px;padding:7px 10px;width:120px}
+  .calc-target #t_result{flex-basis:100%;color:var(--text);margin-top:2px}
+  .calc-disc{font-family:var(--mono);font-size:11px;color:var(--muted);margin:14px 0 34px;line-height:1.55;border-left:2px solid var(--gold);padding:8px 0 8px 14px}
 </style>
 </head>
 <body>
@@ -184,10 +194,12 @@
 
   <input type="radio" name="mode" id="mode-sim" checked>
   <input type="radio" name="mode" id="mode-real">
+  <input type="radio" name="mode" id="mode-calc">
 
   <div class="mode-tabs">
-    <label class="ms" for="mode-sim" tabindex="0">Simulación<small>modelo por tramos de apalancamiento</small></label>
-    <label class="mr" for="mode-real" tabindex="0">Loop real<small>tus tres posiciones en vivo</small></label>
+    <label class="ms" for="mode-sim" tabindex="0">Simulación<small>modelo por tramos</small></label>
+    <label class="mr" for="mode-real" tabindex="0">Loop real<small>tus posiciones en vivo</small></label>
+    <label class="mc" for="mode-calc" tabindex="0">Calculadora<small>simula un movimiento</small></label>
   </div>
 
   <div class="mode-content sim-content">
@@ -236,7 +248,7 @@
         </div>
       </div>
       <div class="carry"><span class="cl">Carry neto/año:</span> 1,5x <b>−0,83%</b> · 2x <b>−3,58%</b> · 2,44x <b>−6,00%</b></div>
-      <p class="calc"><b>Cálculo.</b> Liquidación = (L−1)/(0,74·L) × $64,14. Carry neto = L×1,93% (staking) − (L−1)×7,44% (USDC). El staking recorta el coste del largo: a 1,5x queda casi neutral (−0,83%). <b>HF</b> al entrar = umbral·L/(L−1); decae hasta 1 justo en la línea roja.</p>
+      <p class="calc"><b>Cálculo.</b> Liquidación = (L−1)/(0,74·L) × $64,14. Carry neto = L×1,93% (staking) − (L−1)×7,44% (USDC). El staking recorta el coste del largo: a 1,5x queda casi neutral (−0,83%). <b>HF</b> al entrar = 0,74·L/(L−1).</p>
     </div>
 
     <!-- BTC -->
@@ -249,7 +261,7 @@
         <div class="stat"><div class="k">Apal. máx.</div><div class="v">~7,1x</div><div class="vsub">liq. inmediata</div></div>
       </div>
       <div class="ph">BTC — Morpho Blue · cbBTC/USDC · Ethereum mainnet</div>
-      <div class="psub">Mercado cbBTC/USDC en <b>Ethereum mainnet</b> (LLTV 86%, +15 curadores, $40,9M liquidez, 3,95% borrow USDC). El gas de mainnet es coste único de entrada/salida — en un largo de semanas o meses es ruido frente a la tasa recurrente. El cbBTC no renta; pagas el borrow entero. El protocolo permite hasta ~7x, pero a 2,5x ya solo aguantas −30%; más allá es temerario.</div>
+      <div class="psub">Mercado cbBTC/USDC en <b>Ethereum mainnet</b> (LLTV 86%, +15 curadores incl. Steakhouse y Gauntlet, 3,95% borrow USDC). El gas de mainnet es coste único de entrada/salida. El cbBTC no renta; pagas el borrow entero. Hasta ~7x posible, pero a 2,5x solo aguantas −30%.</div>
       <div class="ladder">
         <div class="axis">
           <span style="top:0%">0%</span><span style="top:23.1%">−15%</span>
@@ -271,7 +283,7 @@
         </div>
       </div>
       <div class="carry"><span class="cl">Carry neto/año:</span> 1,5x <b>−1,98%</b> · 2x <b>−3,95%</b> · 2,5x <b>−5,93%</b></div>
-      <p class="calc"><b>Cálculo.</b> Liquidación = (L−1)/(0,86·L) × $62.700. Carry = (L−1)×3,95% USDC (el colateral no renta). Penalización si te liquidan ≈ 5% (LIF ~1,05). <b>HF</b> al entrar = umbral·L/(L−1); decae hasta 1 justo en la línea roja.</p>
+      <p class="calc"><b>Cálculo.</b> Liquidación = (L−1)/(0,86·L) × $62.700. Carry = (L−1)×3,95% USDC (el colateral no renta). Penalización si te liquidan ≈ 5% (LIF ~1,05). <b>HF</b> al entrar = 0,86·L/(L−1).</p>
     </div>
 
     <!-- ETH -->
@@ -284,7 +296,7 @@
         <div class="stat"><div class="k">Apal. máx.</div><div class="v">~7,1x</div><div class="vsub">liq. inmediata</div></div>
       </div>
       <div class="ph">ETH — Morpho Blue · wstETH/USDC · Ethereum mainnet</div>
-      <div class="psub">Mercado wstETH/USDC en <b>Ethereum mainnet</b> (misma red que BTC, LLTV 86%, curado por Steakhouse + Gauntlet). wstETH se revaloriza ~<b style="color:var(--eth)">2,60%/año</b> vs ETH por el staking de Lido — igual que kHYPE pero con ETH. Con borrow al <b>3,97%</b>, el carry es <b style="color:var(--safe)">positivo en los tres apalancamientos</b>. Mismos % de caída que BTC; solo cambia el precio.</div>
+      <div class="psub">Mercado wstETH/USDC en <b>Ethereum mainnet</b> (misma red que BTC, LLTV 86%, curado por Steakhouse + Gauntlet). wstETH se revaloriza ~<b style="color:var(--eth)">2,60%/año</b> vs ETH por el staking de Lido. Con borrow al <b>3,97%</b>, el carry es <b style="color:var(--safe)">positivo en los tres apalancamientos</b>.</div>
       <div class="ladder">
         <div class="axis">
           <span style="top:0%">0%</span><span style="top:23.1%">−15%</span>
@@ -306,7 +318,7 @@
         </div>
       </div>
       <div class="carry"><span class="cl">Carry neto/año:</span> 1,5x <b style="color:var(--safe)">+1,92%</b> · 2x <b style="color:var(--safe)">+1,23%</b> · 2,5x <b style="color:var(--safe)">+0,55%</b></div>
-      <p class="calc"><b>Cálculo.</b> Liquidación = (L−1)/(0,86·L) × $1.616. Carry = L×2,60% (staking wstETH) − (L−1)×3,97% (borrow USDC); positivo en todos los tramos. Mismo LLTV que BTC: idéntico % de caída, distinto precio. <b>HF</b> al entrar = umbral·L/(L−1); decae hasta 1 justo en la línea roja.</p>
+      <p class="calc"><b>Cálculo.</b> Liquidación = (L−1)/(0,86·L) × $1.616. Carry = L×2,60% (staking wstETH) − (L−1)×3,97% (borrow USDC); positivo en todos los tramos. <b>HF</b> al entrar = 0,86·L/(L−1).</p>
     </div>
 
   </div>
@@ -315,7 +327,7 @@
     <div class="pcard">
       <h3>Tu coste real (y el carry)</h3>
       <div class="formula">carry neto/año = <span class="mint">L × renta colateral</span> − (L−1) × borrow USDC</div>
-      <p>Borrow USDC por sede: <b>HyperLend 7,44%</b> (kHYPE) · <b>Morpho Ethereum 3,95%</b> (cbBTC) y <b>3,97%</b> (wstETH). La renta del colateral resta: kHYPE 1,93% y wstETH 2,60% (staking), cbBTC 0%. Por eso wstETH tiene carry positivo en todos los tramos y kHYPE es económico pese al borrow caro de HyperLend; cbBTC paga el borrow entero. Tasas variables: confírmalas antes de entrar.</p>
+      <p>Borrow USDC por sede: <b>HyperLend 7,44%</b> (kHYPE) · <b>Morpho Ethereum 3,95%</b> (cbBTC) y <b>3,97%</b> (wstETH). La renta resta: kHYPE 1,93% y wstETH 2,60% (staking), cbBTC 0%. Por eso wstETH tiene carry positivo; cbBTC paga el borrow entero. Tasas variables: confírmalas antes de entrar.</p>
     </div>
     <div class="pcard warn">
       <h3>Volatilidad: el factor oculto</h3>
@@ -326,16 +338,13 @@
 
   <div class="mode-content real-content">
     <div class="ph">Tu loop, en vivo</div>
-    <div class="psub">Tus tres posiciones reales con sus números actuales. La barra muestra cuánto puede caer cada colateral antes de tu liquidación; el marcador rojo es tu punto exacto, no un tramo teórico.</div>
-
+    <div class="psub">Tus tres posiciones reales con sus números actuales. La barra muestra cuánto puede caer cada colateral antes de tu liquidación; el marcador rojo es tu punto exacto.</div>
     <div class="port">
-      <div class="stat"><div class="k">Equity total</div><div class="v mint">$9.228</div></div>
-      <div class="stat"><div class="k">Deuda USDC</div><div class="v">$10.733</div></div>
-      <div class="stat"><div class="k">Apal. combinado</div><div class="v">2,16x</div></div>
-      <div class="stat"><div class="k">Carry combinado</div><div class="v">−3,6%/año</div><div class="vsub">lo paga sobre todo BTC</div></div>
+      <div class="stat"><div class="k">Equity total</div><div class="v mint">$10.970</div></div>
+      <div class="stat"><div class="k">Deuda USDC</div><div class="v">$10.732</div></div>
+      <div class="stat"><div class="k">Apal. combinado</div><div class="v">1,98x</div></div>
+      <div class="stat"><div class="k">Carry combinado</div><div class="v">−3,0%/año</div><div class="vsub">lo paga sobre todo BTC</div></div>
     </div>
-
-    <!-- kHYPE real -->
     <div class="pos">
       <div class="pos-head"><span class="name khype">kHYPE · loop</span><span class="venue">HyperLend · deuda USDC 7,36%</span></div>
       <div class="pos-grid">
@@ -347,25 +356,21 @@
       </div>
       <div class="barcap">Colchón: caída del colateral hasta tu liquidación</div>
       <div class="liqbar"><div class="safe" style="width:70%"></div><div class="mark" style="left:70%"></div><div class="droplab" style="left:70%">−42%</div><div class="axend">−60%</div></div>
-      <div class="pos-foot">Colateral <b>50,44 kHYPE</b> (~$3.180) · deuda <b>$1.370 USDC</b> · equity ~$1.809. Liquidación ~$36,7. El activo más volátil de los tres: el colchón se consume rápido, vigílalo.</div>
+      <div class="pos-foot">Colateral <b>50,44 kHYPE</b> (~$3.180) · deuda <b>$1.370 USDC</b> · equity ~$1.809. Liquidación ~$36,7. El más volátil: el colchón se consume rápido.</div>
     </div>
-
-    <!-- BTC real -->
     <div class="pos">
       <div class="pos-head"><span class="name btc">BTC · loop</span><span class="venue">Morpho · Ethereum mainnet · deuda USDC 3,95%</span></div>
       <div class="pos-grid">
-        <div class="c"><div class="k">Apal.</div><div class="val">2,38x</div></div>
-        <div class="c"><div class="k">Health factor</div><div class="val">1,48</div></div>
-        <div class="c"><div class="k">LTV / máx</div><div class="val">58% / 86%</div></div>
-        <div class="c"><div class="k">Caída a liq.</div><div class="val bad">−32%</div></div>
-        <div class="c"><div class="k">Carry/año</div><div class="val bad">−5,45%</div></div>
+        <div class="c"><div class="k">Apal.</div><div class="val">2,06x</div></div>
+        <div class="c"><div class="k">Health factor</div><div class="val">1,67</div></div>
+        <div class="c"><div class="k">LTV / máx</div><div class="val">51% / 86%</div></div>
+        <div class="c"><div class="k">Caída a liq.</div><div class="val bad">−40%</div></div>
+        <div class="c"><div class="k">Carry/año</div><div class="val bad">−4,19%</div></div>
       </div>
       <div class="barcap">Colchón: caída del colateral hasta tu liquidación</div>
-      <div class="liqbar"><div class="safe" style="width:53%"></div><div class="mark" style="left:53%"></div><div class="droplab" style="left:53%">−32%</div><div class="axend">−60%</div></div>
-      <div class="pos-foot">Colateral <b>0,2332 cbBTC</b> (~$13.960) · deuda <b>$8.091 USDC</b> · equity ~$5.869. Liquidación oráculo <b>$40.344</b>. Tu mayor posición y la de mayor carry negativo: si quisieras reducir la sangría, esta es la palanca.</div>
+      <div class="liqbar"><div class="safe" style="width:67%"></div><div class="mark" style="left:67%"></div><div class="droplab" style="left:67%">−40%</div><div class="axend">−60%</div></div>
+      <div class="pos-foot">Colateral <b>0,2635 cbBTC</b> (~$15.700) · deuda <b>$8.090 USDC</b> · equity ~$7.610. Liquidación oráculo <b>$35.707</b>. Reforzada: apalancamiento 2,38x→2,06x (HF 1,48→1,67). La deuda no cambió, así que el coste en dólares sigue igual; ganaste colchón.</div>
     </div>
-
-    <!-- wstETH real -->
     <div class="pos">
       <div class="pos-head"><span class="name eth">wstETH · loop</span><span class="venue">Morpho · Ethereum mainnet · deuda USDC 3,97%</span></div>
       <div class="pos-grid">
@@ -377,16 +382,148 @@
       </div>
       <div class="barcap">Colchón: caída del colateral hasta tu liquidación</div>
       <div class="liqbar"><div class="safe" style="width:80%"></div><div class="mark" style="left:80%"></div><div class="droplab" style="left:80%">−48%</div><div class="axend">−60%</div></div>
-      <div class="pos-foot">Colateral <b>1,4517 wstETH</b> (~$2.822) · deuda <b>$1.272 USDC</b> · equity ~$1.550. Liquidación oráculo <b>$1.019/wstETH</b>. La única con carry positivo: el staking del 2,60% supera el coste del borrow. La pata más sana.</div>
+      <div class="pos-foot">Colateral <b>1,4517 wstETH</b> (~$2.822) · deuda <b>$1.272 USDC</b> · equity ~$1.550. Liquidación oráculo <b>$1.019/wstETH</b>. La única con carry positivo: el staking del 2,60% supera el borrow.</div>
     </div>
+    <div class="realnote">Datos de tus capturas (28 jun 2026). Utilización en Morpho ~86%: si sube hacia el 100%, el borrow USDC y el carry empeoran. Reforzar colateral mejora el colchón pero no baja el coste en dólares (la deuda no cambia); para reducir la sangría habría que repagar deuda.</div>
+  </div>
 
-    <div class="realnote">Datos de tus capturas (28 jun 2026). Las liquidaciones y tasas son las reales de tus posiciones. La utilización en Morpho ronda el 86%: si sube hacia el 100%, el borrow USDC y el carry empeoran. En kHYPE estás a 1,76x, con margen para subir cuando HYPE corrija — recuerda que la caída a liquidación se mide desde tu entrada, no desde el máximo.</div>
+  <div class="mode-content calc-content">
+    <div class="ph">Calculadora de posición</div>
+    <div class="psub">Elige una posición (o entra datos a mano), aplica un movimiento y mira cómo queda. Todo se recalcula al instante. Edita el precio del colateral al valor actual antes de fiarte de la liquidación.</div>
+    <div class="calc-presets">
+      <button data-preset="khype">kHYPE</button>
+      <button data-preset="btc">cbBTC</button>
+      <button data-preset="weth">wstETH</button>
+      <button data-preset="manual">Manual</button>
+    </div>
+    <div class="calc-block">
+      <h4>Posición de partida</h4>
+      <div class="calc-grid">
+        <label>Colateral (uds)<input id="c_units" type="number" step="any"></label>
+        <label>Precio colateral $<input id="c_price" type="number" step="any"></label>
+        <label>Deuda USDC $<input id="c_debt" type="number" step="any"></label>
+        <label>LLTV %<input id="c_lltv" type="number" step="any"></label>
+        <label>Borrow USDC %<input id="c_borrow" type="number" step="any"></label>
+        <label>Staking colateral %<input id="c_yield" type="number" step="any"></label>
+      </div>
+    </div>
+    <div class="calc-block">
+      <h4>Movimiento (en $, deja en 0 lo que no apliques)</h4>
+      <div class="calc-grid">
+        <label>Aportar colateral $<input id="a_addc" type="number" step="any" value="0"></label>
+        <label>Retirar colateral $<input id="a_remc" type="number" step="any" value="0"></label>
+        <label>Pedir prestado $<input id="a_borrow" type="number" step="any" value="0"></label>
+        <label>Repagar deuda $<input id="a_repay" type="number" step="any" value="0"></label>
+      </div>
+    </div>
+    <div class="calc-out">
+      <div class="calc-col">
+        <div class="calc-col-h">Ahora</div>
+        <div class="crow"><span>Valor colateral</span><b id="now_cv"></b></div>
+        <div class="crow"><span>Deuda USDC</span><b id="now_debt"></b></div>
+        <div class="crow"><span>Equity</span><b id="now_eq"></b></div>
+        <div class="crow"><span>Apalancamiento</span><b id="now_lev"></b></div>
+        <div class="crow"><span>LTV</span><b id="now_ltv"></b></div>
+        <div class="crow"><span>Health factor</span><b id="now_hf"></b></div>
+        <div class="crow"><span>Precio liquidación</span><b id="now_liq"></b></div>
+        <div class="crow"><span>Caída a liq.</span><b id="now_dist"></b></div>
+        <div class="crow"><span>Carry</span><b id="now_carry"></b></div>
+      </div>
+      <div class="calc-col">
+        <div class="calc-col-h after">Después</div>
+        <div class="crow"><span>Valor colateral</span><b id="aft_cv"></b></div>
+        <div class="crow"><span>Deuda USDC</span><b id="aft_debt"></b></div>
+        <div class="crow"><span>Equity</span><b id="aft_eq"></b></div>
+        <div class="crow"><span>Apalancamiento</span><b id="aft_lev"></b></div>
+        <div class="crow"><span>LTV</span><b id="aft_ltv"></b></div>
+        <div class="crow"><span>Health factor</span><b id="aft_hf"></b></div>
+        <div class="crow"><span>Precio liquidación</span><b id="aft_liq"></b></div>
+        <div class="crow"><span>Caída a liq.</span><b id="aft_dist"></b></div>
+        <div class="crow"><span>Carry</span><b id="aft_carry"></b></div>
+      </div>
+    </div>
+    <div class="calc-target">
+      <span>¿Qué deuda total deja la liquidación en</span><input id="t_liq" type="number" step="any" placeholder="45000"><span>$ ?</span>
+      <div id="t_result"></div>
+    </div>
+    <div class="calc-disc">HF = LLTV × valor colateral / deuda · Liquidación = deuda / (uds × LLTV) · Carry/año = valor colateral × staking − deuda × borrow. La caída a liquidación se mide desde el precio que pongas arriba. No es asesoramiento financiero; verifica tasas y precios en la app antes de operar.</div>
   </div>
 
   <footer>
-    Recomendación práctica: en activos volátiles, apalancar 1,5x–2x deja un colchón sano frente a las mechas. · Deuda USDC en ambas sedes (HyperLend 7,44% · Morpho Ethereum 3,95% cbBTC / 3,97% wstETH). · Sedes: kHYPE en HyperLend; cbBTC y wstETH en Morpho Ethereum mainnet (LLTV 86%, curadores Steakhouse + Gauntlet). · Precios: kHYPE $64,14 (oráculo HyperLend) · BTC ~$62.700 (cbBTC) · ETH ~$1.616 (wstETH, staking Lido 2,60%); el precio de liquidación escala con tu entrada real. · No es asesoramiento financiero. Tasas y parámetros dinámicos: verifica en la app antes de operar.
+    Recomendación práctica: en activos volátiles, apalancar 1,5x–2x deja un colchón sano frente a las mechas. · Deuda USDC en ambas sedes (HyperLend 7,44% · Morpho Ethereum 3,95% cbBTC / 3,97% wstETH). · Sedes: kHYPE en HyperLend; cbBTC y wstETH en Morpho Ethereum mainnet (LLTV 86%, curadores Steakhouse + Gauntlet). · Precios: kHYPE $64,14 · BTC ~$59.900 (cbBTC) · ETH ~$1.577 (wstETH); el precio de liquidación escala con tu entrada real. · No es asesoramiento financiero. Tasas y parámetros dinámicos: verifica en la app antes de operar.
   </footer>
 
 </div>
+<script>
+(function(){
+  var presets = {
+    khype:{units:50.44, price:63.04, debt:1370, lltv:74, borrow:7.36, yield:2.0},
+    btc:  {units:0.263504, price:59580, debt:8091.74, lltv:86, borrow:3.95, yield:0},
+    weth: {units:1.4517, price:1944, debt:1272.35, lltv:86, borrow:3.97, yield:2.60},
+    manual:{units:1, price:1000, debt:0, lltv:86, borrow:4, yield:0}
+  };
+  function $(id){ return document.getElementById(id); }
+  var baseIds=['c_units','c_price','c_debt','c_lltv','c_borrow','c_yield'];
+  var actIds=['a_addc','a_remc','a_borrow','a_repay'];
+  function num(id){ var v=parseFloat($(id).value); return isNaN(v)?0:v; }
+  function f$(n){ if(!isFinite(n)) return '—'; return '$'+Math.round(n).toLocaleString('es-ES'); }
+  function fpct(n){ return (n*100).toLocaleString('es-ES',{maximumFractionDigits:1})+'%'; }
+  function hfColor(hf){ if(hf>=1.8) return 'var(--safe)'; if(hf>=1.35) return 'var(--warn)'; return 'var(--danger)'; }
+
+  function state(units,price,debt,lltv,borrow,yld){
+    var cv=units*price, eq=cv-debt, lltvf=lltv/100;
+    var ltv=cv>0?debt/cv:0;
+    var hf=debt>0?(cv*lltvf)/debt:Infinity;
+    var liq=(units>0&&lltvf>0)?debt/(units*lltvf):0;
+    var dist=price>0?(1-liq/price):0;
+    var lev=eq>0?cv/eq:Infinity;
+    var carry=cv*(yld/100)-debt*(borrow/100);
+    return {cv:cv,eq:eq,ltv:ltv,hf:hf,liq:liq,dist:dist,lev:lev,carry:carry};
+  }
+  function renderCol(p,s,debt){
+    $(p+'_cv').textContent=f$(s.cv);
+    $(p+'_debt').textContent=f$(debt);
+    $(p+'_eq').textContent=f$(s.eq);
+    $(p+'_lev').textContent=isFinite(s.lev)?s.lev.toFixed(2)+'x':'—';
+    $(p+'_ltv').textContent=fpct(s.ltv);
+    var hfEl=$(p+'_hf'); hfEl.textContent=isFinite(s.hf)?s.hf.toFixed(2):'\u221E'; hfEl.style.color=hfColor(s.hf);
+    $(p+'_liq').textContent=f$(s.liq);
+    var dEl=$(p+'_dist'); dEl.textContent=(s.dist*100).toFixed(0)+'%'; dEl.style.color=s.dist>0?'var(--danger)':'var(--muted)';
+    var cEl=$(p+'_carry'); cEl.textContent=(s.carry>=0?'+':'')+f$(s.carry)+'/año'; cEl.style.color=s.carry>=0?'var(--safe)':'var(--danger)';
+  }
+  function compute(){
+    var units=num('c_units'),price=num('c_price'),debt=num('c_debt'),lltv=num('c_lltv'),borrow=num('c_borrow'),yld=num('c_yield');
+    renderCol('now',state(units,price,debt,lltv,borrow,yld),debt);
+    var nUnits=units+(price>0?(num('a_addc')-num('a_remc'))/price:0);
+    var nDebt=debt+num('a_borrow')-num('a_repay');
+    renderCol('aft',state(nUnits,price,nDebt,lltv,borrow,yld),nDebt);
+    var tliq=num('t_liq'), lltvf=lltv/100;
+    if(tliq>0&&units>0&&lltvf>0){
+      var maxDebt=tliq*units*lltvf, delta=maxDebt-debt;
+      $('t_result').innerHTML='Deuda total máx: <b>'+f$(maxDebt)+'</b> &middot; '+
+        (delta>=0?'puedes pedir <b style="color:var(--safe)">'+f$(delta)+'</b> más sin pasar de ese precio'
+                 :'tendrías que repagar <b style="color:var(--danger)">'+f$(-delta)+'</b> para bajar a ese precio');
+    } else { $('t_result').textContent=''; }
+  }
+  function loadPreset(p){
+    var d=presets[p];
+    $('c_units').value=d.units; $('c_price').value=d.price; $('c_debt').value=d.debt;
+    $('c_lltv').value=d.lltv; $('c_borrow').value=d.borrow; $('c_yield').value=d.yield;
+    actIds.forEach(function(i){ $(i).value=0; });
+    compute();
+  }
+  var btns=document.querySelectorAll('.calc-presets button');
+  btns.forEach(function(b){ b.addEventListener('click',function(){
+    btns.forEach(function(x){ x.classList.remove('on'); });
+    b.classList.add('on'); loadPreset(b.dataset.preset);
+  }); });
+  baseIds.concat(actIds).concat(['t_liq']).forEach(function(i){
+    var el=$(i); if(el) el.addEventListener('input',compute);
+  });
+  var def=document.querySelector('.calc-presets button[data-preset="btc"]');
+  if(def){ def.classList.add('on'); }
+  loadPreset('btc');
+})();
+</script>
 </body>
 </html>
