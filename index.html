@@ -115,6 +115,61 @@
     font-family:var(--mono);letter-spacing:.02em;line-height:1.6}
   @media(prefers-reduced-motion:reduce){.fill{animation:none}}
   :focus-visible{outline:2px solid var(--mint);outline-offset:3px;border-radius:4px}
+
+  /* ── mode tabs: Simulación vs Loop real ── */
+  input[name=mode]{position:absolute;opacity:0;pointer-events:none}
+  .mode-tabs{display:flex;gap:10px;margin:30px 0 26px}
+  .mode-tabs label{flex:1;text-align:center;padding:15px 14px;border:1px solid var(--line);
+    border-radius:12px;background:var(--surface);cursor:pointer;display:flex;flex-direction:column;gap:3px;
+    font-family:var(--display);font-size:16px;font-weight:600;letter-spacing:-.01em;color:var(--muted);
+    transition:color .15s,border-color .15s,background .15s}
+  .mode-tabs label small{font-family:var(--mono);font-size:10.5px;font-weight:400;letter-spacing:.05em;opacity:.7}
+  #mode-sim:checked~.mode-tabs .ms{color:var(--text);border-color:var(--muted);background:var(--surface-2)}
+  #mode-real:checked~.mode-tabs .mr{color:var(--mint);border-color:var(--mint);
+    background:linear-gradient(180deg,rgba(79,227,193,.08),transparent)}
+  .mode-tabs label:focus-within{outline:2px solid var(--mint);outline-offset:2px}
+  .mode-content{display:none}
+  #mode-sim:checked~.sim-content{display:block}
+  #mode-real:checked~.real-content{display:block}
+
+  /* ── real loop: portfolio summary ── */
+  .port{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:18px 0 26px}
+  .port .stat{background:var(--surface);padding:16px 18px}
+  .port .k{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .port .v{font-family:var(--mono);font-size:20px;font-weight:600;margin-top:5px;color:var(--text)}
+  .port .v.mint{color:var(--mint)}
+  .port .vsub{font-family:var(--mono);font-size:11px;color:var(--muted);margin-top:3px}
+  @media(max-width:680px){.port{grid-template-columns:repeat(2,1fr)}}
+
+  /* ── real position cards ── */
+  .pos{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);
+    padding:22px clamp(18px,3vw,26px);margin-bottom:16px}
+  .pos-head{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:6px}
+  .pos-head .name{font-family:var(--display);font-size:19px;font-weight:600}
+  .pos-head .name.khype{color:var(--khype)}.pos-head .name.btc{color:var(--gold)}.pos-head .name.eth{color:var(--eth)}
+  .pos-head .venue{font-family:var(--mono);font-size:11.5px;color:var(--muted);letter-spacing:.03em}
+  .pos-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);
+    border:1px solid var(--line);border-radius:9px;overflow:hidden;margin:16px 0}
+  .pos-grid .c{background:var(--surface);padding:11px 13px}
+  .pos-grid .k{font-family:var(--mono);font-size:9.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+  .pos-grid .val{font-family:var(--mono);font-size:15px;font-weight:600;margin-top:4px;color:var(--text)}
+  .pos-grid .val.good{color:var(--safe)}.pos-grid .val.bad{color:var(--danger)}
+  @media(max-width:680px){.pos-grid{grid-template-columns:repeat(2,1fr)}.pos-grid .c:last-child{grid-column:1/-1}}
+  .barcap{font-family:var(--mono);font-size:10.5px;letter-spacing:.04em;color:var(--muted);margin-bottom:5px}
+  .liqbar{position:relative;height:32px;border-radius:8px;background:var(--surface-2);margin:0 0 4px}
+  .liqbar .safe{position:absolute;top:0;bottom:0;left:0;border-radius:8px;transform-origin:left;
+    background:linear-gradient(90deg,rgba(79,227,193,.16),rgba(79,227,193,.5));animation:grow 1s cubic-bezier(.16,1,.3,1)}
+  @keyframes grow{from{transform:scaleX(0)}}
+  .liqbar .mark{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--danger)}
+  .liqbar .droplab{position:absolute;top:50%;transform:translate(-112%,-50%);
+    font-family:var(--mono);font-size:12.5px;font-weight:600;color:var(--danger)}
+  .liqbar .axend{position:absolute;right:8px;top:50%;transform:translateY(-50%);
+    font-family:var(--mono);font-size:10px;color:var(--muted)}
+  .pos-foot{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:10px;line-height:1.55}
+  .pos-foot b{color:var(--text)}
+  .realnote{font-family:var(--mono);font-size:12px;color:var(--muted);line-height:1.6;
+    border-left:2px solid var(--mint);padding:8px 0 8px 14px;margin:6px 0 34px}
 </style>
 </head>
 <body>
@@ -126,6 +181,16 @@
     <p class="lede">Depositas el activo, pides USDC, recompras y repites para multiplicar exposición. Mejor sede por activo: <b>kHYPE en HyperLend</b> (nativo, sin puentes); <b>BTC (cbBTC) y ETH (wstETH) en Morpho Ethereum mainnet</b> (LLTV 86%, mucho más colchón). El eje muestra cuánto puede caer el precio antes de liquidarte.</p>
     <p class="setup"><b>Montaje:</b> colateral en el activo · <b>deuda en USDC</b> (en ambas sedes). Es un largo apalancado: la deuda queda fija en USD y la liquidación salta cuando el precio del colateral cae.</p>
   </header>
+
+  <input type="radio" name="mode" id="mode-sim" checked>
+  <input type="radio" name="mode" id="mode-real">
+
+  <div class="mode-tabs">
+    <label class="ms" for="mode-sim" tabindex="0">Simulación<small>modelo por tramos de apalancamiento</small></label>
+    <label class="mr" for="mode-real" tabindex="0">Loop real<small>tus tres posiciones en vivo</small></label>
+  </div>
+
+  <div class="mode-content sim-content">
 
   <input type="radio" name="asset" id="tab-khype" checked>
   <input type="radio" name="asset" id="tab-btc">
@@ -256,6 +321,66 @@
       <h3>Volatilidad: el factor oculto</h3>
       <p>El LLTV del 86% de Morpho (BTC/ETH) da el mayor colchón de todos, y el 74% de kHYPE también es alto. Pero <b>kHYPE sigue el precio de HYPE, que se mueve mucho más que BTC o ETH</b>. Un −20% puede pasar en un día; en BTC es mucho menos probable. Lee cada colchón junto a la volatilidad del activo, no en aislado.</p>
     </div>
+  </div>
+  </div><!-- /sim-content -->
+
+  <div class="mode-content real-content">
+    <div class="ph">Tu loop, en vivo</div>
+    <div class="psub">Tus tres posiciones reales con sus números actuales. La barra muestra cuánto puede caer cada colateral antes de tu liquidación; el marcador rojo es tu punto exacto, no un tramo teórico.</div>
+
+    <div class="port">
+      <div class="stat"><div class="k">Equity total</div><div class="v mint">$9.228</div></div>
+      <div class="stat"><div class="k">Deuda USDC</div><div class="v">$10.733</div></div>
+      <div class="stat"><div class="k">Apal. combinado</div><div class="v">2,16x</div></div>
+      <div class="stat"><div class="k">Carry combinado</div><div class="v">−3,6%/año</div><div class="vsub">lo paga sobre todo BTC</div></div>
+    </div>
+
+    <!-- kHYPE real -->
+    <div class="pos">
+      <div class="pos-head"><span class="name khype">kHYPE · loop</span><span class="venue">HyperLend · deuda USDC 7,36%</span></div>
+      <div class="pos-grid">
+        <div class="c"><div class="k">Apal.</div><div class="val">1,76x</div></div>
+        <div class="c"><div class="k">Health factor</div><div class="val">1,72</div></div>
+        <div class="c"><div class="k">LTV / máx</div><div class="val">43% / 74%</div></div>
+        <div class="c"><div class="k">Caída a liq.</div><div class="val bad">−42%</div></div>
+        <div class="c"><div class="k">Carry/año</div><div class="val bad">−2,06%</div></div>
+      </div>
+      <div class="barcap">Colchón: caída del colateral hasta tu liquidación</div>
+      <div class="liqbar"><div class="safe" style="width:70%"></div><div class="mark" style="left:70%"></div><div class="droplab" style="left:70%">−42%</div><div class="axend">−60%</div></div>
+      <div class="pos-foot">Colateral <b>50,44 kHYPE</b> (~$3.180) · deuda <b>$1.370 USDC</b> · equity ~$1.809. Liquidación ~$36,7. El activo más volátil de los tres: el colchón se consume rápido, vigílalo.</div>
+    </div>
+
+    <!-- BTC real -->
+    <div class="pos">
+      <div class="pos-head"><span class="name btc">BTC · loop</span><span class="venue">Morpho · Ethereum mainnet · deuda USDC 3,95%</span></div>
+      <div class="pos-grid">
+        <div class="c"><div class="k">Apal.</div><div class="val">2,38x</div></div>
+        <div class="c"><div class="k">Health factor</div><div class="val">1,48</div></div>
+        <div class="c"><div class="k">LTV / máx</div><div class="val">58% / 86%</div></div>
+        <div class="c"><div class="k">Caída a liq.</div><div class="val bad">−32%</div></div>
+        <div class="c"><div class="k">Carry/año</div><div class="val bad">−5,45%</div></div>
+      </div>
+      <div class="barcap">Colchón: caída del colateral hasta tu liquidación</div>
+      <div class="liqbar"><div class="safe" style="width:53%"></div><div class="mark" style="left:53%"></div><div class="droplab" style="left:53%">−32%</div><div class="axend">−60%</div></div>
+      <div class="pos-foot">Colateral <b>0,2332 cbBTC</b> (~$13.960) · deuda <b>$8.091 USDC</b> · equity ~$5.869. Liquidación oráculo <b>$40.344</b>. Tu mayor posición y la de mayor carry negativo: si quisieras reducir la sangría, esta es la palanca.</div>
+    </div>
+
+    <!-- wstETH real -->
+    <div class="pos">
+      <div class="pos-head"><span class="name eth">wstETH · loop</span><span class="venue">Morpho · Ethereum mainnet · deuda USDC 3,97%</span></div>
+      <div class="pos-grid">
+        <div class="c"><div class="k">Apal.</div><div class="val">1,82x</div></div>
+        <div class="c"><div class="k">Health factor</div><div class="val">1,91</div></div>
+        <div class="c"><div class="k">LTV / máx</div><div class="val">45% / 86%</div></div>
+        <div class="c"><div class="k">Caída a liq.</div><div class="val bad">−48%</div></div>
+        <div class="c"><div class="k">Carry/año</div><div class="val good">+1,48%</div></div>
+      </div>
+      <div class="barcap">Colchón: caída del colateral hasta tu liquidación</div>
+      <div class="liqbar"><div class="safe" style="width:80%"></div><div class="mark" style="left:80%"></div><div class="droplab" style="left:80%">−48%</div><div class="axend">−60%</div></div>
+      <div class="pos-foot">Colateral <b>1,4517 wstETH</b> (~$2.822) · deuda <b>$1.272 USDC</b> · equity ~$1.550. Liquidación oráculo <b>$1.019/wstETH</b>. La única con carry positivo: el staking del 2,60% supera el coste del borrow. La pata más sana.</div>
+    </div>
+
+    <div class="realnote">Datos de tus capturas (28 jun 2026). Las liquidaciones y tasas son las reales de tus posiciones. La utilización en Morpho ronda el 86%: si sube hacia el 100%, el borrow USDC y el carry empeoran. En kHYPE estás a 1,76x, con margen para subir cuando HYPE corrija — recuerda que la caída a liquidación se mide desde tu entrada, no desde el máximo.</div>
   </div>
 
   <footer>
