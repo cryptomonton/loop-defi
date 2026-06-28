@@ -123,7 +123,7 @@
   <header>
     <div class="eyebrow">Loop · HyperLend + Morpho</div>
     <h1>El loop de lending, activo por activo: <em>dónde está tu liquidación</em></h1>
-    <p class="lede">Depositas el activo, pides USDC, recompras y repites para multiplicar exposición. Mejor sede por activo: <b>kHYPE en HyperLend</b> (nativo, sin puentes); <b>BTC y ETH en Morpho</b> (LLTV 86%, mucho más colchón). El eje muestra cuánto puede caer el precio antes de liquidarte.</p>
+    <p class="lede">Depositas el activo, pides USDC, recompras y repites para multiplicar exposición. Mejor sede por activo: <b>kHYPE en HyperLend</b> (nativo, sin puentes); <b>BTC (cbBTC) y ETH (wstETH) en Morpho Ethereum mainnet</b> (LLTV 86%, mucho más colchón). El eje muestra cuánto puede caer el precio antes de liquidarte.</p>
     <p class="setup"><b>Montaje:</b> colateral en el activo · <b>deuda en USDC</b> (en ambas sedes). Es un largo apalancado: la deuda queda fija en USD y la liquidación salta cuando el precio del colateral cae.</p>
   </header>
 
@@ -133,8 +133,8 @@
 
   <div class="asset-tabs">
     <label class="tk" for="tab-khype" tabindex="0">kHYPE<small>HyperLend · staking 1,93%</small></label>
-    <label class="tb" for="tab-btc" tabindex="0">BTC<small>Morpho · 86%</small></label>
-    <label class="te" for="tab-eth" tabindex="0">ETH<small>Morpho · 86%</small></label>
+    <label class="tb" for="tab-btc" tabindex="0">BTC<small>Morpho · Ethereum · 86%</small></label>
+    <label class="te" for="tab-eth" tabindex="0">wstETH<small>Morpho · Ethereum · 86%</small></label>
   </div>
 
   <div class="panels">
@@ -171,7 +171,7 @@
         </div>
       </div>
       <div class="carry"><span class="cl">Carry neto/año:</span> 1,5x <b>−0,83%</b> · 2x <b>−3,58%</b> · 2,44x <b>−6,00%</b></div>
-      <p class="calc"><b>Cálculo.</b> Liquidación = (L−1)/(0,74·L) × $64,14. Carry neto = L×1,93% (staking) − (L−1)×7,44% (USDC). El staking recorta el coste del largo: a 1,5x queda casi neutral (−0,83%). <b>HF</b> al entrar = 0,74·L/(L−1); decae hasta 1 justo en la línea roja.</p>
+      <p class="calc"><b>Cálculo.</b> Liquidación = (L−1)/(0,74·L) × $64,14. Carry neto = L×1,93% (staking) − (L−1)×7,44% (USDC). El staking recorta el coste del largo: a 1,5x queda casi neutral (−0,83%). <b>HF</b> al entrar = umbral·L/(L−1); decae hasta 1 justo en la línea roja.</p>
     </div>
 
     <!-- BTC -->
@@ -183,8 +183,8 @@
         <div class="stat"><div class="k">Renta colateral</div><div class="v">0%</div></div>
         <div class="stat"><div class="k">Apal. máx.</div><div class="v">~7,1x</div><div class="vsub">liq. inmediata</div></div>
       </div>
-      <div class="ph">BTC — Morpho Blue (cbBTC/USDC)</div>
-      <div class="psub">LLTV del 86%: mucho más colchón que HyperLend (a 2x liquida a −42% en vez de −24%). El cbBTC no renta y pagas 3,95% de borrow USDC. El protocolo permite hasta ~7x, pero a 2,5x ya solo aguantas −30%; más allá es temerario.</div>
+      <div class="ph">BTC — Morpho Blue · cbBTC/USDC · Ethereum mainnet</div>
+      <div class="psub">Mercado cbBTC/USDC en <b>Ethereum mainnet</b> (LLTV 86%, +15 curadores, $40,9M liquidez, 3,95% borrow USDC). El gas de mainnet es coste único de entrada/salida — en un largo de semanas o meses es ruido frente a la tasa recurrente. El cbBTC no renta; pagas el borrow entero. El protocolo permite hasta ~7x, pero a 2,5x ya solo aguantas −30%; más allá es temerario.</div>
       <div class="ladder">
         <div class="axis">
           <span style="top:0%">0%</span><span style="top:23.1%">−15%</span>
@@ -206,7 +206,7 @@
         </div>
       </div>
       <div class="carry"><span class="cl">Carry neto/año:</span> 1,5x <b>−1,98%</b> · 2x <b>−3,95%</b> · 2,5x <b>−5,93%</b></div>
-      <p class="calc"><b>Cálculo.</b> Liquidación = (L−1)/(0,86·L) × $62.700. Carry = (L−1)×3,95% USDC (el colateral no renta). Penalización si te liquidan ≈ 5% (LIF ~1,05). <b>HF</b> al entrar = 0,86·L/(L−1); decae hasta 1 justo en la línea roja.</p>
+      <p class="calc"><b>Cálculo.</b> Liquidación = (L−1)/(0,86·L) × $62.700. Carry = (L−1)×3,95% USDC (el colateral no renta). Penalización si te liquidan ≈ 5% (LIF ~1,05). <b>HF</b> al entrar = umbral·L/(L−1); decae hasta 1 justo en la línea roja.</p>
     </div>
 
     <!-- ETH -->
@@ -214,12 +214,12 @@
       <div class="stats">
         <div class="stat"><div class="k">Precio</div><div class="v eth">$1.616</div></div>
         <div class="stat"><div class="k">LLTV</div><div class="v">86%</div></div>
-        <div class="stat"><div class="k">Borrow USDC</div><div class="v">5,16%</div></div>
-        <div class="stat"><div class="k">Renta colateral</div><div class="v">0%</div></div>
+        <div class="stat"><div class="k">Borrow USDC</div><div class="v">3,97%</div></div>
+        <div class="stat"><div class="k">Renta colateral</div><div class="v eth">2,60%</div></div>
         <div class="stat"><div class="k">Apal. máx.</div><div class="v">~7,1x</div><div class="vsub">liq. inmediata</div></div>
       </div>
-      <div class="ph">ETH — Morpho Blue (WETH/USDC)</div>
-      <div class="psub">Mismo LLTV del 86% que BTC, así que idéntico % de caída, solo cambia el precio. Borrow más caro (5,16%) y el WETH no renta. Si quisieras abaratar el carry, <b>wstETH/USDC en Morpho</b> (también 86%) te daría el staking de Lido (~3%) sin perder LLTV.</div>
+      <div class="ph">ETH — Morpho Blue · wstETH/USDC · Ethereum mainnet</div>
+      <div class="psub">Mercado wstETH/USDC en <b>Ethereum mainnet</b> (misma red que BTC, LLTV 86%, curado por Steakhouse + Gauntlet). wstETH se revaloriza ~<b style="color:var(--eth)">2,60%/año</b> vs ETH por el staking de Lido — igual que kHYPE pero con ETH. Con borrow al <b>3,97%</b>, el carry es <b style="color:var(--safe)">positivo en los tres apalancamientos</b>. Mismos % de caída que BTC; solo cambia el precio.</div>
       <div class="ladder">
         <div class="axis">
           <span style="top:0%">0%</span><span style="top:23.1%">−15%</span>
@@ -240,8 +240,8 @@
             <div class="foot">arriesgado</div></div>
         </div>
       </div>
-      <div class="carry"><span class="cl">Carry neto/año:</span> 1,5x <b>−2,58%</b> · 2x <b>−5,16%</b> · 2,5x <b>−7,74%</b></div>
-      <p class="calc"><b>Cálculo.</b> Liquidación = (L−1)/(0,86·L) × $1.616. Carry = (L−1)×5,16% USDC (el colateral no renta). Mismo LLTV que BTC: idéntico % de caída, distinto precio. <b>HF</b> al entrar = 0,86·L/(L−1); decae hasta 1 justo en la línea roja.</p>
+      <div class="carry"><span class="cl">Carry neto/año:</span> 1,5x <b style="color:var(--safe)">+1,92%</b> · 2x <b style="color:var(--safe)">+1,23%</b> · 2,5x <b style="color:var(--safe)">+0,55%</b></div>
+      <p class="calc"><b>Cálculo.</b> Liquidación = (L−1)/(0,86·L) × $1.616. Carry = L×2,60% (staking wstETH) − (L−1)×3,97% (borrow USDC); positivo en todos los tramos. Mismo LLTV que BTC: idéntico % de caída, distinto precio. <b>HF</b> al entrar = umbral·L/(L−1); decae hasta 1 justo en la línea roja.</p>
     </div>
 
   </div>
@@ -250,7 +250,7 @@
     <div class="pcard">
       <h3>Tu coste real (y el carry)</h3>
       <div class="formula">carry neto/año = <span class="mint">L × renta colateral</span> − (L−1) × borrow USDC</div>
-      <p>Borrow USDC por sede: <b>HyperLend 7,44%</b> (kHYPE) · <b>Morpho 3,95%</b> (BTC) y <b>5,16%</b> (ETH). La renta del colateral resta: kHYPE 1,93% (staking), BTC/ETH 0%. Por eso kHYPE tiene buen carry pese al borrow caro de HyperLend, y BTC es el más barato de mantener. Tasas variables: confírmalas antes de entrar.</p>
+      <p>Borrow USDC por sede: <b>HyperLend 7,44%</b> (kHYPE) · <b>Morpho Ethereum 3,95%</b> (cbBTC) y <b>3,97%</b> (wstETH). La renta del colateral resta: kHYPE 1,93% y wstETH 2,60% (staking), cbBTC 0%. Por eso wstETH tiene carry positivo en todos los tramos y kHYPE es económico pese al borrow caro de HyperLend; cbBTC paga el borrow entero. Tasas variables: confírmalas antes de entrar.</p>
     </div>
     <div class="pcard warn">
       <h3>Volatilidad: el factor oculto</h3>
@@ -259,7 +259,7 @@
   </div>
 
   <footer>
-    Recomendación práctica: en activos volátiles, apalancar 1,5x–2x deja un colchón sano frente a las mechas. · Deuda USDC en ambas sedes (HyperLend 7,44% · Morpho 3,95% BTC / 5,16% ETH). · Sedes: kHYPE en HyperLend; BTC/ETH en Morpho (LLTV 86%). · Precios: kHYPE $64,14 (oráculo HyperLend) · BTC ~$62.700 · ETH ~$1.616 (Morpho/spot); el precio de liquidación escala con tu entrada real. · No es asesoramiento financiero. Tasas y parámetros dinámicos: verifica en la app antes de operar.
+    Recomendación práctica: en activos volátiles, apalancar 1,5x–2x deja un colchón sano frente a las mechas. · Deuda USDC en ambas sedes (HyperLend 7,44% · Morpho Ethereum 3,95% cbBTC / 3,97% wstETH). · Sedes: kHYPE en HyperLend; cbBTC y wstETH en Morpho Ethereum mainnet (LLTV 86%, curadores Steakhouse + Gauntlet). · Precios: kHYPE $64,14 (oráculo HyperLend) · BTC ~$62.700 (cbBTC) · ETH ~$1.616 (wstETH, staking Lido 2,60%); el precio de liquidación escala con tu entrada real. · No es asesoramiento financiero. Tasas y parámetros dinámicos: verifica en la app antes de operar.
   </footer>
 
 </div>
