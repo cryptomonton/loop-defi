@@ -125,8 +125,6 @@
   #mode-sim:checked~.sim-content{display:block}
   #mode-real:checked~.real-content{display:block}
   #mode-calc:checked~.calc-content{display:block}
-  #mode-carry:checked~.mode-tabs .my{color:var(--eth);border-color:var(--eth);background:linear-gradient(180deg,rgba(138,160,255,.08),transparent)}
-  #mode-carry:checked~.carry-content{display:block}
   .port{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden;margin:18px 0 26px}
   .port .stat{background:var(--surface);padding:16px 18px}
   .port .k{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
@@ -194,7 +192,6 @@
   .live .lout-now{flex-basis:100%;color:var(--text);font-size:12.5px;line-height:1.5}
   .live .lentcap{font-size:10.5px;color:var(--muted);opacity:.8}
   .live .livecap{font-size:10.5px;color:var(--muted);opacity:.85}
-  .carry-out-line{font-family:var(--mono);font-size:12.5px;color:var(--text);line-height:1.6;margin-top:4px}
   .calc-grid input:focus{outline:none;border-color:var(--eth)}
 </style>
 </head>
@@ -211,13 +208,11 @@
   <input type="radio" name="mode" id="mode-sim" checked>
   <input type="radio" name="mode" id="mode-real">
   <input type="radio" name="mode" id="mode-calc">
-  <input type="radio" name="mode" id="mode-carry">
 
   <div class="mode-tabs">
     <label class="ms" for="mode-sim" tabindex="0">Simulación<small>modelo por tramos</small></label>
     <label class="mr" for="mode-real" tabindex="0">Loop real<small>tus posiciones en vivo</small></label>
     <label class="mc" for="mode-calc" tabindex="0">Calculadora<small>simula un movimiento</small></label>
-    <label class="my" for="mode-carry" tabindex="0">Carry sUSDM<small>BTC → borrow → yield</small></label>
   </div>
 
   <div class="mode-content sim-content">
@@ -470,54 +465,8 @@
     <div class="calc-disc">HF = LLTV × valor colateral / deuda · Liquidación = deuda / (uds × LLTV) · Carry/año = valor colateral × staking − deuda × borrow. La caída a liquidación se mide desde el precio que pongas arriba. No es asesoramiento financiero; verifica tasas y precios en la app antes de operar.</div>
   </div>
 
-  <div class="mode-content carry-content">
-    <div class="ph">Carry sUSDM · BTC → borrow → sUSDM</div>
-    <div class="psub">Pides stablecoin contra BTC (en otra wallet, sin tocar Morpho) y lo pones en sUSDM. Ves el carry neto, el colchón de liquidación y cuánta reserva de BTC necesitas para aguantar una caída sin sacar el sUSDM (cooldown de 3 días).</div>
-    <div class="calc-block">
-      <h4>La posición</h4>
-      <div class="calc-grid">
-        <label>BTC colateral (uds)<input id="cy_units" type="number" step="any" value="0.3"></label>
-        <label>Precio BTC $<input id="cy_price" type="number" step="any" value="62450"></label>
-        <label>% borrow (LTV)<input id="cy_ltv" type="number" step="any" value="40"></label>
-        <label>Borrow rate %<input id="cy_borrow" type="number" step="any" value="3.80"></label>
-        <label>sUSDM APY %<input id="cy_apy" type="number" step="any" value="15"></label>
-        <label>LLTV mercado %<input id="cy_lltv" type="number" step="any" value="86"></label>
-      </div>
-    </div>
-    <div class="calc-out">
-      <div class="calc-col">
-        <div class="calc-col-h">La posición de BTC</div>
-        <div class="crow"><span>Colateral BTC</span><b id="cy_coll"></b></div>
-        <div class="crow"><span>Stables que obtienes</span><b id="cy_debt"></b></div>
-        <div class="crow"><span>LTV</span><b id="cy_ltvout"></b></div>
-        <div class="crow"><span>Health factor</span><b id="cy_hf"></b></div>
-        <div class="crow"><span>Liquidación (caída)</span><b id="cy_liqd"></b></div>
-        <div class="crow"><span>Precio liquidación</span><b id="cy_liqp"></b></div>
-      </div>
-      <div class="calc-col">
-        <div class="calc-col-h after">El carry</div>
-        <div class="crow"><span>sUSDM APY</span><b id="cy_apyout"></b></div>
-        <div class="crow"><span>Coste borrow</span><b id="cy_costout"></b></div>
-        <div class="crow"><span>Spread neto</span><b id="cy_spread"></b></div>
-        <div class="crow"><span>Rendimiento bruto/año</span><b id="cy_gross"></b></div>
-        <div class="crow"><span>Coste borrow/año</span><b id="cy_cost"></b></div>
-        <div class="crow"><span>Carry neto/año</span><b id="cy_net"></b></div>
-      </div>
-    </div>
-    <div class="calc-block">
-      <h4>Colchón con tu reserva de BTC</h4>
-      <div class="calc-grid">
-        <label>Reserva BTC disponible (uds)<input id="cy_res" type="number" step="any" value="0"></label>
-        <label>Caída de BTC a resistir %<input id="cy_drop" type="number" step="any" value="50"></label>
-      </div>
-      <div class="carry-out-line" id="cy_res_out"></div>
-      <div class="carry-out-line" id="cy_drop_out"></div>
-    </div>
-    <div class="calc-disc">Carry neto = stables × (sUSDM APY − borrow). Liquidación = 1 − LTV/LLTV. La reserva de BTC baja el LTV y aleja la liquidación — cubre el riesgo del cooldown de 3 días de sUSDM, pero NO el riesgo de peg/contrato de USDM (protocolo de ~1 mes): dimensiona con lo que puedas permitirte perder. LLTV según sede: Curve WBTC/USDC ~86%, HyperLend UBTC ~65,5%. sUSDM APY variable (tope ~15% en contrato), el funding puede caer. No es asesoramiento financiero.</div>
-  </div>
-
   <footer>
-    Recomendación práctica: en activos volátiles, apalancar 1,5x–2x deja un colchón sano frente a las mechas. · Deuda USDC (HyperLend 7,54% · Morpho Ethereum 4,00% cbBTC / 3,99% wstETH). · Sedes: kHYPE en HyperLend; cbBTC y wstETH en Morpho Ethereum mainnet. · Pestaña Carry sUSDM: BTC de otra wallet → borrow → sUSDM (~15-16%). · Precios 3 jul 2026; PnL y precio en vivo por activo. · No es asesoramiento financiero. Tasas y parámetros dinámicos: verifica en la app antes de operar.
+    Recomendación práctica: en activos volátiles, apalancar 1,5x–2x deja un colchón sano frente a las mechas. · Deuda USDC (HyperLend 7,54% · Morpho Ethereum 4,00% cbBTC / 3,99% wstETH). · Sedes: kHYPE en HyperLend; cbBTC y wstETH en Morpho Ethereum mainnet (LLTV 86%, curadores Steakhouse + Gauntlet). · Precios 3 jul 2026; PnL y precio en vivo por activo. · No es asesoramiento financiero. Tasas y parámetros dinámicos: verifica en la app antes de operar.
   </footer>
 
 </div>
@@ -636,39 +585,6 @@
   ['khype','btc','eth'].forEach(function(a){ if(box(a)) simRender(a); });
 })();
 </script>
-<script>
-(function(){
-  function $(id){return document.getElementById(id);}
-  function n(id){var v=parseFloat($(id).value);return isNaN(v)?0:v;}
-  function d$(x){return '$'+Math.round(x).toLocaleString('es-ES');}
-  function carryCalc(){
-    if(!$('cy_units'))return;
-    var units=n('cy_units'),price=n('cy_price'),ltv=n('cy_ltv')/100,borrow=n('cy_borrow'),apy=n('cy_apy'),lltv=n('cy_lltv')/100;
-    var coll=units*price,debt=coll*ltv,hf=ltv>0?lltv/ltv:Infinity,liqd=lltv>0?(1-ltv/lltv):0,liqp=price*(1-liqd);
-    $('cy_coll').textContent=d$(coll); $('cy_debt').textContent=d$(debt);
-    $('cy_ltvout').textContent=(ltv*100).toFixed(0)+'%';
-    var hfEl=$('cy_hf'); hfEl.textContent=isFinite(hf)?hf.toFixed(2):'\u221E'; hfEl.style.color=hf>=1.8?'var(--safe)':hf>=1.35?'var(--warn)':'var(--danger)';
-    var ld=$('cy_liqd'); ld.textContent=(liqd>0?'\u2212':'')+(liqd*100).toFixed(0)+'%'; ld.style.color='var(--danger)';
-    $('cy_liqp').textContent=d$(liqp);
-    var spread=apy-borrow,gross=debt*apy/100,cost=debt*borrow/100,net=gross-cost;
-    $('cy_apyout').textContent=apy.toFixed(2)+'%'; $('cy_costout').textContent=borrow.toFixed(2)+'%';
-    var sp=$('cy_spread'); sp.textContent=(spread>=0?'+':'\u2212')+Math.abs(spread).toFixed(2)+'%'; sp.style.color=spread>=0?'var(--safe)':'var(--danger)';
-    $('cy_gross').textContent='+'+d$(gross); $('cy_cost').textContent='\u2212'+d$(cost);
-    var ne=$('cy_net'); ne.innerHTML='<span style="color:'+(net>=0?'var(--safe)':'var(--danger)')+';font-weight:600">'+(net>=0?'+':'\u2212')+d$(Math.abs(net))+'</span>';
-    var res=n('cy_res'),drop=n('cy_drop')/100,newColl=(units+res)*price,newLtv=newColl>0?debt/newColl:0,surv=lltv>0?(1-newLtv/lltv):0;
-    $('cy_res_out').innerHTML=res>0
-      ?'Aportando <b>'+res+' BTC</b> de reserva: LTV baja a <b>'+(newLtv*100).toFixed(0)+'%</b> \u00b7 aguantas hasta <b style="color:var(--safe)">\u2212'+(surv*100).toFixed(0)+'%</b> antes de liquidaci\u00f3n'
-      :'Sin reserva aguantas \u2212'+(liqd*100).toFixed(0)+'%. Introduce reserva para ver el colch\u00f3n ampliado.';
-    if(drop>0&&drop<1){
-      var reqColl=debt/((1-drop)*lltv),reqRes=(reqColl/price)-units;
-      $('cy_drop_out').innerHTML=reqRes>0
-        ?'Para resistir una ca\u00edda de <b>\u2212'+(drop*100).toFixed(0)+'%</b> necesitas aportar <b style="color:var(--eth)">'+reqRes.toFixed(4)+' BTC</b> de reserva (total '+(reqColl/price).toFixed(4)+' BTC de colateral).'
-        :'Ya resistes \u2212'+(drop*100).toFixed(0)+'% sin reserva adicional.';
-    } else $('cy_drop_out').textContent='';
-  }
-  ['cy_units','cy_price','cy_ltv','cy_borrow','cy_apy','cy_lltv','cy_res','cy_drop'].forEach(function(i){var e=$(i);if(e)e.addEventListener('input',carryCalc);});
-  carryCalc();
-})();
-</script>
+
 </body>
 </html>
