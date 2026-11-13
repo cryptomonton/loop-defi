@@ -294,7 +294,7 @@
         <label>Precio HYPE ($)<input id="s-phype" type="number" step="any" min="0" value="71.17"></label>
         <label>Meses hasta el cierre<input id="s-months" type="number" step="any" min="0" value="6"></label>
       </div>
-      <div class="simrefresh"><button id="s-refresh" type="button">↻ Actualizar precios</button><span id="s-rstat">precios de tu captura del 12 nov · editables a mano</span></div>
+      <div class="simrefresh"><button id="s-refresh" type="button">↻ Actualizar precios</button><span id="s-rstat">cargando precios…</span></div>
       <div class="simtarget">
         <label>Todos a la vez <span class="tp"><b id="s-allp"></b></span></label>
         <input id="s-all" type="range" min="-70" max="150" step="1" value="0" aria-label="Cambio común de los tres precios">
@@ -451,25 +451,43 @@
     $('s-rstat').textContent='Actualizado '+hh+' \u00b7 '+src;
     calc();
   }
+  var SRC=[
+    {n:'CoinGecko',f:function(){
+      return fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,hyperliquid&vs_currencies=usd',{cache:'no-store'})
+        .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})
+        .then(function(j){return {btc:j.bitcoin.usd,eth:j.ethereum.usd,hype:j.hyperliquid.usd}})}},
+    {n:'DefiLlama',f:function(){
+      return fetch('https://coins.llama.fi/prices/current/coingecko:bitcoin,coingecko:ethereum,coingecko:hyperliquid',{cache:'no-store'})
+        .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})
+        .then(function(j){var c=j.coins;return {btc:c['coingecko:bitcoin'].price,eth:c['coingecko:ethereum'].price,hype:c['coingecko:hyperliquid'].price}})}},
+    {n:'Hyperliquid',f:function(){
+      return fetch('https://api.hyperliquid.xyz/info',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({type:'allMids'})})
+        .then(function(r){if(!r.ok)throw new Error('HTTP '+r.status);return r.json()})
+        .then(function(j){return {btc:parseFloat(j.BTC),eth:parseFloat(j.ETH),hype:parseFloat(j.HYPE)}})}}
+  ];
+  function tmo(pr,ms){return Promise.race([pr,new Promise(function(_,rej){setTimeout(function(){rej(new Error('sin respuesta'))},ms)})])}
+  function okp(p){if(!(p&&p.btc>0&&p.eth>0&&p.hype>0))throw new Error('datos incompletos');return p}
   function getPrices(){
-    return fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,hyperliquid&vs_currencies=usd')
-      .then(function(r){if(!r.ok)throw new Error('cg');return r.json()})
-      .then(function(j){if(!j.bitcoin||!j.ethereum||!j.hyperliquid)throw new Error('cg');return {p:{btc:j.bitcoin.usd,eth:j.ethereum.usd,hype:j.hyperliquid.usd},src:'CoinGecko'}})
-      .catch(function(){
-        return fetch('https://coins.llama.fi/prices/current/coingecko:bitcoin,coingecko:ethereum,coingecko:hyperliquid')
-          .then(function(r){if(!r.ok)throw new Error('dl');return r.json()})
-          .then(function(j){var c=j.coins;return {p:{btc:c['coingecko:bitcoin'].price,eth:c['coingecko:ethereum'].price,hype:c['coingecko:hyperliquid'].price},src:'DefiLlama'}});
-      });
+    var errs=[];
+    function tryN(i){
+      if(i>=SRC.length)return Promise.reject(new Error(errs.join(' \u00b7 ')));
+      var pr;try{pr=SRC[i].f()}catch(e){pr=Promise.reject(e)}
+      return tmo(pr,8000).then(okp).then(function(p){return {p:p,src:SRC[i].n}})
+        .catch(function(e){errs.push(SRC[i].n+': '+((e&&e.message)||'error'));return tryN(i+1)});
+    }
+    return tryN(0);
   }
-  $('s-refresh').addEventListener('click',function(){
+  function refresh(auto){
     var b=$('s-refresh');b.disabled=true;$('s-rstat').textContent='Actualizando\u2026';
-    getPrices().then(function(x){setPrices(x.p,x.src)})
-      .catch(function(){$('s-rstat').textContent='No se pudo cargar el precio (si abres el archivo en local, prueba desde la web publicada). Edítalo a mano.'})
+    return getPrices().then(function(x){setPrices(x.p,x.src)})
+      .catch(function(e){$('s-rstat').textContent=(auto?'Sin precios en vivo; se usan los de la captura del 12 nov. ':'No se pudo cargar el precio. ')+'('+e.message+') Puedes editarlos a mano.'})
       .then(function(){b.disabled=false});
-  });
+  }
+  $('s-refresh').addEventListener('click',function(){refresh(false)});
   $('s-all').addEventListener('input',function(){var v=$('s-all').value;A.forEach(function(a){$(a.s).value=v});calc()});
   ['s-pbtc','s-peth','s-phype','s-months','s-sb','s-se','s-sh'].forEach(function(i){$(i).addEventListener('input',calc)});
   calc();
+  refresh(true);
 })();
 </script>
 </body>
