@@ -48,6 +48,7 @@
   #tab-eth:checked~.asset-tabs .te{color:var(--eth);background:var(--surface);border-bottom:1px solid var(--surface)}
   #tab-aave:checked~.asset-tabs .ta{color:var(--aave);background:var(--surface);border-bottom:1px solid var(--surface)}
   #tab-khype:checked~.asset-tabs .tk{color:var(--khype);background:var(--surface);border-bottom:1px solid var(--surface)}
+  #tab-sim:checked~.asset-tabs .ts{color:var(--mint);background:var(--surface);border-bottom:1px solid var(--surface)}
   .asset-tabs label:focus-within{outline:2px solid var(--mint);outline-offset:2px}
 
   .panels{border:1px solid var(--line);border-radius:0 0 var(--r) var(--r);background:var(--surface);
@@ -57,6 +58,7 @@
   #tab-eth:checked~.panels .panel-eth{display:block}
   #tab-aave:checked~.panels .panel-aave{display:block}
   #tab-khype:checked~.panels .panel-khype{display:block}
+  #tab-sim:checked~.panels .panel-sim{display:block}
 
   .stats{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--line);
     border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:30px}
@@ -120,96 +122,52 @@
   .wcard .wtop .name{font-family:var(--display);font-weight:600;font-size:17px}
   .wcard .wtop .pill{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
     padding:3px 9px;border-radius:20px;margin-left:auto}
-  .wrow{display:grid;grid-template-columns:1fr auto auto;gap:8px 12px;align-items:baseline;
+  .wrow{display:grid;grid-template-columns:1fr auto auto auto;gap:8px 12px;align-items:baseline;
     padding:10px 18px;border-top:1px solid var(--line);font-size:13px}
   .wrow .mk{font-family:var(--mono);color:var(--text)}
   .wrow .mk small{color:var(--muted);font-family:var(--mono);font-size:11px}
   .wrow .lv{font-family:var(--mono);color:var(--muted);font-size:12px;text-align:right}
   .wrow .hf{font-family:var(--mono);font-weight:700;text-align:right;min-width:52px}
-  .wrow.spot{background:var(--surface-2)}
-  .wrow.spot .mk small{color:var(--rosa)}
+  .wrow .lq{font-family:var(--mono);font-size:12px;color:var(--muted);text-align:right;white-space:nowrap}
+  .wrow .lq b{color:var(--danger);font-weight:600}
+  .wrow.head{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);border-top:none;padding-top:2px;padding-bottom:6px}
+  .wrow.head .hf,.wrow.head .lv{font-weight:400;font-size:10px;color:var(--muted)}
+  @media(max-width:680px){.wrow{grid-template-columns:1fr auto auto}.wrow .lq{grid-column:1/-1;text-align:left}.wrow.head .lq{display:none}}
 
   footer{color:var(--muted);font-size:12.5px;border-top:1px solid var(--line);padding-top:18px;
     font-family:var(--mono);letter-spacing:.02em;line-height:1.6}
+  @media(max-width:680px){.asset-tabs{gap:4px}.asset-tabs label{padding:12px 2px;font-size:12.5px}.asset-tabs label small{font-size:9px}}
+  .simctl{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+  @media(max-width:680px){.simctl{grid-template-columns:repeat(2,1fr)}.simctl .wide{grid-column:1/-1}}
+  .simctl label,.simtarget label{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .simctl .wide{grid-column:span 2}
+  .simctl input,.simctl select{width:100%;margin-top:6px;background:var(--surface-2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:9px 10px;font-family:var(--mono);font-size:14px}
+  .simrefresh{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:-4px 0 20px}
+  .simrefresh button{background:var(--surface-2);color:var(--mint);border:1px solid rgba(79,227,193,.45);border-radius:8px;padding:9px 14px;font-family:var(--mono);font-size:12.5px;cursor:pointer}
+  .simrefresh button:hover{background:rgba(79,227,193,.1)}
+  .simrefresh button:disabled{opacity:.5;cursor:wait}
+  .simrefresh #s-rstat{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
+  .simtarget{margin:6px 0 22px}
+  .simtarget input{width:100%;margin-top:12px;accent-color:var(--mint)}
+  .simtarget .tp{font-family:var(--mono);font-size:17px;color:var(--text);text-transform:none;letter-spacing:0;margin-left:8px}
+  .panel-sim .stat .v{font-size:16px}
+  .pos{color:var(--safe)}.neg{color:var(--danger)}.wn{color:var(--warn)}
+  .simtbl{overflow-x:auto;margin-top:22px}
+  .simtbl table{width:100%;border-collapse:collapse;font-family:var(--mono);font-size:12.5px;min-width:600px}
+  .simtbl th{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:400}
+  .simtbl th,.simtbl td{padding:8px 10px;border-top:1px solid var(--line);text-align:right}
+  .simtbl th:first-child,.simtbl td:first-child{text-align:left}
+  .simtbl tr.cur td{background:var(--surface-2)}
+  .sl3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:0 0 22px}
+  @media(max-width:680px){.sl3{grid-template-columns:1fr}}
+  .sl3 label{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
+  .sl3 .tp{display:block;font-size:15px;color:var(--text);text-transform:none;letter-spacing:0;margin-top:4px}
+  .sl3 input{width:100%;margin-top:8px;accent-color:var(--mint)}
+  .panel-sim details{margin-top:18px;border:1px solid var(--line);border-radius:10px;padding:11px 14px}
+  .panel-sim summary{cursor:pointer;font-family:var(--mono);font-size:12px;color:var(--muted)}
+  .simtbl tr.tot td{font-weight:700;border-top:2px solid var(--line)}
   @media(prefers-reduced-motion:reduce){.fill{animation:none}}
   :focus-visible{outline:2px solid var(--mint);outline-offset:3px;border-radius:4px}
-
-  /* ===== Resumen + simulador ===== */
-  .sect{margin:34px 0 0}
-  .sect-h{font-family:var(--display);font-size:clamp(19px,2.6vw,24px);font-weight:600;letter-spacing:-.01em;margin-bottom:4px}
-  .sect-sub{color:var(--muted);font-size:13.5px;margin-bottom:16px;max-width:66ch}
-  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);
-    border:1px solid var(--line);border-radius:10px;overflow:hidden;margin-bottom:16px}
-  .kpis .stat .vsub{color:var(--muted)}
-  @media(max-width:680px){.kpis{grid-template-columns:repeat(2,1fr)}}
-  .gwallets{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-  @media(max-width:820px){.gwallets{grid-template-columns:1fr}}
-  .gcard{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);overflow:hidden}
-  .gtop{display:flex;align-items:center;gap:9px;padding:15px 18px 12px}
-  .gtop .dot{width:11px;height:11px;border-radius:50%}
-  .gtop .name{font-family:var(--display);font-weight:600;font-size:17px}
-  .gtop .pill{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
-    padding:3px 9px;border-radius:20px;margin-left:auto}
-  .prow{border-top:1px solid var(--line);padding:12px 18px}
-  .phead{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:9px}
-  .pname{font-family:var(--mono);font-size:13px}
-  .pname small{color:var(--muted);font-size:11px}
-  .phf{font-family:var(--mono);font-weight:700;font-size:13px;white-space:nowrap}
-  .pgrid{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:8px 12px}
-  @media(max-width:420px){.pgrid{grid-template-columns:1fr 1fr}.pgrid .pc:first-child{grid-column:1/-1}}
-  .pc .k{display:block;font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
-  .pc b{display:block;font-family:var(--mono);font-size:13px;font-weight:600;margin-top:2px}
-  .pc .sb{display:block;font-family:var(--mono);font-size:11.5px;color:var(--muted)}
-  .gtot{display:flex;justify-content:space-between;gap:6px 14px;flex-wrap:wrap;padding:12px 18px;
-    background:var(--surface-2);border-top:1px solid var(--line);font-family:var(--mono);font-size:12px;color:var(--muted)}
-  .gtot b{color:var(--text)}
-  .gnote{padding:10px 18px;border-top:1px solid var(--line);font-family:var(--mono);font-size:11.5px;color:var(--muted)}
-
-  .simbox{border:1px solid var(--line);border-radius:var(--r);background:var(--surface);padding:clamp(18px,3vw,26px)}
-  .sliders{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-  @media(max-width:900px){.sliders{grid-template-columns:1fr 1fr}}
-  @media(max-width:520px){.sliders{grid-template-columns:1fr}}
-  .sl .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;margin-bottom:8px}
-  .sl .nm{font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;font-weight:700}
-  .sl .val{font-family:var(--mono);font-size:22px;font-weight:600}
-  .sl .chg{font-family:var(--mono);font-size:12px;margin-left:6px}
-  .sl input[type=range]{width:100%;height:28px;accent-color:var(--mint);cursor:pointer}
-  .presets{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0}
-  .presets .plab{font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;
-    color:var(--muted);align-self:center;margin-right:2px}
-  .presets button{font-family:var(--mono);font-size:12px;color:var(--text);background:var(--surface-2);
-    border:1px solid var(--line);border-radius:999px;padding:8px 14px;cursor:pointer;min-height:38px}
-  .presets button:hover{border-color:var(--mint)}
-  .sumbar{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);
-    border:1px solid var(--line);border-radius:10px;overflow:hidden;margin:20px 0 14px}
-  @media(max-width:680px){.sumbar{grid-template-columns:1fr}}
-  .sumbar .cell{background:var(--surface);padding:14px 16px}
-  .sumbar .k{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted)}
-  .sumbar .v{font-family:var(--mono);font-size:22px;font-weight:700;margin-top:4px}
-  .sumbar .veq{font-family:var(--mono);font-size:13.5px;color:var(--text);margin-top:5px}
-  .sumbar .veq span{color:var(--muted)}
-  .sumbar .vs{font-family:var(--mono);font-size:11.5px;color:var(--muted);margin-top:3px}
-  .remainlab{font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--muted);margin:4px 2px 6px}
-  .sumbar.remain{margin-top:0;margin-bottom:16px;border-color:var(--line)}
-  .sumbar.remain .cell{background:var(--surface-2)}
-  .simalert{font-family:var(--mono);font-size:12.5px;padding:11px 14px;border-radius:10px;margin-bottom:14px;
-    border:1px solid var(--line);color:var(--muted);line-height:1.5}
-  .simalert.bad{border-color:rgba(255,93,93,.45);background:rgba(255,93,93,.07);color:var(--text)}
-  .simalert.ok{border-color:rgba(79,227,193,.35);background:rgba(79,227,193,.05)}
-  .tblwrap{overflow-x:auto;border:1px solid var(--line);border-radius:10px}
-  .stbl{width:100%;min-width:640px;border-collapse:collapse;font-family:var(--mono);font-size:12.5px}
-  .stbl th{font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:400;
-    text-align:right;padding:10px 12px;background:var(--surface-2);border-bottom:1px solid var(--line)}
-  .stbl th:first-child,.stbl td.l{text-align:left}
-  .stbl td{padding:9px 12px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap}
-  .stbl td small{color:var(--muted);font-size:11px}
-  .stbl tr.wh td{background:var(--surface-2);text-align:left;font-family:var(--display);font-weight:600;font-size:14px}
-  .stbl .wdot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:8px}
-  .stbl tr.st td{font-weight:600;color:var(--muted)}
-  .stbl tr.st td b,.stbl tr.tt td{color:var(--text)}
-  .stbl tr.tt td{font-weight:700;border-bottom:none;background:var(--surface-2)}
-  .badge{display:inline-block;font-size:10.5px;letter-spacing:.06em;padding:2px 8px;border-radius:20px;
-    background:rgba(255,93,93,.18);color:var(--danger);font-weight:700}
 </style>
 </head>
 <body>
@@ -218,77 +176,25 @@
   <header>
     <div class="eyebrow">Loop · Morpho + Aave v4 · 2 wallets</div>
     <h1>El loop de lending, activo por activo: <em>dónde está tu liquidación</em></h1>
-    <p class="lede">Depositas el activo, pides USDC, recompras y repites para multiplicar exposición. Deuda en USDC (largo apalancado): liquidas cuando el colateral cae. El eje de cada pestaña muestra cuánto puede caer el precio antes de tocarte.</p>
+    <p class="lede">Depositas el activo, pides USDC, recompras y repites para multiplicar exposición. Deuda en USDC (largo apalancado): liquidas cuando el colateral cae. Cada pestaña muestra tu apalancamiento actual y cuánto puede caer el precio antes de tocarte.</p>
     <div class="livebar">
       <span class="live">● EN VIVO →</span>
       <span>Para tus posiciones al minuto (HF, liquidaciones, escenarios de precio) usa el <b>«Monitor de Loops · Rosa &amp; Naranja»</b>. Este documento es la <b>referencia de la estrategia</b> + una instantánea; los números concretos pueden estar desfasados.</span>
     </div>
   </header>
 
-  <section class="sect" aria-labelledby="h-glance">
-    <div class="sect-h" id="h-glance">De un vistazo · tus posiciones</div>
-    <div class="sect-sub">Colateral exacto, valor actual y deuda en USDC de cada posición. Instantánea del 21 sept 2026, con BTC ~$85.950 y ETH ~$2.740.</div>
-    <div class="kpis" id="kpis"></div>
-    <div class="gwallets" id="glance"></div>
-  </section>
-
-  <section class="sect" aria-labelledby="h-sim">
-    <div class="sect-h" id="h-sim">Simulador · ¿y si cambia el precio?</div>
-    <div class="sect-sub">Mueve BTC, ETH (wstETH sigue a ETH) y HYPE, y mira cómo quedan el HF, tu capital propio y el beneficio o pérdida de cada posición frente al precio de hoy.</div>
-    <div class="simbox">
-      <div class="sliders">
-        <div class="sl">
-          <div class="top"><label class="nm" for="simBtc" style="color:var(--gold)">BTC</label>
-            <span><span class="val" id="simBtcVal"></span><span class="chg" id="simBtcChg"></span></span></div>
-          <input type="range" id="simBtc" min="30000" max="200000" step="50">
-        </div>
-        <div class="sl">
-          <div class="top"><label class="nm" for="simEth" style="color:var(--eth)">ETH</label>
-            <span><span class="val" id="simEthVal"></span><span class="chg" id="simEthChg"></span></span></div>
-          <input type="range" id="simEth" min="1000" max="10000" step="10">
-        </div>
-        <div class="sl">
-          <div class="top"><label class="nm" for="simHype" style="color:var(--khype)">HYPE</label>
-            <span><span class="val" id="simHypeVal"></span><span class="chg" id="simHypeChg"></span></span></div>
-          <input type="range" id="simHype" min="10" max="400" step="0.1">
-        </div>
-      </div>
-      <div class="presets" id="presets">
-        <span class="plab">Los tres:</span>
-        <button type="button" data-pct="-0.4">−40%</button>
-        <button type="button" data-pct="-0.2">−20%</button>
-        <button type="button" data-pct="-0.1">−10%</button>
-        <button type="button" data-pct="0.1">+10%</button>
-        <button type="button" data-pct="0.25">+25%</button>
-        <button type="button" data-pct="0.5">+50%</button>
-        <button type="button" data-pct="0">Hoy</button>
-      </div>
-      <div class="sumbar" id="simSum"></div>
-      <div class="remainlab">Si en este escenario pagaras toda la deuda en USDC vendiendo parte del colateral, esto es lo que te quedaría en cartera:</div>
-      <div class="sumbar remain" id="simRemain"></div>
-      <div class="simalert" id="simAlert" role="status" aria-live="polite"></div>
-      <div class="tblwrap">
-        <table class="stbl">
-          <thead><tr><th>Posición</th><th>Liquida en</th><th>HF</th><th>Colateral</th><th>Capital propio</th><th>Beneficio</th></tr></thead>
-          <tbody id="simBody"></tbody>
-        </table>
-      </div>
-      <p class="calc"><b>Cómo se calcula.</b> Beneficio = capital propio simulado − capital propio de hoy, donde capital propio = valor del colateral − deuda en USDC (la deuda ya va restada). Como la deuda es fija en USDC, el beneficio equivale a la variación del valor del colateral; el % es sobre el capital propio de hoy. El HF parte del real de la app y se mueve en proporción al precio. Una posición se marca como liquidada cuando su HF llega a 1 y su resultado se queda congelado en ese precio, sin la penalización de liquidación. El HYPE suministrado en HyperLend no tiene deuda, así que nunca liquida y su beneficio es solo la variación de precio. La cartera restante = cuánta cbBTC, wstETH o ETH te quedaría si vendieras parte del colateral para cancelar toda la deuda USDC de esa posición al precio simulado (menos moneda si el precio baja, más si sube); una posición liquidada se cuenta como 0, porque el protocolo ya se ha quedado con el colateral. No incluye intereses del borrow, renta de staking, APY de HYPE ni comisiones de swap.</p>
-    </div>
-  </section>
-
-  <div class="sect-h" style="margin-top:46px">Referencia de la estrategia · activo por activo</div>
-
   <input type="radio" name="asset" id="tab-btc" checked>
   <input type="radio" name="asset" id="tab-eth">
   <input type="radio" name="asset" id="tab-aave">
   <input type="radio" name="asset" id="tab-khype">
+  <input type="radio" name="asset" id="tab-sim">
 
   <div class="asset-tabs">
     <label class="tb" for="tab-btc" tabindex="0">BTC<small>Morpho · cbBTC</small></label>
     <label class="te" for="tab-eth" tabindex="0">ETH<small>Morpho · wstETH</small></label>
-    <label class="ta" for="tab-aave" tabindex="0">Aave v4<small>ETH</small></label>
-    <label class="tk" for="tab-khype" tabindex="0">kHYPE<small>cerrado</small></label>
+    <label class="ta" for="tab-aave" tabindex="0">Aave v4<small>ETH · BTC</small></label>
+    <label class="tk" for="tab-khype" tabindex="0">HYPE<small>Morpho · WHYPE</small></label>
+    <label class="ts" for="tab-sim" tabindex="0">Simulación<small>precio → beneficio</small></label>
   </div>
 
   <div class="panels">
@@ -296,330 +202,274 @@
     <!-- BTC -->
     <div class="panel panel-btc">
       <div class="stats">
-        <div class="stat"><div class="k">Precio BTC</div><div class="v btc">~$85.950</div></div>
+        <div class="stat"><div class="k">Precio BTC</div><div class="v btc">~$71.690</div></div>
         <div class="stat"><div class="k">LLTV</div><div class="v">86%</div></div>
-        <div class="stat"><div class="k">Borrow USDC</div><div class="v">~5,0%</div></div>
+        <div class="stat"><div class="k">Borrow USDC</div><div class="v">~5,16%</div></div>
         <div class="stat"><div class="k">Renta colateral</div><div class="v">0%</div></div>
         <div class="stat"><div class="k">Apal. máx.</div><div class="v">~7,1x</div><div class="vsub">liq. inmediata</div></div>
       </div>
-      <div class="ph">BTC — Morpho Blue (cbBTC/USDC)</div>
-      <div class="psub"><b style="color:var(--warn)">Sigue siendo la posición que más sangra.</b> Tus dos wallets están a ~2,1x (HF ~1,62) y liquidan a <b>~$53.200 (−38%)</b>: por debajo de tu suelo de $57k, pero solo ~7% por debajo de él. El apalancamiento efectivo ha bajado desde ~2,3x porque BTC ha subido (~$85.950 frente a ~$79.530 el 5 de sept). El cbBTC no renta y pagas ~5,0% de borrow (carry negativo, apuesta direccional).</div>
-      <div class="ladder">
-        <div class="axis">
-          <span style="top:0%">0%</span><span style="top:23.1%">−15%</span>
-          <span style="top:46.2%">−30%</span><span style="top:69.2%">−45%</span><span style="top:92.3%">−60%</span>
-        </div>
-        <div class="cols">
-          <div class="col s1"><div class="lev">1,5x</div><div class="bar">
-            <div class="fill" style="height:94.1%"></div><div class="liqline" style="top:94.1%"></div>
-            <div class="liqtag up" style="top:94.1%"><span class="dp">−61%</span><span class="pr">$33.320</span></div></div>
-            <div class="foot">colchón amplio</div></div>
-          <div class="col s2"><div class="lev">2x</div><div class="bar">
-            <div class="fill" style="height:64.5%"></div><div class="liqline" style="top:64.5%"></div>
-            <div class="liqtag" style="top:64.5%"><span class="dp">−42%</span><span class="pr">$49.970</span></div></div>
-            <div class="foot">equilibrado</div></div>
-          <div class="col s3"><div class="lev">2,1x · tú</div><div class="bar">
-            <div class="fill" style="height:58.6%"></div><div class="liqline" style="top:58.6%"></div>
-            <div class="liqtag" style="top:58.6%"><span class="dp">−38%</span><span class="pr">$53.200</span></div></div>
-            <div class="foot">tus 2 wallets</div></div>
-        </div>
-      </div>
-      <div class="carry"><span class="cl">Carry neto/año:</span> 1,5x <b>−2,50%</b> · 2x <b>−4,99%</b> · 2,1x <b>−5,49%</b></div>
-      <p class="calc"><b>Instantánea (21 sept 2026).</b> loops cbBTC/USDC: <b style="color:var(--rosa)">rosa</b> ~2,13x · HF 1,615 (liq. ~$53,2k) · <b style="color:var(--naranja)">naranja</b> ~2,11x · HF 1,631 (liq. ~$52,7k). Fórmula liq. = (L−1)/(0,86·L) × $85.950.</p>
+      <div class="ph">BTC — Morpho Blue (cbBTC/USDC) · y Aave v4 en naranja</div>
+      <div class="psub"><b style="color:var(--warn)">Ya no es tu activo seguro.</b> <b style="color:var(--rosa)">rosa</b> está a ~2,61x (HF 1,40) y <b style="color:var(--naranja)">naranja</b> a ~3,06x (HF 1,28): liquidan a <b>~$51.400 (−28%)</b> y <b>~$56.100 (−22%)</b>, esta última justo por debajo de tu suelo de $57k. El cbBTC no renta y pagas ~5,16% de borrow (carry negativo, apuesta direccional).</div>
+      <div class="simtbl" style="margin-top:0"><table>
+        <thead><tr><th>Posición</th><th>x actual</th><th>HF</th><th>Liquidación</th><th>Carry neto/año</th></tr></thead>
+        <tbody>
+          <tr><td><b style="color:var(--rosa)">Rosa</b> · Morpho</td><td>~2,61x</td><td class="neg">1,40</td><td>BTC $51.375 (−28%)</td><td class="neg">−8,31%</td></tr>
+          <tr><td><b style="color:var(--naranja)">Naranja</b> · Morpho</td><td>~3,06x</td><td class="neg">1,28</td><td>BTC $56.128 (−22%)</td><td class="neg">−10,63%</td></tr>
+          <tr><td><b style="color:var(--naranja)">Naranja</b> · Aave v4</td><td>~2,57x</td><td class="neg">1,38</td><td>BTC $50.671 (−28%)</td><td class="neg">−9,23%</td></tr>
+        </tbody>
+      </table></div>
+      <p class="calc"><b>Instantánea (12 nov 2026).</b> loops cbBTC/USDC en Morpho: <b style="color:var(--rosa)">rosa</b> ~2,61x · HF 1,40 (liq. ~$51,4k) · <b style="color:var(--naranja)">naranja</b> ~3,06x · HF 1,28 (liq. ~$56,1k). Aave v4 (naranja): cbBTC ~2,57x · HF 1,38 · liq. $50.671 (−28%) · borrow 5,88%. Fórmula liq. = (L−1)/(0,86·L) × $71.690. Rosa: sin movimientos desde el 10 nov, valorada a precios del 12 nov; Aave Naranja: posición del 11 nov (estimación).</p>
     </div>
 
     <!-- ETH · wstETH -->
     <div class="panel panel-eth">
       <div class="stats">
-        <div class="stat"><div class="k">Precio wstETH</div><div class="v eth">~$3.415</div></div>
+        <div class="stat"><div class="k">Precio wstETH</div><div class="v eth">~$2.507</div></div>
         <div class="stat"><div class="k">LLTV</div><div class="v">86%</div></div>
-        <div class="stat"><div class="k">Borrow USDC</div><div class="v">~5,0%</div></div>
+        <div class="stat"><div class="k">Borrow USDC</div><div class="v">~5,17%</div></div>
         <div class="stat"><div class="k">Renta colateral</div><div class="v eth">~3%</div></div>
         <div class="stat"><div class="k">Apal. máx.</div><div class="v">~7,1x</div><div class="vsub">liq. inmediata</div></div>
       </div>
       <div class="ph">ETH — Morpho Blue (wstETH/USDC)</div>
-      <div class="psub">wstETH (LLTV 86%): renta ~3% de staking, que compensa casi todo el borrow ~5,0% → carry ligeramente positivo (~+1%). Lo corres a ~1,93x (rosa) y ~1,85x (naranja). Sus liquidaciones (−44/−47%) quedan algo más lejos que las de BTC (−38/−39%) y Aave (−38%).</div>
-      <div class="ladder">
-        <div class="axis">
-          <span style="top:0%">0%</span><span style="top:23.1%">−15%</span>
-          <span style="top:46.2%">−30%</span><span style="top:69.2%">−45%</span><span style="top:92.3%">−60%</span>
-        </div>
-        <div class="cols">
-          <div class="col s1"><div class="lev">1,5x</div><div class="bar">
-            <div class="fill" style="height:94.1%"></div><div class="liqline" style="top:94.1%"></div>
-            <div class="liqtag up" style="top:94.1%"><span class="dp">−61%</span><span class="pr">$1.324</span></div></div>
-            <div class="foot">colchón amplio</div></div>
-          <div class="col s2"><div class="lev">1,85x · naranja</div><div class="bar">
-            <div class="fill" style="height:71.7%"></div><div class="liqline" style="top:71.7%"></div>
-            <div class="liqtag" style="top:71.7%"><span class="dp">−47%</span><span class="pr">$1.823</span></div></div>
-            <div class="foot">naranja HF 1,873</div></div>
-          <div class="col s3"><div class="lev">1,93x · rosa</div><div class="bar">
-            <div class="fill" style="height:67.2%"></div><div class="liqline" style="top:67.2%"></div>
-            <div class="liqtag" style="top:67.2%"><span class="dp">−44%</span><span class="pr">$1.924</span></div></div>
-            <div class="foot">rosa HF 1,775</div></div>
-        </div>
-      </div>
-      <div class="carry"><span class="cl">Carry neto/año:</span> 1,5x <b style="color:var(--safe)">+2,0%</b> · 1,85x <b style="color:var(--safe)">+1,2%</b> · 1,93x <b style="color:var(--safe)">+1,1%</b></div>
-      <p class="calc"><b>Instantánea (21 sept 2026).</b> loops wstETH/USDC: <b style="color:var(--rosa)">rosa</b> ~1,93x · HF 1,775 (liq. ETH ~$1.540, −44%) · <b style="color:var(--naranja)">naranja</b> ~1,85x · HF 1,873 (liq. ETH ~$1.460, −47%). Carry = L×3% − (L−1)×5,05%, suponiendo que el staking sigue en ~3%.</p>
+      <div class="psub">wstETH (LLTV 86%): renta ~3% de staking, que cubre solo parte del borrow ~5,2%: el carry se vuelve negativo por encima de ~2,4x. <b style="color:var(--rosa)">rosa</b> ~2,96x (HF 1,30) y <b style="color:var(--naranja)">naranja</b> ~2,93x (HF 1,30) liquidan con ETH a ~$1.540 (−23%), en la misma banda que cbBTC naranja (−22%) y Aave rosa ($1.496, −25%).</div>
+      <div class="simtbl" style="margin-top:0"><table>
+        <thead><tr><th>Posición</th><th>x actual</th><th>HF</th><th>Liquidación</th><th>Carry neto/año</th></tr></thead>
+        <tbody>
+          <tr><td><b style="color:var(--rosa)">Rosa</b> · Morpho</td><td>~2,96x</td><td class="neg">1,30</td><td>ETH $1.544 (−23%)</td><td class="neg">−1,25%</td></tr>
+          <tr><td><b style="color:var(--naranja)">Naranja</b> · Morpho</td><td>~2,93x</td><td class="neg">1,30</td><td>ETH $1.536 (−23%)</td><td class="neg">−1,19%</td></tr>
+        </tbody>
+      </table></div>
+      <p class="calc"><b>Instantánea (12 nov 2026).</b> loops wstETH/USDC en Morpho: <b style="color:var(--rosa)">rosa</b> ~2,96x · HF 1,30 (liq. ETH ~$1.544, −23%) · <b style="color:var(--naranja)">naranja</b> ~2,93x · HF 1,30 (liq. ETH ~$1.536, −23%). Carry = L×3% − (L−1)×5,17%. Rosa: sin movimientos desde el 10 nov, valorada a precios del 12 nov; Aave Naranja: posición del 11 nov (estimación).</p>
     </div>
 
     <!-- ETH · Aave v4 -->
     <div class="panel panel-aave">
       <div class="stats">
-        <div class="stat"><div class="k">Precio ETH</div><div class="v aave">~$2.740</div></div>
-        <div class="stat"><div class="k">Umbral liq.</div><div class="v">83%</div></div>
-        <div class="stat"><div class="k">Borrow USDC</div><div class="v">4,29%</div></div>
-        <div class="stat"><div class="k">Renta colateral</div><div class="v aave">1,82%</div></div>
-        <div class="stat"><div class="k">Apal. máx.</div><div class="v">~5,9x</div><div class="vsub">carry negativo</div></div>
+        <div class="stat"><div class="k">Precio ETH</div><div class="v aave">~$2.001</div></div>
+        <div class="stat"><div class="k">Umbral liq.</div><div class="v">84%</div></div>
+        <div class="stat"><div class="k">Borrow USDC</div><div class="v">3,86%</div></div>
+        <div class="stat"><div class="k">Renta colateral</div><div class="v aave">1,56%</div></div>
+        <div class="stat"><div class="k">Apal. máx.</div><div class="v">~6,3x</div><div class="vsub" style="color:var(--danger)">carry negativo &gt;1,7x</div></div>
       </div>
-      <div class="ph">ETH — Aave v4 (WETH/USDC) · solo wallet rosa</div>
-      <div class="psub">Solo en <b style="color:var(--rosa)">rosa</b>. Depósito ETH renta 1,82%, borrow 4,29% (era 1,97% el 5 de sept): el borrow se ha más que duplicado y el carry pasa a ligeramente negativo (Net APY −0,76%). Sigue siendo algo más barata que Morpho (~5,0%), pero ya no es neutra. Umbral 83%. Liquida en la misma banda que cbBTC (−38/−39%).</div>
-      <div class="ladder">
-        <div class="axis">
-          <span style="top:0%">0%</span><span style="top:23.1%">−15%</span>
-          <span style="top:46.2%">−30%</span><span style="top:69.2%">−45%</span><span style="top:92.3%">−60%</span>
-        </div>
-        <div class="cols">
-          <div class="col s1"><div class="lev">1,5x</div><div class="bar">
-            <div class="fill" style="height:92%"></div><div class="liqline" style="top:92%"></div>
-            <div class="liqtag up" style="top:92%"><span class="dp">−60%</span><span class="pr">$1.100</span></div></div>
-            <div class="foot">colchón amplio</div></div>
-          <div class="col s2"><div class="lev">2x</div><div class="bar">
-            <div class="fill" style="height:61.2%"></div><div class="liqline" style="top:61.2%"></div>
-            <div class="liqtag" style="top:61.2%"><span class="dp">−40%</span><span class="pr">$1.651</span></div></div>
-            <div class="foot">equilibrado</div></div>
-          <div class="col s3"><div class="lev">2,05x · tú</div><div class="bar">
-            <div class="fill" style="height:59.2%"></div><div class="liqline" style="top:59.2%"></div>
-            <div class="liqtag" style="top:59.2%"><span class="dp">−38%</span><span class="pr">$1.685</span></div></div>
-            <div class="foot">tu posición</div></div>
-        </div>
-      </div>
-      <div class="carry"><span class="cl">Carry neto/año:</span> 1,5x <b style="color:var(--safe)">+0,59%</b> · 2x <b>−0,65%</b> · 2,05x <b>−0,77%</b></div>
-      <p class="calc"><b>Instantánea (21 sept 2026).</b> 3,94 ETH depositados (~$10,79k) · deuda 5.516 USDC · <b>~2,05x</b> · <b>HF 1,623</b> · liquidación $1.685 (−38%). Fórmula liq. = (L−1)/(0,83·L) × $2.740.</p>
+      <div class="ph">Aave v4 — ETH en rosa · cbBTC en naranja</div>
+      <div class="psub">En <b style="color:var(--rosa)">rosa</b> (ETH, mercado Main) y en <b style="color:var(--naranja)">naranja</b> (cbBTC, Bluechip). Rosa: el depósito rinde 1,56% y el borrow ha bajado a 3,86% (era 5,22% el 11 nov), así que vuelve a ser el préstamo más barato del libro, aunque es variable. A ~2,7x el carry es ~−2,3% anual. Umbral 84%. Tras añadir colateral, liquida a $1.496 (−25%).</div>
+      <div class="simtbl" style="margin-top:0"><table>
+        <thead><tr><th>Posición</th><th>x actual</th><th>HF</th><th>Liquidación</th><th>Carry neto/año</th></tr></thead>
+        <tbody>
+          <tr><td><b style="color:var(--rosa)">Rosa</b> · ETH (Main)</td><td>~2,69x</td><td class="neg">1,34</td><td>ETH $1.496 (−25%)</td><td class="neg">−2,32%</td></tr>
+          <tr><td><b style="color:var(--naranja)">Naranja</b> · cbBTC (Bluechip)</td><td>~2,57x</td><td class="neg">1,38</td><td>BTC $50.671 (−28%)</td><td class="neg">−9,23%</td></tr>
+        </tbody>
+      </table></div>
+      <p class="calc"><b>Instantánea (12 nov 2026).</b> rosa: 4,4252 ETH depositado ($8.855) · deuda ~5.562 USDC · <b>~2,69x</b> · <b>HF 1,34</b> · liquidación $1.496 (−25%). Naranja (posición del 11 nov, estimación a precio de hoy): 0,209 cbBTC · deuda ~8.951 USDC · ~2,57x · HF 1,38 · liq. $50.671 (−28%) · borrow 5,88%. Fórmula liq. = (L−1)/(0,84·L) × $2.001 para ETH; el cbBTC de Naranja usa umbral 84,5%, borrow 5,88% y renta 0%. Los datos de cabecera (precio, umbral, borrow, renta) son los de ETH.</p>
     </div>
 
-    <!-- kHYPE cerrado -->
+    <!-- HYPE · WHYPE -->
     <div class="panel panel-khype">
       <div class="stats">
-        <div class="stat"><div class="k">Precio</div><div class="v khype">$64,14</div></div>
-        <div class="stat"><div class="k">Umbral liq.</div><div class="v">74%</div></div>
-        <div class="stat"><div class="k">Borrow USDC</div><div class="v">7,44%</div></div>
-        <div class="stat"><div class="k">Renta colateral</div><div class="v khype">1,93%</div></div>
-        <div class="stat"><div class="k">Apal. máx.</div><div class="v">2,44x</div><div class="vsub">liq. $51,13</div></div>
+        <div class="stat"><div class="k">Precio HYPE</div><div class="v khype">~$71,17</div></div>
+        <div class="stat"><div class="k">LLTV</div><div class="v">86%</div></div>
+        <div class="stat"><div class="k">Borrow USDC</div><div class="v">~4,26%</div></div>
+        <div class="stat"><div class="k">Renta colateral</div><div class="v">0%</div></div>
+        <div class="stat"><div class="k">Apal. máx.</div><div class="v">~7,1x</div><div class="vsub">liq. inmediata</div></div>
       </div>
-      <div class="ph">kHYPE — HyperLend</div>
-      <div class="psub"><b style="color:var(--warn)">Cerrado — referencia por si vuelves a kHYPE.</b> HYPE stakeado que renta 1,93%. Umbral 74%. El activo más volátil, el colchón se consume rápido.</div>
-      <div class="ladder">
-        <div class="axis">
-          <span style="top:0%">0%</span><span style="top:23.1%">−15%</span>
-          <span style="top:46.2%">−30%</span><span style="top:69.2%">−45%</span><span style="top:92.3%">−60%</span>
-        </div>
-        <div class="cols">
-          <div class="col s1"><div class="lev">1,5x</div><div class="bar">
-            <div class="fill" style="height:84.6%"></div><div class="liqline" style="top:84.6%"></div>
-            <div class="liqtag up" style="top:84.6%"><span class="dp">−55%</span><span class="pr">$28,89</span></div></div>
-            <div class="foot">colchón amplio</div></div>
-          <div class="col s2"><div class="lev">2x</div><div class="bar">
-            <div class="fill" style="height:49.9%"></div><div class="liqline" style="top:49.9%"></div>
-            <div class="liqtag" style="top:49.9%"><span class="dp">−32%</span><span class="pr">$43,34</span></div></div>
-            <div class="foot">equilibrado</div></div>
-          <div class="col s3"><div class="lev">2,44x máx</div><div class="bar">
-            <div class="fill" style="height:31.2%"></div><div class="liqline" style="top:31.2%"></div>
-            <div class="liqtag" style="top:31.2%"><span class="dp">−20%</span><span class="pr">$51,13</span></div></div>
-            <div class="foot">techo · arriesgado</div></div>
-        </div>
-      </div>
-      <div class="carry"><span class="cl">Carry neto/año:</span> 1,5x <b>−0,83%</b> · 2x <b>−3,58%</b> · 2,44x <b>−6,00%</b></div>
-      <p class="calc"><b>Cerrado (1 sept 2026).</b> Liquidación = (L−1)/(0,74·L) × $64,14.</p>
+      <div class="ph">HYPE — Morpho Blue (WHYPE/USDC) · rosa y naranja</div>
+      <div class="psub">Largo apalancado sobre HYPE. WHYPE es HYPE envuelto: no renta y pagas el borrow en USDC (apuesta direccional). Oracle Chainlink HYPE/USD, penalización de liquidación 4,38%. <b style="color:var(--warn)">HYPE es más volátil que BTC y ETH</b>, pero sus liquidaciones ($52,57, −26% en rosa · $44,61, −37% en naranja) quedan por detrás de las de cbBTC naranja y wstETH.</div>
+      <div class="simtbl" style="margin-top:0"><table>
+        <thead><tr><th>Posición</th><th>x actual</th><th>HF</th><th>Liquidación</th><th>Carry neto/año</th></tr></thead>
+        <tbody>
+          <tr><td><b style="color:var(--rosa)">Rosa</b> · Morpho</td><td>~2,74x</td><td class="neg">1,35</td><td>HYPE $52,57 (−26%)</td><td class="neg">−7,4%</td></tr>
+          <tr><td><b style="color:var(--naranja)">Naranja</b> · Morpho</td><td>~2,17x</td><td class="wn">1,59</td><td>HYPE $44,61 (−37%)</td><td class="neg">−5,0%</td></tr>
+        </tbody>
+      </table></div>
+      <p class="calc"><b>Instantánea (12 nov 2026).</b> naranja: 73 WHYPE ($5.195) · deuda ~2.800 USDC · ~2,17x · HF 1,59 · liq. ~$44,61 (−37%). rosa (sin movimientos desde el 10 nov, a precio de hoy): 104 WHYPE ($7.402) · deuda ~4.702 USDC · ~2,74x · HF 1,35 · liq. ~$52,57 (−26%). Fórmula liq. = (L−1)/(0,86·L) × $71,17. El borrow es variable: la utilización del mercado es ~90%, el punto de la curva a partir del cual el tipo suele subir más rápido.</p>
     </div>
 
+    <!-- Simulación -->
+    <div class="panel panel-sim">
+      <div class="ph">Simulación — BTC + ETH + HYPE juntos</div>
+      <div class="psub">Las 8 posiciones de Rosa y Naranja agrupadas en tres apuestas. Mueve los precios por separado o todos a la vez y mira el capital, el beneficio y cuándo liquida cada loop.</div>
+      <div class="simctl">
+        <label>Precio BTC ($)<input id="s-pbtc" type="number" step="any" min="0" value="71690"></label>
+        <label>Precio ETH ($)<input id="s-peth" type="number" step="any" min="0" value="2004"></label>
+        <label>Precio HYPE ($)<input id="s-phype" type="number" step="any" min="0" value="71.17"></label>
+        <label>Meses hasta el cierre<input id="s-months" type="number" step="any" min="0" value="6"></label>
+      </div>
+      <div class="simrefresh"><button id="s-refresh" type="button">↻ Actualizar precios</button><span id="s-rstat">precios de tu captura del 12 nov · editables a mano</span></div>
+      <div class="simtarget">
+        <label>Todos a la vez <span class="tp"><b id="s-allp"></b></span></label>
+        <input id="s-all" type="range" min="-70" max="150" step="1" value="0" aria-label="Cambio común de los tres precios">
+      </div>
+      <div class="sl3">
+        <div><label for="s-sb">BTC <span class="tp" id="s-lb"></span></label><input id="s-sb" type="range" min="-70" max="150" step="1" value="0"></div>
+        <div><label for="s-se">ETH <span class="tp" id="s-le"></span></label><input id="s-se" type="range" min="-70" max="150" step="1" value="0"></div>
+        <div><label for="s-sh">HYPE <span class="tp" id="s-lh"></span></label><input id="s-sh" type="range" min="-70" max="150" step="1" value="0"></div>
+      </div>
+      <div class="stats">
+        <div class="stat"><div class="k">Capital hoy</div><div class="v" id="s-eq0"></div></div>
+        <div class="stat"><div class="k">Capital al objetivo</div><div class="v" id="s-eq1"></div></div>
+        <div class="stat"><div class="k">Beneficio</div><div class="v" id="s-pl"></div></div>
+        <div class="stat"><div class="k">% s/ capital</div><div class="v" id="s-plp"></div></div>
+        <div class="stat"><div class="k">Loops liquidados</div><div class="v" id="s-nliq"></div></div>
+      </div>
+      <div class="simtbl"><table>
+        <thead><tr><th>Activo</th><th>Precio objetivo</th><th>Capital hoy</th><th>Capital objetivo</th><th>Beneficio</th><th>Tokens netos hoy → objetivo</th><th>HF mín.</th><th>Primera liquidación</th></tr></thead>
+        <tbody id="s-asset"></tbody>
+      </table></div>
+      <p class="calc" id="s-note"></p>
+      <div class="simtbl"><table>
+        <thead><tr><th>Los 3 mueven</th><th>Capital total</th><th>Beneficio</th><th>% capital</th><th>HF BTC</th><th>HF ETH</th><th>HF HYPE</th></tr></thead>
+        <tbody id="s-scen"></tbody>
+      </table></div>
+      <details open><summary>Detalle por loop</summary>
+        <div class="simtbl"><table>
+          <thead><tr><th>Loop</th><th>Colateral</th><th>Deuda</th><th>HF hoy</th><th>HF objetivo</th><th>Liquida a</th><th>Capital objetivo</th><th>Tokens netos</th><th>Aportado</th></tr></thead>
+          <tbody id="s-loops"></tbody>
+        </table></div>
+      </details>
+      <p class="calc">Cada loop se calcula por separado, porque cada uno liquida a su propio precio: la liquidación de BTC en Naranja llega antes que la de Rosa. Al tocar el umbral se supone liquidación completa con su penalización (4,38% en Morpho 86%, ~5% supuesto en Aave) y queda un resto pequeño. El wstETH se valora como ETH × 1,251 (ratio aproximado). Los precios son aproximados y editables, y Aave usa su propio oráculo (cbBTC ~2% por debajo de Morpho) y su liquidación se muestra en precio Aave; ignora comisiones y deslizamiento. Tokens netos = lo que te queda tras vender colateral y repagar la deuda, en unidades del activo (en ETH para wstETH y Aave). Aportado = colateral que depositaste sin un préstamo previo en ese mercado, según el historial de Morpho de Rosa y Naranja; parte pudo financiarse con préstamos sin compra inmediata (~$5.800 en Naranja, ~$1.500 en Rosa). En cbBTC de Rosa se descuentan ~0,054 cbBTC retirados en julio (estimación). Sin dato para Aave.</p>
+    </div>
+
+  </div>
+
+  <p class="snap">Naranja Morpho y Aave Rosa: capturas del 12 nov · Rosa Morpho: sin movimientos desde el 10 nov, a precios del 12 nov · Aave Naranja: posición del 11 nov (estimación) · datos en vivo → Monitor de Loops</p>
+  <div class="wallets">
+    <div class="wcard">
+      <div class="wtop"><span style="width:11px;height:11px;border-radius:50%;background:var(--rosa)"></span>
+        <span class="name">Rosa</span>
+        <span class="pill" style="background:rgba(255,111,166,.16);color:var(--rosa)">Morpho + Aave</span></div>
+      <div class="wrow head"><span>posición</span><span class="lv">apal.</span><span class="hf">HF</span><span class="lq">liquidación</span></div>
+      <div class="wrow"><span class="mk">cbBTC/USDC <small>Morpho</small></span><span class="lv">~2,61x</span><span class="hf" style="color:var(--danger)">1,40</span><span class="lq">BTC $51.375 · <b>−28%</b></span></div>
+      <div class="wrow"><span class="mk">wstETH/USDC <small>Morpho</small></span><span class="lv">~2,96x</span><span class="hf" style="color:var(--danger)">1,30</span><span class="lq">ETH $1.544 · <b>−23%</b></span></div>
+      <div class="wrow"><span class="mk">WHYPE/USDC <small>Morpho</small></span><span class="lv">~2,74x</span><span class="hf" style="color:var(--danger)">1,35</span><span class="lq">HYPE $52,57 · <b>−26%</b></span></div>
+      <div class="wrow"><span class="mk">ETH/USDC <small>Aave v4</small></span><span class="lv">~2,69x</span><span class="hf" style="color:var(--danger)">1,34</span><span class="lq">ETH $1.496 · <b>−25%</b></span></div>
+    </div>
+    <div class="wcard">
+      <div class="wtop"><span style="width:11px;height:11px;border-radius:50%;background:var(--naranja)"></span>
+        <span class="name">Naranja</span>
+        <span class="pill" style="background:rgba(246,151,62,.16);color:var(--naranja)">Morpho + Aave</span></div>
+      <div class="wrow head"><span>posición</span><span class="lv">apal.</span><span class="hf">HF</span><span class="lq">liquidación</span></div>
+      <div class="wrow"><span class="mk">cbBTC/USDC <small>Morpho</small></span><span class="lv">~3,06x</span><span class="hf" style="color:var(--danger)">1,28</span><span class="lq">BTC $56.128 · <b>−22%</b></span></div>
+      <div class="wrow"><span class="mk">wstETH/USDC <small>Morpho</small></span><span class="lv">~2,93x</span><span class="hf" style="color:var(--danger)">1,30</span><span class="lq">ETH $1.536 · <b>−23%</b></span></div>
+      <div class="wrow"><span class="mk">WHYPE/USDC <small>Morpho</small></span><span class="lv">~2,17x</span><span class="hf" style="color:var(--warn)">1,59</span><span class="lq">HYPE $44,61 · <b>−37%</b></span></div>
+      <div class="wrow"><span class="mk">cbBTC/USDC <small>Aave v4</small></span><span class="lv">~2,57x</span><span class="hf" style="color:var(--danger)">1,38</span><span class="lq">BTC $50.671 · <b>−28%</b></span></div>
+    </div>
   </div>
 
   <div class="grid2">
     <div class="pcard warn">
-      <h3>⚠ Todo el libro liquida en la misma banda (−38% a −47%)</h3>
-      <p>Las cinco posiciones liquidan entre <b>−38% y −47%</b>: cbBTC de rosa y naranja (−38/−39%) y ETH en Aave (−38%) casi juntas, y los wstETH algo más lejos (−44/−47%). <b>Un desplome correlacionado del ~40% liquidaría a la vez cbBTC en las dos wallets y Aave</b>; los wstETH aguantarían hasta ~−44%. La liquidación de cbBTC (~$53k) queda por debajo de tu suelo de $57k, pero solo por ~7%. Idea si quieres más margen: bajar la deuda de BTC a ~1,8x llevaría la liquidación hacia ~$44k.</p>
+      <h3>⚠ Ya no tienes un activo seguro</h3>
+      <p>Las liquidaciones más cercanas: <b>cbBTC Morpho de Naranja (BTC $56.128, −22%, justo bajo tu suelo de $57k)</b> y <b>wstETH en las dos wallets (ETH ~$1.540, −23%)</b>; siguen Aave ETH de Rosa (ETH $1.496, −25%, HF 1,34) y WHYPE en Rosa (HYPE $52,57, −26%). <b>Una caída del ~20-25% liquida buena parte del libro</b>, en las dos wallets a la vez. Idea: bajar deuda o añadir colateral primero en cbBTC y wstETH.</p>
     </div>
     <div class="pcard good">
-      <h3>Carry y pólvora seca</h3>
-      <p>Borrow USDC: Morpho ~5,0% · Aave 4,29%. Renta: wstETH ~3% (casi neutraliza), cbBTC 0%, ETH Aave 1,82%. <b>Aave sigue siendo la más barata</b>, pero ya no es neutra (net −0,76%); cbBTC es la que más sangra. Colchón de rescate: <b style="color:var(--rosa)">rosa</b> tiene ~$2k en spot en Hyperliquid sin apalancar (dato del 5 sept, sin actualizar) frente a ~$42k de deuda entre las dos wallets: no cubre gran cosa en un crash.</p>
+      <h3>Carry</h3>
+      <p>Borrow USDC: Morpho ~5,2% (cbBTC, wstETH) · 4,26% (WHYPE) · Aave 3,86% (ETH) y 5,88% (cbBTC). Renta: wstETH ~3% (compensa solo en parte), ETH Aave 1,56%, cbBTC y WHYPE 0%. <b>Ya no hay carry positivo</b> a tus apalancamientos: el libro paga más borrow del que cobra. El borrow de Aave ETH bajó de 5,22% a 3,86% y vuelve a ser el más barato, pero es variable.</p>
     </div>
   </div>
 
   <footer>
-    <b style="color:var(--text)">Instantánea 21 sept 2026 — datos en vivo en el Monitor de Loops.</b> <b style="color:var(--rosa)">Rosa</b> (Morpho + Aave + HL): cbBTC ~2,13x HF 1,615 · wstETH ~1,93x HF 1,775 · Aave ETH ~2,05x HF 1,623 · + ~$2k spot HL. <b style="color:var(--naranja)">Naranja</b> (solo Morpho): cbBTC ~2,11x HF 1,631 · wstETH ~1,85x HF 1,873. · ⚠ Las 5 posiciones liquidan entre −38% y −47%: un crash del ~40% barre cbBTC y Aave. Liq. BTC ~$53k (bajo el suelo de $57k). · HyperLend cerrado. · Borrow: Morpho ~5,0% · Aave 4,29%. · Precios: BTC ~$85.950 · ETH ~$2.740 · wstETH ~$3.415. · No es asesoramiento financiero. Verifica en la app.
+    <b style="color:var(--text)">Instantánea 12 nov 2026 — datos en vivo en el Monitor de Loops.</b> <b style="color:var(--rosa)">Rosa</b> (Morpho sin movimientos desde el 10 nov, a precios de hoy; Aave del 12 nov): cbBTC ~2,61x HF 1,40 (liq. $51.375) · wstETH ~2,96x HF 1,30 (liq. ETH $1.544) · WHYPE ~2,74x HF 1,35 (liq. $52,57) · Aave ETH ~2,69x HF 1,34 (liq. ETH $1.496). <b style="color:var(--naranja)">Naranja</b> (Morpho + Aave): cbBTC ~3,06x HF 1,28 (liq. $56.128) · wstETH ~2,93x HF 1,30 (liq. ETH $1.536) · WHYPE ~2,17x HF 1,59 (liq. $44,61) · Aave cbBTC ~2,57x HF 1,38 (liq. $50.671, 11 nov). · ⚠ Las más cercanas: cbBTC Morpho naranja (BTC $56.128, −22%, justo bajo tu suelo de $57k) y wstETH en las dos wallets (ETH ~$1.540, −23%); después Aave ETH rosa (ETH $1.496, −25%): una caída del ~20-25% barre buena parte del libro. · HyperLend cerrado. · Borrow: Morpho ~5,2% (WHYPE 4,26%) · Aave 3,86% (ETH) · 5,88% (cbBTC). · Precios (12 nov, aprox.): BTC ~$71.690 · ETH ~$2.004 · wstETH ~$2.507 · HYPE ~$71,17. · No es asesoramiento financiero. Verifica en la app.
   </footer>
 
 </div>
 <script>
 (function(){
-  var BTC0=82457, ETH0=2517, HYPE0=5693.78247/60;
-  var POS=[
-    {w:"rosa",name:"cbBTC/USDC",venue:"Morpho",asset:"btc",col:"btc",mult:1,amt:0.299889,unit:"cbBTC",dec:6,debt:13720,hf:1.555},
-    {w:"rosa",name:"wstETH/USDC",venue:"Morpho",asset:"eth",col:"eth",mult:3137/ETH0,amt:3.1886,unit:"wstETH",dec:4,debt:5272.78,hf:1.630},
-    {w:"rosa",name:"ETH/USDC",venue:"Aave v4",asset:"eth",col:"aave",mult:1,amt:3.94,unit:"ETH",dec:2,debt:5516,hf:1.623},
-    {w:"naranja",name:"cbBTC/USDC",venue:"Morpho",asset:"btc",col:"btc",mult:1,amt:0.364125,unit:"cbBTC",dec:6,debt:19100,hf:1.357},
-    {w:"naranja",name:"wstETH/USDC",venue:"Morpho",asset:"eth",col:"eth",mult:3137/ETH0,amt:3.7808,unit:"wstETH",dec:4,debt:7631.09,hf:1.333}
+  var $=function(i){return document.getElementById(i)};
+  if(!$('s-all'))return;
+  var fm=function(x,d){d=d||0;return x.toLocaleString('de-DE',{minimumFractionDigits:d,maximumFractionDigits:d})};
+  var usd=function(x,d){d=d||0;return (x<0?'\u2212':'')+'$'+fm(Math.abs(x),d)};
+  var pc=function(x){return (x>0?'+':x<0?'\u2212':'')+fm(Math.abs(x),1)+'%'};
+  var num=function(i){var v=parseFloat($(i).value);return isNaN(v)?0:v};
+  var cls=function(x){return x>0.5?'pos':x<-0.5?'neg':''};
+  var hfc=function(h){return h<1.2?'neg':h<1.5?'wn':'pos'};
+  var rd=function(x,d){var f=Math.pow(10,d);return Math.round(x*f)/f};
+  var tk=function(x,a){return fm(x,a.t)+' '+a.n};
+  var hft=function(h){return h<1?'liquidado':fm(h,2)};
+  var A=[{k:'btc',n:'BTC',p:'s-pbtc',s:'s-sb',l:'s-lb',d:0,t:4},{k:'eth',n:'ETH',p:'s-peth',s:'s-se',l:'s-le',d:0,t:3},{k:'hype',n:'HYPE',p:'s-phype',s:'s-sh',l:'s-lh',d:2,t:1}];
+  var L=[
+    {a:'btc',n:'cbBTC \u00b7 Rosa',u:0.311889,d:13780,l:0.86,b:0.0516,y:0,pen:0.0438,k:1,ap0:'~0,108 cbBTC'},
+    {a:'btc',n:'cbBTC \u00b7 Naranja',u:0.397557,d:19190,l:0.86,b:0.0516,y:0,pen:0.0438,k:1,ap0:'0,1417 cbBTC'},
+    {a:'btc',n:'cbBTC Aave \u00b7 Naranja',u:0.20904,d:8950.58,l:0.845,b:0.0588,y:0,pen:0.05,k:0.978,ap:1},
+    {a:'eth',n:'wstETH \u00b7 Rosa',u:3.1886,d:5295.78,l:0.86,b:0.0517,y:0.03,pen:0.0438,k:1.251,ap0:'1,3960 wstETH'},
+    {a:'eth',n:'wstETH \u00b7 Naranja',u:4.6396,d:7665.37,l:0.86,b:0.0517,y:0.03,pen:0.0438,k:1.251,ap0:'2,9374 wstETH'},
+    {a:'eth',n:'WETH Aave \u00b7 Rosa',u:4.4252,d:5562.01,l:0.84,b:0.0386,y:0.0156,pen:0.05,k:1},
+    {a:'hype',n:'WHYPE \u00b7 Rosa',u:104,d:4701.61,l:0.86,b:0.0426,y:0,pen:0.0438,k:1,ap0:'64 WHYPE'},
+    {a:'hype',n:'WHYPE \u00b7 Naranja',u:73,d:2800.48,l:0.86,b:0.0426,y:0,pen:0.0438,k:1,ap0:'73 WHYPE'}
   ];
-  var WAL=[
-    {id:"rosa",name:"Rosa",color:"var(--rosa)",bg:"rgba(255,111,166,.16)",pill:"Morpho + Aave + HyperLend"},
-    {id:"naranja",name:"Naranja",color:"var(--naranja)",bg:"rgba(246,151,62,.16)",pill:"Morpho + HyperLend"}
-  ];
-  var COL={btc:"var(--gold)",eth:"var(--eth)",aave:"var(--aave)"};
-  var SUPPLY=[
-    {w:"rosa",name:"HYPE",venue:"HyperLend",amt:60,unit:"HYPE",dec:0,value:5693.78247,apy:9.71,hf:"10+"},
-    {w:"naranja",name:"HYPE",venue:"HyperLend",amt:60,unit:"HYPE",dec:0,value:5693.78247,apy:9.71,hf:"10+"}
-  ];
-
-  function el(id){return document.getElementById(id);}
-  function fmt(n,d){d=d||0;return n.toLocaleString("de-DE",{minimumFractionDigits:d,maximumFractionDigits:d});}
-  function usd(n,d){return (n<0?"−":"")+"$"+fmt(Math.abs(n),d||0);}
-  function isZero(n){return Math.abs(n)<0.5;}
-  function sgn(n){return isZero(n)?"$0":(n<0?"−":"+")+"$"+fmt(Math.abs(n));}
-  function pct(x){return (Math.abs(x)<0.0005?"":(x<0?"−":"+"))+fmt(Math.abs(x)*100,1)+"%";}
-  function pcol(n){return isZero(n)?"var(--muted)":(n<0?"var(--danger)":"var(--safe)");}
-  function hfc(h){return h>=1.7?"var(--safe)":(h>=1.3?"var(--warn)":"var(--danger)");}
-  function p0(p){return p.asset==="btc"?BTC0:ETH0;}
-  function tag(p){return p.asset==="btc"?"BTC ":"ETH ";}
-  function base(p){var v=p.amt*p.mult*p0(p);return {val:v,eq:v-p.debt};}
-
-  /* ---------- De un vistazo ---------- */
-  (function(){
-    var totCb=0,totCbV=0,totWs=0,totWsV=0,totEth=0,totEthV=0,totHy=0,totHyV=0,totV=0,totD=0,html="";
-    WAL.forEach(function(w){
-      var tv=0,td=0;
-      var h='<div class="gcard"><div class="gtop"><span class="dot" style="background:'+w.color+'"></span><span class="name">'+w.name+'</span><span class="pill" style="background:'+w.bg+';color:'+w.color+'">'+w.pill+'</span></div>';
-      POS.filter(function(p){return p.w===w.id;}).forEach(function(p){
-        var b=base(p); tv+=b.val; td+=p.debt;
-        if(p.unit==="cbBTC"){totCb+=p.amt;totCbV+=b.val;}
-        if(p.unit==="wstETH"){totWs+=p.amt;totWsV+=b.val;}
-        if(p.unit==="ETH"){totEth+=p.amt;totEthV+=b.val;}
-        h+='<div class="prow"><div class="phead"><span class="pname">'+p.name+' <small>'+p.venue+'</small></span><span class="phf" style="color:'+hfc(p.hf)+'">HF '+fmt(p.hf,3)+'</span></div><div class="pgrid">'
-         +'<div class="pc"><span class="k">Colateral</span><b style="color:'+COL[p.col]+'">'+fmt(p.amt,p.dec)+' '+p.unit+'</b><span class="sb">valor '+usd(b.val)+'</span></div>'
-         +'<div class="pc"><span class="k">Deuda</span><b>'+fmt(p.debt,p.debt%1?2:0)+' USDC</b><span class="sb">apal. '+fmt(b.val/b.eq,2)+'x</span></div>'
-         +'<div class="pc"><span class="k">Capital propio</span><b>'+usd(b.eq)+'</b><span class="sb">liq. '+tag(p)+usd(p0(p)/p.hf)+'</span></div></div></div>';
-      });
-      SUPPLY.filter(function(sp){return sp.w===w.id;}).forEach(function(sp){
-        tv+=sp.value; totHy+=sp.amt; totHyV+=sp.value;
-        h+='<div class="prow"><div class="phead"><span class="pname">'+sp.name+' <small>'+sp.venue+'</small></span><span class="phf" style="color:var(--safe)">sin deuda</span></div><div class="pgrid">'
-         +'<div class="pc"><span class="k">Suministrado</span><b style="color:var(--khype)">'+fmt(sp.amt,sp.dec)+' '+sp.unit+'</b><span class="sb">valor '+usd(sp.value,2)+'</span></div>'
-         +'<div class="pc"><span class="k">APY</span><b style="color:var(--safe)">'+fmt(sp.apy,2)+'%</b><span class="sb">HF '+sp.hf+'</span></div>'
-         +'<div class="pc"><span class="k">Estado</span><b style="color:var(--safe)">no liquida</b><span class="sb">sin apalancar · sin loop</span></div></div></div>';
-      });
-      if(w.id==="rosa"){h+='<div class="gnote">+ ~$2k en spot Hyperliquid, sin apalancar (dato del 5 sept, sin actualizar)</div>';}
-      h+='<div class="gtot"><span>Colateral <b>'+usd(tv)+'</b></span><span>Deuda <b>'+usd(td)+'</b></span><span>Neto <b>'+usd(tv-td)+'</b></span></div></div>';
-      totV+=tv; totD+=td; html+=h;
+  function lc(lp,px,s,m){
+    var v0=lp.u*lp.k*px,v1=v0*(1+s/100),hf1=v1*lp.l/lp.d,liq=hf1<1;
+    return {lp:lp,v0:v0,eq0:v0-lp.d,eq1:liq?Math.max(lp.d*(1/lp.l-1-lp.pen),0):v1-lp.d,hf0:v0*lp.l/lp.d,hf1:hf1,liq:liq,carry:(v0*lp.y-lp.d*lp.b)*m/12,lpx:lp.d/(lp.u*lp.k*lp.l)};
+  }
+  function run(px,sh,m){return L.map(function(lp){return lc(lp,px[lp.a],sh[lp.a],m)})}
+  function sum(rs,f){return rs.reduce(function(t,r){return t+r[f]},0)}
+  function calc(){
+    var px={},sh={},m=num('s-months'),i;
+    for(i=0;i<A.length;i++){px[A[i].k]=num(A[i].p);sh[A[i].k]=num(A[i].s);if(px[A[i].k]<=0)return;}
+    $('s-allp').textContent=pc(num('s-all'));
+    A.forEach(function(a){$(a.l).textContent=usd(px[a.k]*(1+sh[a.k]/100),a.d)+' ('+pc(sh[a.k])+')'});
+    var R=run(px,sh,m);
+    var AM={};A.forEach(function(a){AM[a.k]=a});
+    R.forEach(function(r){
+      var a=AM[r.lp.a],pf=r.lp.ap?r.lp.k:1,pt=px[a.k]*(1+sh[a.k]/100);
+      r.e0=Math.round(r.eq0);r.e1=Math.round(r.eq1);
+      r.k0=rd(r.eq0/(px[a.k]*pf),a.t);r.k1=rd(r.eq1/(pt*pf),a.t);
     });
-    el("glance").innerHTML=html;
-    el("kpis").innerHTML=
-      '<div class="stat"><div class="k">cbBTC total</div><div class="v btc">'+fmt(totCb,6)+'</div><div class="vsub">≈ '+usd(totCbV)+'</div></div>'
-     +'<div class="stat"><div class="k">wstETH total</div><div class="v eth">'+fmt(totWs,4)+'</div><div class="vsub">≈ '+usd(totWsV)+'</div></div>'
-     +'<div class="stat"><div class="k">ETH total (Aave)</div><div class="v aave">'+fmt(totEth,2)+'</div><div class="vsub">≈ '+usd(totEthV)+'</div></div>'
-     +'<div class="stat"><div class="k">HYPE total</div><div class="v khype">'+fmt(totHy,0)+'</div><div class="vsub">≈ '+usd(totHyV,2)+' · sin loop</div></div>'
-     +'<div class="stat"><div class="k">Colateral total</div><div class="v">'+usd(totV)+'</div><div class="vsub">2 wallets</div></div>'
-     +'<div class="stat"><div class="k">Deuda USDC</div><div class="v">'+usd(totD)+'</div><div class="vsub">2 wallets</div></div>'
-     +'<div class="stat"><div class="k">Capital propio</div><div class="v">'+usd(totV-totD)+'</div><div class="vsub">apal. '+fmt(totV/(totV-totD),2)+'x</div></div>';
-  })();
-
-  /* ---------- Simulador ---------- */
-  var btcR=el("simBtc"), ethR=el("simEth"), hypeR=el("simHype");
-  function calc(p,bp,ep){
-    var px=p.asset==="btc"?bp:ep, q0=p0(p), b=base(p);
-    var pliq=q0/p.hf, liq=px<=pliq, eff=liq?pliq:px;
-    var val=p.amt*p.mult*eff, eq=val-p.debt;
-    return {pliq:pliq,liq:liq,hf:p.hf*px/q0,val:val,eq:eq,eq0:b.eq,pnl:eq-b.eq,eff:eff};
-  }
-  function calcSupply(sp,hp){
-    var eq0=sp.value, val=sp.amt*hp;
-    return {pliq:null,liq:false,hf:Infinity,val:val,eq:val,eq0:eq0,pnl:val-eq0};
-  }
-  /* Cuánto BTC/ETH comprarías hoy con el capital propio que tienes metido en cada activo,
-     si en vez de loopear te limitaras a mantenerlo en spot sin deuda. */
-  /* Cuánta cbBTC/wstETH/ETH quedaría en cartera si, a este precio, se vendiera
-     parte del colateral para cancelar toda la deuda USDC de esa posición. */
-  var TOT0={cbBTC:0,wstETH:0,ETH:0};
-  POS.forEach(function(p){TOT0[p.unit]+=p.amt;});
-  function remCell(title,unit,color,amt0,amt1,val1){
-    var d=amt1-amt0, dec=unit==="cbBTC"?6:4, thr=Math.pow(10,-dec)/2;
-    var small=Math.abs(d)<thr, sign=small?'':(d<0?'−':'+');
-    var dcol=small?'var(--muted)':(d<0?'var(--danger)':'var(--safe)');
-    return '<div class="cell"><div class="k">'+title+'</div><div class="v" style="color:'+color+'">'+fmt(amt1,dec)+' '+unit+'</div>'
-     +'<div class="veq"><span>Valor →</span> '+usd(val1)+'</div>'
-     +'<div class="vs" style="color:'+dcol+'">'+sign+fmt(Math.abs(d),dec)+' '+unit+' vs hoy ('+fmt(amt0,dec)+')</div></div>';
-  }
-  function setChg(id,x){
-    var e=el(id);
-    if(Math.abs(x)<0.0005){e.textContent="precio de hoy";e.style.color="var(--muted)";}
-    else{e.textContent=pct(x)+" vs hoy";e.style.color=x<0?"var(--danger)":"var(--safe)";}
-  }
-  function cell(title,pnl,eq0){
-    var eq1=eq0+pnl;
-    return '<div class="cell"><div class="k">'+title+'</div><div class="v" style="color:'+pcol(pnl)+'">'+sgn(pnl)+'</div>'
-     +'<div class="veq"><span>Capital propio →</span> '+usd(eq1)+'</div>'
-     +'<div class="vs">'+pct(pnl/eq0)+' · hoy '+usd(eq0)+'</div></div>';
-  }
-  function render(){
-    var bp=+btcR.value, ep=+ethR.value, hp=+hypeR.value;
-    el("simBtcVal").textContent="$"+fmt(bp); setChg("simBtcChg",bp/BTC0-1);
-    el("simEthVal").textContent="$"+fmt(ep); setChg("simEthChg",ep/ETH0-1);
-    el("simHypeVal").textContent="$"+fmt(hp,2); setChg("simHypeChg",hp/HYPE0-1);
-    var body="",liqN=[],minHf=null,T={eq0:0,pnl:0},W={},totalPos=POS.length+SUPPLY.length;
-    var REM={cbBTC:{amt:0,val:0},wstETH:{amt:0,val:0},ETH:{amt:0,val:0}};
-    WAL.forEach(function(w){
-      var S={val:0,eq:0,eq0:0,pnl:0};
-      body+='<tr class="wh"><td colspan="6"><span class="wdot" style="background:'+w.color+'"></span>'+w.name+'</td></tr>';
-      POS.filter(function(p){return p.w===w.id;}).forEach(function(p){
-        var r=calc(p,bp,ep);
-        S.val+=r.val;S.eq+=r.eq;S.eq0+=r.eq0;S.pnl+=r.pnl;
-        var remQty=r.liq?0:r.eq/(p.mult*r.eff);
-        REM[p.unit].amt+=remQty; REM[p.unit].val+=(r.liq?0:r.eq);
-        if(r.liq){liqN.push(w.name+" "+p.name+" ("+p.venue+")");}
-        else if(minHf===null||r.hf<minHf.hf){minHf={hf:r.hf,n:w.name+" "+p.name};}
-        body+='<tr><td class="l">'+p.name+' <small>'+p.venue+'</small></td>'
-         +'<td>'+tag(p)+usd(r.pliq)+'</td>'
-         +'<td style="color:'+(r.liq?"var(--danger)":hfc(r.hf))+'">'+(r.liq?'<span class="badge">LIQUIDADA</span>':fmt(r.hf,3))+'</td>'
-         +'<td>'+usd(r.val)+'</td><td>'+usd(r.eq)+'</td>'
-         +'<td style="color:'+pcol(r.pnl)+'">'+sgn(r.pnl)+' <small>('+pct(r.pnl/r.eq0)+')</small></td></tr>';
-      });
-      SUPPLY.filter(function(sp){return sp.w===w.id;}).forEach(function(sp){
-        var r=calcSupply(sp,hp);
-        S.val+=r.val;S.eq+=r.eq;S.eq0+=r.eq0;S.pnl+=r.pnl;
-        body+='<tr><td class="l">'+sp.name+' <small>'+sp.venue+'</small></td>'
-         +'<td><small>sin deuda</small></td>'
-         +'<td style="color:var(--safe)">no liquida</td>'
-         +'<td>'+usd(r.val)+'</td><td>'+usd(r.eq)+'</td>'
-         +'<td style="color:'+pcol(r.pnl)+'">'+sgn(r.pnl)+' <small>('+pct(r.pnl/r.eq0)+')</small></td></tr>';
-      });
-      body+='<tr class="st"><td class="l">Subtotal '+w.name+'</td><td></td><td></td><td>'+usd(S.val)+'</td><td>'+usd(S.eq)+'</td><td style="color:'+pcol(S.pnl)+'">'+sgn(S.pnl)+' <small>('+pct(S.pnl/S.eq0)+')</small></td></tr>';
-      W[w.id]=S;T.eq0+=S.eq0;T.pnl+=S.pnl;
+    var tc=sum(R,'carry'),nl=R.filter(function(r){return r.liq}).length,t0=0,t1=0,rows='';
+    A.forEach(function(a){
+      var rs=R.filter(function(r){return r.lp.a===a.k}),e0=sum(rs,'e0'),e1=sum(rs,'e1'),g=e1-e0;
+      var k0=rd(sum(rs,'k0'),a.t),k1=rd(sum(rs,'k1'),a.t);
+      var mh=Math.min.apply(null,rs.map(function(r){return r.hf1}));
+      var f=rs.reduce(function(b,r){return r.lpx>b.lpx?r:b},rs[0]);
+      t0+=e0;t1+=e1;
+      rows+='<tr><td>'+a.n+'</td><td>'+usd(px[a.k]*(1+sh[a.k]/100),a.d)+' ('+pc(sh[a.k])+')</td><td>'+usd(e0)+'</td><td>'+usd(e1)+'</td><td class="'+cls(g)+'">'+usd(g)+'</td><td>'+tk(k0,a)+' \u2192 '+tk(k1,a)+'</td><td class="'+hfc(mh)+'">'+hft(mh)+'</td><td>'+usd(f.lpx*(f.lp.ap?f.lp.k:1),a.d)+' ('+pc((f.lpx/px[a.k]-1)*100)+') \u00b7 '+f.lp.n.split(' \u00b7 ')[1].split(' ')[0]+'</td></tr>';
     });
-    body+='<tr class="tt"><td class="l">Total</td><td></td><td></td><td>'+usd(W.rosa.val+W.naranja.val)+'</td><td>'+usd(W.rosa.eq+W.naranja.eq)+'</td><td style="color:'+pcol(T.pnl)+'">'+sgn(T.pnl)+' <small>('+pct(T.pnl/T.eq0)+')</small></td></tr>';
-    el("simBody").innerHTML=body;
-    el("simSum").innerHTML=cell("Beneficio total",T.pnl,T.eq0)+cell("Rosa",W.rosa.pnl,W.rosa.eq0)+cell("Naranja",W.naranja.pnl,W.naranja.eq0);
-    el("simRemain").innerHTML=remCell("cbBTC restante","cbBTC","var(--gold)",TOT0.cbBTC,REM.cbBTC.amt,REM.cbBTC.val)
-      +remCell("wstETH restante","wstETH","var(--eth)",TOT0.wstETH,REM.wstETH.amt,REM.wstETH.val)
-      +remCell("ETH restante (Aave)","ETH","var(--aave)",TOT0.ETH,REM.ETH.amt,REM.ETH.val);
-    var a=el("simAlert");
-    if(liqN.length){a.className="simalert bad";a.textContent="⚠ En este escenario se liquidan "+liqN.length+" de "+totalPos+" posiciones: "+liqN.join(" · ")+".";}
-    else{a.className="simalert ok";a.textContent="Ninguna posición se liquida. HF más bajo: "+fmt(minHf.hf,3)+" ("+minHf.n+").";}
+    var pl=t1-t0,pp=t0>0?pl/t0*100:0;
+    rows+='<tr class="tot"><td>Total</td><td></td><td>'+usd(t0)+'</td><td>'+usd(t1)+'</td><td class="'+cls(pl)+'">'+usd(pl)+'</td><td></td><td></td><td></td></tr>';
+    $('s-asset').innerHTML=rows;
+    $('s-eq0').textContent=usd(t0);$('s-eq1').textContent=usd(t1);
+    var plE=$('s-pl');plE.textContent=usd(pl);plE.className='v '+cls(pl);
+    var ppE=$('s-plp');ppE.textContent=pc(pp);ppE.className='v '+cls(pl);
+    var nE=$('s-nliq');nE.textContent=nl+' de '+L.length;nE.className='v '+(nl?'neg':'pos');
+    var net=pl+tc;
+    $('s-note').innerHTML='<b>'+m+' meses de '+(tc>=0?'carry a favor':'coste neto')+':</b> '+usd(tc)+' \u2192 beneficio neto \u2248 <b class="'+cls(net)+'">'+usd(net)+' ('+pc(t0>0?net/t0*100:0)+')</b>. Deuda total: '+usd(L.reduce(function(t,l){return t+l.d},0))+'.';
+    var sc='';
+    [-60,-50,-40,-30,-20,-10,0,10,25,50,100].forEach(function(c){
+      var s3={btc:c,eth:c,hype:c},Q=run(px,s3,m),q1=Q.reduce(function(t,r){return t+Math.round(r.eq1)},0),g=q1-t0;
+      var h=function(k){var v=Math.min.apply(null,Q.filter(function(r){return r.lp.a===k}).map(function(r){return r.hf1}));return '<td class="'+hfc(v)+'">'+hft(v)+'</td>'};
+      sc+='<tr'+(c===0?' class="cur"':'')+'><td>'+(c===0?'hoy':pc(c))+'</td><td>'+usd(q1)+'</td><td class="'+cls(g)+'">'+usd(g)+'</td><td class="'+cls(g)+'">'+pc(t0>0?g/t0*100:0)+'</td>'+h('btc')+h('eth')+h('hype')+'</tr>';
+    });
+    $('s-scen').innerHTML=sc;
+    var lr='';
+    R.forEach(function(r){
+      var a=AM[r.lp.a];
+      lr+='<tr><td>'+r.lp.n+'</td><td>'+usd(r.v0)+'</td><td>'+usd(r.lp.d)+'</td><td class="'+hfc(r.hf0)+'">'+fm(r.hf0,2)+'</td><td class="'+hfc(r.hf1)+'">'+hft(r.hf1)+'</td><td>'+usd(r.lpx*(r.lp.ap?r.lp.k:1),a.d)+' ('+pc((r.lpx/px[r.lp.a]-1)*100)+')</td><td>'+usd(r.e1)+'</td><td>'+tk(r.k1,a)+'</td><td>'+(r.lp.ap0||'\u2014')+'</td></tr>';
+    });
+    $('s-loops').innerHTML=lr;
   }
-  function snap(v,min,max,step){v=Math.round(v/step)*step;return Math.min(max,Math.max(min,v));}
-  function setPrices(b,e,h){
-    btcR.value=snap(b,+btcR.min,+btcR.max,50);
-    ethR.value=snap(e,+ethR.min,+ethR.max,10);
-    hypeR.value=snap(h,+hypeR.min,+hypeR.max,0.1);
-    render();
+  function setPrices(p,src){
+    $('s-pbtc').value=Math.round(p.btc);$('s-peth').value=Math.round(p.eth);$('s-phype').value=p.hype.toFixed(2);
+    var d=new Date(),hh=('0'+d.getHours()).slice(-2)+':'+('0'+d.getMinutes()).slice(-2);
+    $('s-rstat').textContent='Actualizado '+hh+' \u00b7 '+src;
+    calc();
   }
-  btcR.addEventListener("input",render);
-  ethR.addEventListener("input",render);
-  hypeR.addEventListener("input",render);
-  el("presets").addEventListener("click",function(ev){
-    var t=ev.target;
-    if(!t||!t.getAttribute("data-pct")&&t.getAttribute("data-pct")!=="0"){return;}
-    var k=parseFloat(t.getAttribute("data-pct"));
-    setPrices(BTC0*(1+k),ETH0*(1+k),HYPE0*(1+k));
+  function getPrices(){
+    return fetch('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin,ethereum,hyperliquid&vs_currencies=usd')
+      .then(function(r){if(!r.ok)throw new Error('cg');return r.json()})
+      .then(function(j){if(!j.bitcoin||!j.ethereum||!j.hyperliquid)throw new Error('cg');return {p:{btc:j.bitcoin.usd,eth:j.ethereum.usd,hype:j.hyperliquid.usd},src:'CoinGecko'}})
+      .catch(function(){
+        return fetch('https://coins.llama.fi/prices/current/coingecko:bitcoin,coingecko:ethereum,coingecko:hyperliquid')
+          .then(function(r){if(!r.ok)throw new Error('dl');return r.json()})
+          .then(function(j){var c=j.coins;return {p:{btc:c['coingecko:bitcoin'].price,eth:c['coingecko:ethereum'].price,hype:c['coingecko:hyperliquid'].price},src:'DefiLlama'}});
+      });
+  }
+  $('s-refresh').addEventListener('click',function(){
+    var b=$('s-refresh');b.disabled=true;$('s-rstat').textContent='Actualizando\u2026';
+    getPrices().then(function(x){setPrices(x.p,x.src)})
+      .catch(function(){$('s-rstat').textContent='No se pudo cargar el precio (si abres el archivo en local, prueba desde la web publicada). Edítalo a mano.'})
+      .then(function(){b.disabled=false});
   });
-  setPrices(BTC0,ETH0,HYPE0);
+  $('s-all').addEventListener('input',function(){var v=$('s-all').value;A.forEach(function(a){$(a.s).value=v});calc()});
+  ['s-pbtc','s-peth','s-phype','s-months','s-sb','s-se','s-sh'].forEach(function(i){$(i).addEventListener('input',calc)});
+  calc();
 })();
 </script>
 </body>
