@@ -171,6 +171,13 @@
   .simrefresh #g-rstat{font-family:var(--mono);font-size:11.5px;color:var(--muted)}
   .ghf{margin-left:auto;font-family:var(--mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px}
   .ghf input{width:70px;background:var(--surface-2);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:7px 8px;font-family:var(--mono);font-size:13px}
+  .simctl.c3{grid-template-columns:repeat(3,1fr);margin-bottom:6px}
+  .simctl label small{display:block;margin-top:7px;text-transform:none;letter-spacing:0;font-size:11.5px;color:var(--muted)}
+  .csec{margin-top:34px;padding-top:26px;border-top:1px solid var(--line)}
+  .csec .psub{margin-bottom:18px}
+  .simtbl td small{display:block;color:var(--muted);font-size:11px}
+  .simtbl tr.sub td{background:var(--surface-2);font-weight:600}
+  @media(max-width:680px){.simctl.c3{grid-template-columns:1fr}}
   .gtok{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:26px}
   .gcard{border:1px solid var(--line);border-top:3px solid var(--c);border-radius:10px;padding:14px 16px;background:var(--surface-2);font-family:var(--mono)}
   .gcard .gt{display:flex;justify-content:space-between;align-items:baseline}
@@ -260,6 +267,20 @@
       <div class="gtok" id="g-tok"></div>
       <div class="gh">Orden de liquidación · la más cercana arriba</div>
       <div class="glist" id="g-list"></div>
+      <div class="csec">
+        <div class="ph">Simulador — bajar el precio de liquidación</div>
+        <div class="psub">Pon el precio al que quieres que liquide cada token y mira cuánta deuda repagar, o cuánto colateral añadir, en cada posición. Son dos alternativas, no se suman.</div>
+        <div class="simctl c3">
+          <label>BTC · liquidar en ($)<input id="c-btc" type="number" step="any" min="0" value="45000"><small id="c-lbtc"></small></label>
+          <label>ETH · liquidar en ($)<input id="c-eth" type="number" step="any" min="0" value="1200"><small id="c-leth"></small></label>
+          <label>HYPE · liquidar en ($)<input id="c-hype" type="number" step="any" min="0" value="45"><small id="c-lhype"></small></label>
+        </div>
+        <div class="simtbl"><table>
+          <thead><tr><th>Posición</th><th>Liquida ahora</th><th>Objetivo</th><th>Repagar deuda</th><th>O añadir colateral</th></tr></thead>
+          <tbody id="c-rows"></tbody>
+        </table></div>
+        <p class="calc">La deuda a repagar no depende del precio actual, solo del colateral y la deuda de cada posición. El colateral se da en el token de cada mercado (cbBTC, wstETH, ETH, WHYPE) y su valor en dólares, al precio de arriba. En wstETH el objetivo es el precio de ETH (Morpho lo muestra en wstETH, ×1,249); en Aave es el precio que marca su app. No incluye intereses posteriores a las capturas, comisiones ni deslizamiento.</p>
+      </div>
       <p class="calc"><b>Cómo leerlo.</b> «Caída hasta liquidar» es cuánto tiene que bajar ese activo desde el precio actual. «Para llegar al HF objetivo» da dos formas de cubrir cada posición: repagar esa cantidad de USDC o añadir ese colateral. ETH y HYPE suelen moverse más que BTC, así que a distancias parecidas las de ETH y HYPE tienden a llegar antes. <b>Datos:</b> Morpho (Rosa y Naranja) y Aave Rosa del 14 nov por la tarde; Aave Naranja del 11 nov; la deuda no incluye los intereses posteriores y los precios son los de arriba (editables en Simulación). Verifica en la app antes de actuar.</p>
     </div>
 
@@ -509,6 +530,7 @@
     });
     $('s-loops').innerHTML=lr;
     gcalc(px);
+    ccalc(px);
   }
   var GC={btc:'var(--gold)',eth:'var(--eth)',hype:'var(--khype)'},GU={btc:'cbBTC',eth:'ETH eq.',hype:'WHYPE'};
   function dcl(x){return x>-20?'neg':x>-30?'wn':'pos'}
@@ -547,6 +569,31 @@
         +'<span class="gfix">'+(g.rep>0?'repagar '+usd(g.rep)+'<small>o añadir '+fm(g.addt,g.lp.cd)+' '+g.lp.c+'</small>':'ya por encima')+'</span></div>';
     });
     $('g-list').innerHTML=h;
+  }
+  function ccalc(px){
+    if(!$('c-rows'))return;
+    var rows='',TR=0,TC=0;
+    A.forEach(function(a){
+      var t=num('c-'+a.k),p=px[a.k],ok=t>0,sr=0,sc=0;
+      $('c-l'+a.k).textContent=!ok?'introduce un precio':t>=p?'por encima del precio actual ('+usd(p,a.d)+')':pc((t/p-1)*100)+' desde '+usd(p,a.d)+' · HF '+fm(p/t,2);
+      L.filter(function(lp){return lp.a===a.k}).forEach(function(lp){
+        var f=lp.ap?1:lp.k,cur=lp.d/(lp.u*f*lp.l),nm='<span class="gdot" style="background:var(--'+lp.w+')"></span>'+lp.c+'<small>'+lp.w.charAt(0).toUpperCase()+lp.w.slice(1)+' · '+lp.pr+'</small>';
+        var c3,c4;
+        if(!ok){c3=c4='—'}
+        else if(cur<=t){c3='ya liquida por debajo';c4='—'}
+        else{
+          var r=lp.d-t*lp.u*f*lp.l,ad=lp.d/(t*f*lp.l)-lp.u,av=ad*lp.k*p;
+          sr+=r;sc+=av;
+          c3=usd(r)+'<small>deuda '+usd(lp.d)+' → '+usd(lp.d-r)+'</small>';
+          c4=fm(ad,lp.cd)+' '+lp.c+'<small>≈ '+usd(av)+'</small>';
+        }
+        rows+='<tr><td>'+nm+'</td><td>'+usd(cur,a.d)+'</td><td>'+(ok?usd(t,a.d):'—')+'</td><td>'+c3+'</td><td>'+c4+'</td></tr>';
+      });
+      TR+=sr;TC+=sc;
+      rows+='<tr class="sub"><td>Total '+a.n+'</td><td></td><td></td><td>'+usd(sr)+'</td><td>≈ '+usd(sc)+'</td></tr>';
+    });
+    rows+='<tr class="tot"><td>Total los tres</td><td></td><td></td><td>'+usd(TR)+'</td><td>≈ '+usd(TC)+'</td></tr>';
+    $('c-rows').innerHTML=rows;
   }
   function setStat(t){$('s-rstat').textContent=t;if($('g-rstat'))$('g-rstat').textContent=t}
   function setPrices(p,src){
@@ -590,6 +637,7 @@
   $('s-refresh').addEventListener('click',function(){refresh(false)});
   if($('g-refresh'))$('g-refresh').addEventListener('click',function(){refresh(false)});
   if($('g-hf'))$('g-hf').addEventListener('input',calc);
+  ['c-btc','c-eth','c-hype'].forEach(function(i){if($(i))$(i).addEventListener('input',calc)});
   $('s-all').addEventListener('input',function(){var v=$('s-all').value;A.forEach(function(a){$(a.s).value=v});calc()});
   ['s-pbtc','s-peth','s-phype','s-months','s-sb','s-se','s-sh'].forEach(function(i){$(i).addEventListener('input',calc)});
   calc();
