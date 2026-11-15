@@ -281,93 +281,93 @@
         </table></div>
         <p class="calc">La deuda a repagar no depende del precio actual, solo del colateral y la deuda de cada posición. El colateral se da en el token de cada mercado (cbBTC, wstETH, ETH, WHYPE) y su valor en dólares, al precio de arriba. En wstETH el objetivo es el precio de ETH (Morpho lo muestra en wstETH, ×1,249); en Aave es el precio que marca su app. No incluye intereses posteriores a las capturas, comisiones ni deslizamiento.</p>
       </div>
-      <p class="calc"><b>Cómo leerlo.</b> «Caída hasta liquidar» es cuánto tiene que bajar ese activo desde el precio actual. «Para llegar al HF objetivo» da dos formas de cubrir cada posición: repagar esa cantidad de USDC o añadir ese colateral. ETH y HYPE suelen moverse más que BTC, así que a distancias parecidas las de ETH y HYPE tienden a llegar antes. <b>Datos:</b> Morpho (Rosa y Naranja) y Aave Rosa del 14 nov por la tarde; Aave Naranja del 11 nov; la deuda no incluye los intereses posteriores y los precios son los de arriba (editables en Simulación). Verifica en la app antes de actuar.</p>
+      <p class="calc"><b>Cómo leerlo.</b> «Caída hasta liquidar» es cuánto tiene que bajar ese activo desde el precio actual. «Para llegar al HF objetivo» da dos formas de cubrir cada posición: repagar esa cantidad de USDC o añadir ese colateral. ETH y HYPE suelen moverse más que BTC, así que a distancias parecidas las de ETH y HYPE tienden a llegar antes. <b>Datos:</b> Morpho (Rosa y Naranja) y Aave Rosa del 15 nov; Aave Naranja del 11 nov; la deuda no incluye los intereses posteriores y los precios son los de arriba (editables en Simulación). Verifica en la app antes de actuar.</p>
     </div>
 
     <!-- BTC -->
     <div class="panel panel-btc">
       <div class="stats">
-        <div class="stat"><div class="k">Precio BTC</div><div class="v btc">~$65.300</div></div>
+        <div class="stat"><div class="k">Precio BTC</div><div class="v btc">~$65.400</div></div>
         <div class="stat"><div class="k">LLTV</div><div class="v">86%</div></div>
         <div class="stat"><div class="k">Borrow USDC</div><div class="v">~5,12%</div></div>
         <div class="stat"><div class="k">Renta colateral</div><div class="v">0%</div></div>
         <div class="stat"><div class="k">Apal. máx.</div><div class="v">~7,1x</div><div class="vsub">liq. inmediata</div></div>
       </div>
       <div class="ph">BTC — Morpho Blue (cbBTC/USDC) · y Aave v4 en naranja</div>
-      <div class="psub"><b style="color:var(--warn)">Ya no es tu activo seguro.</b> <b style="color:var(--naranja)">naranja</b> está a ~3,29x (HF 1,23) y liquida a <b>~$52.850 (−19%)</b>, por debajo de tu suelo de $57k; <b style="color:var(--rosa)">rosa</b> está a ~3,10x (HF 1,27) y liquida a <b>~$51.400 (−21%)</b>. El cbBTC no renta y pagas ~5,12% de borrow (carry negativo, apuesta direccional).</div>
+      <div class="psub"><b style="color:var(--warn)">Ya no es tu activo seguro.</b> <b style="color:var(--naranja)">naranja</b> está a ~3,28x (HF 1,24) y liquida a <b>~$52.880 (−19%)</b>, por debajo de tu suelo de $57k y la más cercana de todo el libro; <b style="color:var(--rosa)">rosa</b> está a ~3,09x (HF 1,27) y liquida a <b>~$51.400 (−21%)</b>. El cbBTC no renta y pagas ~5,12% de borrow (carry negativo, apuesta direccional).</div>
       <div class="simtbl" style="margin-top:0"><table>
         <thead><tr><th>Posición</th><th>x actual</th><th>HF</th><th>Liquidación</th><th>Carry neto/año</th></tr></thead>
         <tbody>
-          <tr><td><b style="color:var(--rosa)">Rosa</b> · Morpho</td><td>~3,10x</td><td class="neg">1,27</td><td>BTC $51.412 (−21%)</td><td class="neg">−10,7%</td></tr>
-          <tr><td><b style="color:var(--naranja)">Naranja</b> · Morpho</td><td>~3,29x</td><td class="neg">1,23</td><td>BTC $52.850 (−19%)</td><td class="neg">−11,7%</td></tr>
-          <tr><td><b style="color:var(--naranja)">Naranja</b> · Aave v4</td><td>~3,04x</td><td class="neg">1,26</td><td>BTC $50.671 (−21%)</td><td class="neg">−12,0%</td></tr>
+          <tr><td><b style="color:var(--rosa)">Rosa</b> · Morpho</td><td>~3,09x</td><td class="neg">1,27</td><td>BTC $51.412 (−21%)</td><td class="neg">−10,7%</td></tr>
+          <tr><td><b style="color:var(--naranja)">Naranja</b> · Morpho</td><td>~3,28x</td><td class="neg">1,24</td><td>BTC $52.877 (−19%)</td><td class="neg">−11,7%</td></tr>
+          <tr><td><b style="color:var(--naranja)">Naranja</b> · Aave v4</td><td>~3,03x</td><td class="neg">1,26</td><td>BTC $50.671 (−21%)</td><td class="neg">−11,9%</td></tr>
         </tbody>
       </table></div>
-      <p class="calc"><b>Instantánea (14 nov 2026, tarde).</b> loops cbBTC/USDC en Morpho: <b style="color:var(--naranja)">naranja</b> 0,4222 cbBTC ($27.470) · deuda ~19.190 USDC · ~3,29x · HF 1,23 (liq. $52.850) · <b style="color:var(--rosa)">rosa</b> 0,3119 cbBTC ($20.450) · deuda ~13.790 USDC · ~3,10x · HF 1,27 (liq. $51.412). Aave v4 (naranja): 0,209 cbBTC · deuda ~8.951 USDC · ~3,04x · HF 1,26 · liq. $50.671 (−21%) · borrow 5,88%. Aave Naranja: posición del 11 nov a precio de hoy (estimación).</p>
+      <p class="calc"><b>Instantánea (15 nov 2026).</b> loops cbBTC/USDC en Morpho: <b style="color:var(--naranja)">naranja</b> 0,4222 cbBTC ($27.630) · deuda ~19.200 USDC · ~3,28x · HF 1,24 (liq. $52.877) · <b style="color:var(--rosa)">rosa</b> 0,3119 cbBTC ($20.370) · deuda ~13.790 USDC · ~3,09x · HF 1,27 (liq. $51.412). Aave v4 (naranja): 0,209 cbBTC · deuda ~8.951 USDC · ~3,03x · HF 1,26 · liq. $50.671 (−21%) · borrow 5,88%. Aave Naranja: posición del 11 nov a precio de hoy (estimación).</p>
     </div>
 
     <!-- ETH · wstETH -->
     <div class="panel panel-eth">
       <div class="stats">
-        <div class="stat"><div class="k">Precio wstETH</div><div class="v eth">~$2.293</div></div>
+        <div class="stat"><div class="k">Precio wstETH</div><div class="v eth">~$2.279</div></div>
         <div class="stat"><div class="k">LLTV</div><div class="v">86%</div></div>
-        <div class="stat"><div class="k">Borrow USDC</div><div class="v">~5,12%</div></div>
+        <div class="stat"><div class="k">Borrow USDC</div><div class="v">~5,1%</div></div>
         <div class="stat"><div class="k">Renta colateral</div><div class="v eth">~3%</div></div>
         <div class="stat"><div class="k">Apal. máx.</div><div class="v">~7,1x</div><div class="vsub">liq. inmediata</div></div>
       </div>
       <div class="ph">ETH — Morpho Blue (wstETH/USDC) · y Aave v4 en rosa</div>
-      <div class="psub">wstETH (LLTV 86%): renta ~3% de staking, que cubre solo parte del borrow ~5,1%: el carry se vuelve negativo por encima de ~2,4x. Tras añadir colateral el 14 nov, <b style="color:var(--rosa)">rosa</b> ~3,12x (HF 1,27) y <b style="color:var(--naranja)">naranja</b> ~3,19x (HF 1,25) liquidan con ETH a ~$1.451 y ~$1.466 (−20/−21%), junto a Aave rosa ($1.454).</div>
+      <div class="psub">wstETH (LLTV 86%): renta ~3% de staking, que cubre solo parte del borrow ~5,1%: el carry se vuelve negativo por encima de ~2,4x. Tras repagar ~$100 de deuda en cada una el 15 nov, las tres posiciones de ETH liquidan entre $1.423 y $1.447 (−21/−22%).</div>
       <div class="simtbl" style="margin-top:0"><table>
         <thead><tr><th>Posición</th><th>x actual</th><th>HF</th><th>Liquidación</th><th>Carry neto/año</th></tr></thead>
         <tbody>
-          <tr><td><b style="color:var(--rosa)">Rosa</b> · Morpho</td><td>~3,12x</td><td class="neg">1,27</td><td>ETH $1.451 (−21%)</td><td class="neg">−1,5%</td></tr>
-          <tr><td><b style="color:var(--naranja)">Naranja</b> · Morpho</td><td>~3,19x</td><td class="neg">1,25</td><td>ETH $1.466 (−20%)</td><td class="neg">−1,6%</td></tr>
-          <tr><td><b style="color:var(--rosa)">Rosa</b> · Aave v4 (ETH)</td><td>~2,99x</td><td class="neg">1,26</td><td>ETH $1.454 (−21%)</td><td class="neg">−2,43%</td></tr>
+          <tr><td><b style="color:var(--rosa)">Rosa</b> · Morpho</td><td>~3,04x</td><td class="neg">1,29</td><td>ETH $1.423 (−22%)</td><td class="neg">−1,3%</td></tr>
+          <tr><td><b style="color:var(--naranja)">Naranja</b> · Morpho</td><td>~3,15x</td><td class="neg">1,27</td><td>ETH $1.447 (−21%)</td><td class="neg">−1,5%</td></tr>
+          <tr><td><b style="color:var(--rosa)">Rosa</b> · Aave v4 (ETH)</td><td>~2,92x</td><td class="neg">1,28</td><td>ETH $1.428 (−22%)</td><td class="neg">−2,14%</td></tr>
         </tbody>
       </table></div>
-      <p class="calc"><b>Instantánea (14 nov 2026, tarde).</b> loops wstETH/USDC en Morpho: <b style="color:var(--naranja)">naranja</b> 4,8696 wstETH ($11.100) · deuda ~7.667 USDC · ~3,19x · HF 1,25 (liq. ETH ~$1.466, −20%) · <b style="color:var(--rosa)">rosa</b> 3,4000 wstETH ($7.824) · deuda ~5.298 USDC · ~3,12x · HF 1,27 (liq. ETH ~$1.451, −21%). Carry = L×3% − (L−1)×5,12%. Liquidación en precio de ETH con 1 wstETH ≈ 1,249 ETH. Aave v4 (rosa): 4,5556 ETH ($8.364) · deuda ~5.564 USDC · ~2,99x · HF 1,26 · liq. $1.454 (−21%) · borrow 3,57%, renta 1,56%, umbral 84%. Los datos de cabecera (LLTV, borrow, renta) son los de wstETH en Morpho.</p>
+      <p class="calc"><b>Instantánea (15 nov 2026).</b> loops wstETH/USDC en Morpho: <b style="color:var(--naranja)">naranja</b> 4,8696 wstETH ($11.090) · deuda ~7.566 USDC · ~3,15x · HF 1,27 (liq. ETH ~$1.447, −21%) · <b style="color:var(--rosa)">rosa</b> 3,4000 wstETH ($7.752) · deuda ~5.198 USDC · ~3,04x · HF 1,29 (liq. ETH ~$1.423, −22%). Carry = L×3% − (L−1)×5,1%. Liquidación en precio de ETH con 1 wstETH ≈ 1,249 ETH. Aave v4 (rosa): 4,5557 ETH ($8.303) · deuda ~5.465 USDC · ~2,92x · HF 1,28 · liq. $1.428 (−22%) · borrow 3,62%, renta 1,65%, umbral 84%. Los datos de cabecera (LLTV, borrow, renta) son los de wstETH en Morpho.</p>
     </div>
 
     <!-- ETH · Aave v4 -->
     <div class="panel panel-aave">
       <div class="stats">
-        <div class="stat"><div class="k">Precio ETH</div><div class="v aave">~$1.836</div></div>
+        <div class="stat"><div class="k">Precio ETH</div><div class="v aave">~$1.823</div></div>
         <div class="stat"><div class="k">Umbral liq.</div><div class="v">84%</div></div>
-        <div class="stat"><div class="k">Borrow USDC</div><div class="v">3,57%</div></div>
-        <div class="stat"><div class="k">Renta colateral</div><div class="v aave">1,56%</div></div>
+        <div class="stat"><div class="k">Borrow USDC</div><div class="v">3,62%</div></div>
+        <div class="stat"><div class="k">Renta colateral</div><div class="v aave">1,65%</div></div>
         <div class="stat"><div class="k">Apal. máx.</div><div class="v">~6,3x</div><div class="vsub" style="color:var(--danger)">carry negativo &gt;1,8x</div></div>
       </div>
       <div class="ph">Aave v4 — ETH en rosa · cbBTC en naranja</div>
-      <div class="psub">En <b style="color:var(--rosa)">rosa</b> (ETH, mercado Main) y en <b style="color:var(--naranja)">naranja</b> (cbBTC, Bluechip). Rosa: el depósito rinde 1,56% y el borrow está en 3,57%, el préstamo más barato del libro, aunque es variable. A ~3,0x el carry es −2,43% anual (Net APY de la app). Umbral 84%. Tras añadir 0,08 ETH liquida a $1.454 (−21%), junto a los dos loops de wstETH.</div>
+      <div class="psub">En <b style="color:var(--rosa)">rosa</b> (ETH, mercado Main) y en <b style="color:var(--naranja)">naranja</b> (cbBTC, Bluechip). Rosa: el depósito rinde 1,65% y el borrow está en 3,62%, el préstamo más barato del libro, aunque es variable. A ~2,9x el carry es −2,14% anual (Net APY de la app). Umbral 84%. Tras repagar ~$100 liquida a $1.428 (−22%), junto a los dos loops de wstETH.</div>
       <div class="simtbl" style="margin-top:0"><table>
         <thead><tr><th>Posición</th><th>x actual</th><th>HF</th><th>Liquidación</th><th>Carry neto/año</th></tr></thead>
         <tbody>
-          <tr><td><b style="color:var(--rosa)">Rosa</b> · ETH (Main)</td><td>~2,99x</td><td class="neg">1,26</td><td>ETH $1.454 (−21%)</td><td class="neg">−2,43%</td></tr>
-          <tr><td><b style="color:var(--naranja)">Naranja</b> · cbBTC (Bluechip)</td><td>~3,04x</td><td class="neg">1,26</td><td>BTC $50.671 (−21%)</td><td class="neg">−12,0%</td></tr>
+          <tr><td><b style="color:var(--rosa)">Rosa</b> · ETH (Main)</td><td>~2,92x</td><td class="neg">1,28</td><td>ETH $1.428 (−22%)</td><td class="neg">−2,14%</td></tr>
+          <tr><td><b style="color:var(--naranja)">Naranja</b> · cbBTC (Bluechip)</td><td>~3,03x</td><td class="neg">1,26</td><td>BTC $50.671 (−21%)</td><td class="neg">−11,9%</td></tr>
         </tbody>
       </table></div>
-      <p class="calc"><b>Instantánea (14 nov 2026, tarde).</b> rosa: 4,5556 ETH depositado ($8.364) · deuda ~5.564 USDC · <b>~2,99x</b> · <b>HF 1,26</b> · liquidación $1.454 (−21%). Naranja (posición del 11 nov a precio de hoy, estimación): 0,209 cbBTC · deuda ~8.951 USDC · ~3,04x · HF 1,26 · liq. $50.671 (−21%) · borrow 5,88%, umbral 84,5%, renta 0%. Los datos de cabecera (precio, umbral, borrow, renta) son los de ETH.</p>
+      <p class="calc"><b>Instantánea (15 nov 2026).</b> rosa: 4,5557 ETH depositado ($8.303) · deuda ~5.465 USDC · <b>~2,92x</b> · <b>HF 1,28</b> · liquidación $1.428 (−22%). Naranja (posición del 11 nov a precio de hoy, estimación): 0,209 cbBTC · deuda ~8.951 USDC · ~3,03x · HF 1,26 · liq. $50.671 (−21%) · borrow 5,88%, umbral 84,5%, renta 0%. Los datos de cabecera (precio, umbral, borrow, renta) son los de ETH.</p>
     </div>
 
     <!-- HYPE · WHYPE -->
     <div class="panel panel-khype">
       <div class="stats">
-        <div class="stat"><div class="k">Precio HYPE</div><div class="v khype">~$65,38</div></div>
+        <div class="stat"><div class="k">Precio HYPE</div><div class="v khype">~$68,10</div></div>
         <div class="stat"><div class="k">LLTV</div><div class="v">86%</div></div>
         <div class="stat"><div class="k">Borrow USDC</div><div class="v">~4,26%</div></div>
         <div class="stat"><div class="k">Renta colateral</div><div class="v">0%</div></div>
         <div class="stat"><div class="k">Apal. máx.</div><div class="v">~7,1x</div><div class="vsub">liq. inmediata</div></div>
       </div>
       <div class="ph">HYPE — Morpho Blue (WHYPE/USDC) · rosa y naranja</div>
-      <div class="psub">Largo apalancado sobre HYPE. WHYPE es HYPE envuelto: no renta y pagas el borrow en USDC (apuesta direccional). Oracle Chainlink HYPE/USD, penalización de liquidación 4,38%. <b style="color:var(--warn)">HYPE es más volátil que BTC y ETH</b>, y la posición de rosa ($52,58, −20%) es ya de las más cercanas del libro; la de naranja ($44,62, −32%) es la más lejana.</div>
+      <div class="psub">Largo apalancado sobre HYPE. WHYPE es HYPE envuelto: no renta y pagas el borrow en USDC (apuesta direccional). Oracle Chainlink HYPE/USD, penalización de liquidación 4,38%. <b style="color:var(--warn)">HYPE es más volátil que BTC y ETH</b>; la posición de rosa liquida a $52,59 (−23%) y la de naranja a $44,62 (−34%), la más lejana del libro.</div>
       <div class="simtbl" style="margin-top:0"><table>
         <thead><tr><th>Posición</th><th>x actual</th><th>HF</th><th>Liquidación</th><th>Carry neto/año</th></tr></thead>
         <tbody>
-          <tr><td><b style="color:var(--rosa)">Rosa</b> · Morpho</td><td>~3,24x</td><td class="neg">1,25</td><td>HYPE $52,58 (−20%)</td><td class="neg">−9,6%</td></tr>
-          <tr><td><b style="color:var(--naranja)">Naranja</b> · Morpho</td><td>~2,42x</td><td class="wn">1,46</td><td>HYPE $44,62 (−32%)</td><td class="neg">−6,1%</td></tr>
+          <tr><td><b style="color:var(--rosa)">Rosa</b> · Morpho</td><td>~2,99x</td><td class="neg">1,29</td><td>HYPE $52,59 (−23%)</td><td class="neg">−8,5%</td></tr>
+          <tr><td><b style="color:var(--naranja)">Naranja</b> · Morpho</td><td>~2,28x</td><td class="pos">1,53</td><td>HYPE $44,62 (−34%)</td><td class="neg">−5,5%</td></tr>
         </tbody>
       </table></div>
-      <p class="calc"><b>Instantánea (14 nov 2026, tarde).</b> rosa: 104 WHYPE ($6.801) · deuda ~4.703 USDC · ~3,24x · HF 1,25 · liq. ~$52,58 (−20%). naranja: 73 WHYPE ($4.773) · deuda ~2.801 USDC · ~2,42x · HF 1,46 · liq. ~$44,62 (−32%). El borrow es variable: la utilización del mercado es ~90%, el punto de la curva a partir del cual el tipo suele subir más rápido.</p>
+      <p class="calc"><b>Instantánea (15 nov 2026).</b> rosa: 104 WHYPE ($7.064) · deuda ~4.704 USDC · ~2,99x · HF 1,29 · liq. ~$52,59 (−23%). naranja: 73 WHYPE ($4.986) · deuda ~2.801 USDC · ~2,28x · HF 1,53 · liq. ~$44,62 (−34%). El borrow es variable: la utilización del mercado es ~90%, el punto de la curva a partir del cual el tipo suele subir más rápido.</p>
     </div>
 
     <!-- Simulación -->
@@ -375,9 +375,9 @@
       <div class="ph">Simulación — BTC + ETH + HYPE juntos</div>
       <div class="psub">Las 8 posiciones de Rosa y Naranja agrupadas en tres apuestas. Mueve los precios por separado o todos a la vez y mira el capital, el beneficio y cuándo liquida cada loop.</div>
       <div class="simctl">
-        <label>Precio BTC ($)<input id="s-pbtc" type="number" step="any" min="0" value="65300"></label>
-        <label>Precio ETH ($)<input id="s-peth" type="number" step="any" min="0" value="1836"></label>
-        <label>Precio HYPE ($)<input id="s-phype" type="number" step="any" min="0" value="65.38"></label>
+        <label>Precio BTC ($)<input id="s-pbtc" type="number" step="any" min="0" value="65400"></label>
+        <label>Precio ETH ($)<input id="s-peth" type="number" step="any" min="0" value="1823"></label>
+        <label>Precio HYPE ($)<input id="s-phype" type="number" step="any" min="0" value="68.10"></label>
         <label>Meses hasta el cierre<input id="s-months" type="number" step="any" min="0" value="6"></label>
       </div>
       <div class="simrefresh"><button id="s-refresh" type="button">↻ Actualizar precios</button><span id="s-rstat">cargando precios…</span></div>
@@ -417,43 +417,43 @@
 
   </div>
 
-  <p class="snap">Instantánea de posiciones · capturas del 14 nov 2026 (tarde) · Aave Naranja: posición del 11 nov a precio de hoy (estimación) · datos en vivo → Monitor de Loops</p>
+  <p class="snap">Instantánea de posiciones · capturas del 15 nov 2026 · Aave Naranja: posición del 11 nov a precio de hoy (estimación) · datos en vivo → Monitor de Loops</p>
   <div class="wallets">
     <div class="wcard">
       <div class="wtop"><span style="width:11px;height:11px;border-radius:50%;background:var(--rosa)"></span>
         <span class="name">Rosa</span>
         <span class="pill" style="background:rgba(255,111,166,.16);color:var(--rosa)">Morpho + Aave</span></div>
       <div class="wrow head"><span>posición</span><span class="lv">apal.</span><span class="hf">HF</span><span class="lq">liquidación</span></div>
-      <div class="wrow"><span class="mk">cbBTC/USDC <small>Morpho</small></span><span class="lv">~3,10x</span><span class="hf" style="color:var(--danger)">1,27</span><span class="lq">BTC $51.412 · <b>−21%</b></span></div>
-      <div class="wrow"><span class="mk">wstETH/USDC <small>Morpho</small></span><span class="lv">~3,12x</span><span class="hf" style="color:var(--danger)">1,27</span><span class="lq">ETH $1.451 · <b>−21%</b></span></div>
-      <div class="wrow"><span class="mk">WHYPE/USDC <small>Morpho</small></span><span class="lv">~3,24x</span><span class="hf" style="color:var(--danger)">1,25</span><span class="lq">HYPE $52,58 · <b>−20%</b></span></div>
-      <div class="wrow"><span class="mk">ETH/USDC <small>Aave v4</small></span><span class="lv">~2,99x</span><span class="hf" style="color:var(--danger)">1,26</span><span class="lq">ETH $1.454 · <b>−21%</b></span></div>
+      <div class="wrow"><span class="mk">cbBTC/USDC <small>Morpho</small></span><span class="lv">~3,09x</span><span class="hf" style="color:var(--danger)">1,27</span><span class="lq">BTC $51.412 · <b>−21%</b></span></div>
+      <div class="wrow"><span class="mk">wstETH/USDC <small>Morpho</small></span><span class="lv">~3,04x</span><span class="hf" style="color:var(--danger)">1,29</span><span class="lq">ETH $1.423 · <b>−22%</b></span></div>
+      <div class="wrow"><span class="mk">WHYPE/USDC <small>Morpho</small></span><span class="lv">~2,99x</span><span class="hf" style="color:var(--danger)">1,29</span><span class="lq">HYPE $52,59 · <b>−23%</b></span></div>
+      <div class="wrow"><span class="mk">ETH/USDC <small>Aave v4</small></span><span class="lv">~2,92x</span><span class="hf" style="color:var(--danger)">1,28</span><span class="lq">ETH $1.428 · <b>−22%</b></span></div>
     </div>
     <div class="wcard">
       <div class="wtop"><span style="width:11px;height:11px;border-radius:50%;background:var(--naranja)"></span>
         <span class="name">Naranja</span>
         <span class="pill" style="background:rgba(246,151,62,.16);color:var(--naranja)">Morpho + Aave</span></div>
       <div class="wrow head"><span>posición</span><span class="lv">apal.</span><span class="hf">HF</span><span class="lq">liquidación</span></div>
-      <div class="wrow"><span class="mk">cbBTC/USDC <small>Morpho</small></span><span class="lv">~3,29x</span><span class="hf" style="color:var(--danger)">1,23</span><span class="lq">BTC $52.850 · <b>−19%</b></span></div>
-      <div class="wrow"><span class="mk">wstETH/USDC <small>Morpho</small></span><span class="lv">~3,19x</span><span class="hf" style="color:var(--danger)">1,25</span><span class="lq">ETH $1.466 · <b>−20%</b></span></div>
-      <div class="wrow"><span class="mk">WHYPE/USDC <small>Morpho</small></span><span class="lv">~2,42x</span><span class="hf" style="color:var(--danger)">1,46</span><span class="lq">HYPE $44,62 · <b>−32%</b></span></div>
-      <div class="wrow"><span class="mk">cbBTC/USDC <small>Aave v4 · 11 nov</small></span><span class="lv">~3,04x</span><span class="hf" style="color:var(--danger)">1,26</span><span class="lq">BTC $50.671 · <b>−21%</b></span></div>
+      <div class="wrow"><span class="mk">cbBTC/USDC <small>Morpho</small></span><span class="lv">~3,28x</span><span class="hf" style="color:var(--danger)">1,24</span><span class="lq">BTC $52.877 · <b>−19%</b></span></div>
+      <div class="wrow"><span class="mk">wstETH/USDC <small>Morpho</small></span><span class="lv">~3,15x</span><span class="hf" style="color:var(--danger)">1,27</span><span class="lq">ETH $1.447 · <b>−21%</b></span></div>
+      <div class="wrow"><span class="mk">WHYPE/USDC <small>Morpho</small></span><span class="lv">~2,28x</span><span class="hf" style="color:var(--warn)">1,53</span><span class="lq">HYPE $44,62 · <b>−34%</b></span></div>
+      <div class="wrow"><span class="mk">cbBTC/USDC <small>Aave v4 · 11 nov</small></span><span class="lv">~3,03x</span><span class="hf" style="color:var(--danger)">1,26</span><span class="lq">BTC $50.671 · <b>−21%</b></span></div>
     </div>
   </div>
 
   <div class="grid2">
     <div class="pcard warn">
       <h3>⚠ Ya no tienes un activo seguro</h3>
-      <p>Siete de las ocho posiciones liquidan ahora <b>entre −19% y −21%</b>: cbBTC Morpho de Naranja (BTC $52.850, −19%, HF 1,23), WHYPE de Rosa (HYPE $52,58, −20%), las tres de ETH (ETH ~$1.451-1.466, −20/−21%) y el resto de cbBTC (−21%). Solo WHYPE en Naranja queda lejos (−32%). <b>Una caída conjunta del ~20% liquida casi todo a la vez</b>, en las dos wallets. El orden exacto está en la pestaña Global.</p>
+      <p>Siete de las ocho posiciones liquidan <b>entre −19% y −23%</b>. Las tres más cercanas están en Naranja: cbBTC Morpho (BTC $52.877, −19%, HF 1,24), wstETH (ETH $1.447, −21%) y cbBTC en Aave (BTC $50.671, −21%). Después vienen las de Rosa (−21/−23%). Solo WHYPE en Naranja queda lejos (−34%). <b>Una caída conjunta del ~20% liquida casi todo a la vez</b>, en las dos wallets. El orden exacto está en la pestaña Global.</p>
     </div>
     <div class="pcard good">
       <h3>Carry</h3>
-      <p>Borrow USDC: Morpho ~5,1% (cbBTC, wstETH) · 4,26% (WHYPE) · Aave 3,57% (ETH) y 5,88% (cbBTC). Renta: wstETH ~3% (compensa solo en parte), ETH Aave 1,56%, cbBTC y WHYPE 0%. <b>Ya no hay carry positivo</b> a tus apalancamientos: el libro paga más borrow del que cobra. El borrow de Aave ETH es el más barato, pero es variable.</p>
+      <p>Borrow USDC: Morpho ~5,1% (cbBTC, wstETH) · 4,26% (WHYPE) · Aave 3,62% (ETH) y 5,88% (cbBTC). Renta: wstETH ~3% (compensa solo en parte), ETH Aave 1,65%, cbBTC y WHYPE 0%. <b>Ya no hay carry positivo</b> a tus apalancamientos: el libro paga más borrow del que cobra. El borrow de Aave ETH es el más barato, pero es variable.</p>
     </div>
   </div>
 
   <footer>
-    <b style="color:var(--text)">Instantánea 14 nov 2026 (tarde) — datos en vivo en el Monitor de Loops.</b> <b style="color:var(--rosa)">Rosa</b> (Morpho + Aave): cbBTC ~3,10x HF 1,27 (liq. $51.412) · wstETH ~3,12x HF 1,27 (liq. ETH $1.451) · WHYPE ~3,24x HF 1,25 (liq. $52,58) · Aave ETH ~2,99x HF 1,26 (liq. ETH $1.454). <b style="color:var(--naranja)">Naranja</b> (Morpho + Aave): cbBTC ~3,29x HF 1,23 (liq. $52.850) · wstETH ~3,19x HF 1,25 (liq. ETH $1.466) · WHYPE ~2,42x HF 1,46 (liq. $44,62) · Aave cbBTC ~3,04x HF 1,26 (liq. $50.671, posición del 11 nov). · ⚠ Siete de ocho posiciones liquidan entre −19% y −21%: una caída conjunta de ese tamaño barre el libro. · HyperLend cerrado. · Borrow: Morpho ~5,1% (WHYPE 4,26%) · Aave 3,57% (ETH) · 5,88% (cbBTC). · Precios (14 nov tarde, aprox.): BTC ~$65.300 · ETH ~$1.836 · wstETH ~$2.293 · HYPE ~$65,38. · No es asesoramiento financiero. Verifica en la app.
+    <b style="color:var(--text)">Instantánea 15 nov 2026 — datos en vivo en el Monitor de Loops.</b> <b style="color:var(--rosa)">Rosa</b> (Morpho + Aave): cbBTC ~3,09x HF 1,27 (liq. $51.412) · wstETH ~3,04x HF 1,29 (liq. ETH $1.423) · WHYPE ~2,99x HF 1,29 (liq. $52,59) · Aave ETH ~2,92x HF 1,28 (liq. ETH $1.428). <b style="color:var(--naranja)">Naranja</b> (Morpho + Aave): cbBTC ~3,28x HF 1,24 (liq. $52.877) · wstETH ~3,15x HF 1,27 (liq. ETH $1.447) · WHYPE ~2,28x HF 1,53 (liq. $44,62) · Aave cbBTC ~3,03x HF 1,26 (liq. $50.671, posición del 11 nov). · ⚠ Siete de ocho posiciones liquidan entre −19% y −23%: una caída conjunta de ese tamaño barre el libro. · HyperLend cerrado. · Borrow: Morpho ~5,1% (WHYPE 4,26%) · Aave 3,62% (ETH) · 5,88% (cbBTC). · Precios (15 nov, aprox.): BTC ~$65.400 · ETH ~$1.823 · wstETH ~$2.279 · HYPE ~$68,10. · No es asesoramiento financiero. Verifica en la app.
   </footer>
 
 </div>
@@ -473,13 +473,13 @@
   var A=[{k:'btc',n:'BTC',p:'s-pbtc',s:'s-sb',l:'s-lb',d:0,t:4},{k:'eth',n:'ETH',p:'s-peth',s:'s-se',l:'s-le',d:0,t:3},{k:'hype',n:'HYPE',p:'s-phype',s:'s-sh',l:'s-lh',d:2,t:1}];
   var L=[
     {a:'btc',n:'cbBTC · Rosa',w:'rosa',pr:'Morpho',c:'cbBTC',cd:4,u:0.311889,d:13790,l:0.86,b:0.0512,y:0,pen:0.0438,k:1,ap0:'~0,108 cbBTC'},
-    {a:'btc',n:'cbBTC · Naranja',w:'naranja',pr:'Morpho',c:'cbBTC',cd:4,u:0.422215,d:19190,l:0.86,b:0.0512,y:0,pen:0.0438,k:1,ap0:'0,1664 cbBTC'},
+    {a:'btc',n:'cbBTC · Naranja',w:'naranja',pr:'Morpho',c:'cbBTC',cd:4,u:0.422215,d:19200,l:0.86,b:0.0512,y:0,pen:0.0438,k:1,ap0:'0,1664 cbBTC'},
     {a:'btc',n:'cbBTC Aave · Naranja',w:'naranja',pr:'Aave v4',c:'cbBTC',cd:4,u:0.20904,d:8950.58,l:0.845,b:0.0588,y:0,pen:0.05,k:0.978,ap:1},
-    {a:'eth',n:'wstETH · Rosa',w:'rosa',pr:'Morpho',c:'wstETH',cd:3,u:3.4,d:5297.93,l:0.86,b:0.0512,y:0.03,pen:0.0438,k:1.249,ap0:'1,6074 wstETH'},
-    {a:'eth',n:'wstETH · Naranja',w:'naranja',pr:'Morpho',c:'wstETH',cd:3,u:4.8696,d:7667.47,l:0.86,b:0.0512,y:0.03,pen:0.0438,k:1.249,ap0:'3,1674 wstETH'},
-    {a:'eth',n:'WETH Aave · Rosa',w:'rosa',pr:'Aave v4',c:'ETH',cd:3,u:4.5556,d:5563.98,l:0.84,b:0.0357,y:0.0156,pen:0.05,k:1},
-    {a:'hype',n:'WHYPE · Rosa',w:'rosa',pr:'Morpho',c:'WHYPE',cd:1,u:104,d:4703.20,l:0.86,b:0.0426,y:0,pen:0.0438,k:1,ap0:'64 WHYPE'},
-    {a:'hype',n:'WHYPE · Naranja',w:'naranja',pr:'Morpho',c:'WHYPE',cd:1,u:73,d:2801.12,l:0.86,b:0.0426,y:0,pen:0.0438,k:1,ap0:'73 WHYPE'}
+    {a:'eth',n:'wstETH · Rosa',w:'rosa',pr:'Morpho',c:'wstETH',cd:3,u:3.4,d:5198.42,l:0.86,b:0.0511,y:0.03,pen:0.0438,k:1.249,ap0:'1,6074 wstETH'},
+    {a:'eth',n:'wstETH · Naranja',w:'naranja',pr:'Morpho',c:'wstETH',cd:3,u:4.8696,d:7566.40,l:0.86,b:0.0509,y:0.03,pen:0.0438,k:1.249,ap0:'3,1674 wstETH'},
+    {a:'eth',n:'WETH Aave · Rosa',w:'rosa',pr:'Aave v4',c:'ETH',cd:3,u:4.5557,d:5464.56,l:0.84,b:0.0362,y:0.0165,pen:0.05,k:1},
+    {a:'hype',n:'WHYPE · Rosa',w:'rosa',pr:'Morpho',c:'WHYPE',cd:1,u:104,d:4703.56,l:0.86,b:0.0426,y:0,pen:0.0438,k:1,ap0:'64 WHYPE'},
+    {a:'hype',n:'WHYPE · Naranja',w:'naranja',pr:'Morpho',c:'WHYPE',cd:1,u:73,d:2801.35,l:0.86,b:0.0426,y:0,pen:0.0438,k:1,ap0:'73 WHYPE'}
   ];
   function lc(lp,px,s,m){
     var v0=lp.u*lp.k*px,v1=v0*(1+s/100),hf1=v1*lp.l/lp.d,liq=hf1<1;
@@ -632,7 +632,7 @@
   function refresh(auto){
     var bs=[$('s-refresh'),$('g-refresh')].filter(Boolean);bs.forEach(function(b){b.disabled=true});setStat('Actualizando\u2026');
     return getPrices().then(function(x){setPrices(x.p,x.src)})
-      .catch(function(e){setStat((auto?'Sin precios en vivo; se usan los de la captura del 14 nov. ':'No se pudo cargar el precio. ')+'('+e.message+') Puedes editarlos en Simulaci\u00f3n.')})
+      .catch(function(e){setStat((auto?'Sin precios en vivo; se usan los de la captura del 15 nov. ':'No se pudo cargar el precio. ')+'('+e.message+') Puedes editarlos en Simulaci\u00f3n.')})
       .then(function(){bs.forEach(function(b){b.disabled=false})});
   }
   $('s-refresh').addEventListener('click',function(){refresh(false)});
