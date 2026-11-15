@@ -243,7 +243,7 @@
   <div class="asset-tabs">
     <label class="tg" for="tab-global" tabindex="0">Global<small>qué cubrir primero</small></label>
     <label class="tb" for="tab-btc" tabindex="0">BTC<small>Morpho · cbBTC</small></label>
-    <label class="te" for="tab-eth" tabindex="0">ETH<small>Morpho · wstETH</small></label>
+    <label class="te" for="tab-eth" tabindex="0">ETH<small>wstETH · Aave</small></label>
     <label class="ta" for="tab-aave" tabindex="0">Aave v4<small>ETH · BTC</small></label>
     <label class="tk" for="tab-khype" tabindex="0">HYPE<small>Morpho · WHYPE</small></label>
     <label class="ts" for="tab-sim" tabindex="0">Simulación<small>precio → beneficio</small></label>
@@ -315,16 +315,17 @@
         <div class="stat"><div class="k">Renta colateral</div><div class="v eth">~3%</div></div>
         <div class="stat"><div class="k">Apal. máx.</div><div class="v">~7,1x</div><div class="vsub">liq. inmediata</div></div>
       </div>
-      <div class="ph">ETH — Morpho Blue (wstETH/USDC)</div>
+      <div class="ph">ETH — Morpho Blue (wstETH/USDC) · y Aave v4 en rosa</div>
       <div class="psub">wstETH (LLTV 86%): renta ~3% de staking, que cubre solo parte del borrow ~5,1%: el carry se vuelve negativo por encima de ~2,4x. Tras añadir colateral el 14 nov, <b style="color:var(--rosa)">rosa</b> ~3,12x (HF 1,27) y <b style="color:var(--naranja)">naranja</b> ~3,19x (HF 1,25) liquidan con ETH a ~$1.451 y ~$1.466 (−20/−21%), junto a Aave rosa ($1.454).</div>
       <div class="simtbl" style="margin-top:0"><table>
         <thead><tr><th>Posición</th><th>x actual</th><th>HF</th><th>Liquidación</th><th>Carry neto/año</th></tr></thead>
         <tbody>
           <tr><td><b style="color:var(--rosa)">Rosa</b> · Morpho</td><td>~3,12x</td><td class="neg">1,27</td><td>ETH $1.451 (−21%)</td><td class="neg">−1,5%</td></tr>
           <tr><td><b style="color:var(--naranja)">Naranja</b> · Morpho</td><td>~3,19x</td><td class="neg">1,25</td><td>ETH $1.466 (−20%)</td><td class="neg">−1,6%</td></tr>
+          <tr><td><b style="color:var(--rosa)">Rosa</b> · Aave v4 (ETH)</td><td>~2,99x</td><td class="neg">1,26</td><td>ETH $1.454 (−21%)</td><td class="neg">−2,43%</td></tr>
         </tbody>
       </table></div>
-      <p class="calc"><b>Instantánea (14 nov 2026, tarde).</b> loops wstETH/USDC en Morpho: <b style="color:var(--naranja)">naranja</b> 4,8696 wstETH ($11.100) · deuda ~7.667 USDC · ~3,19x · HF 1,25 (liq. ETH ~$1.466, −20%) · <b style="color:var(--rosa)">rosa</b> 3,4000 wstETH ($7.824) · deuda ~5.298 USDC · ~3,12x · HF 1,27 (liq. ETH ~$1.451, −21%). Carry = L×3% − (L−1)×5,12%. Liquidación en precio de ETH con 1 wstETH ≈ 1,249 ETH.</p>
+      <p class="calc"><b>Instantánea (14 nov 2026, tarde).</b> loops wstETH/USDC en Morpho: <b style="color:var(--naranja)">naranja</b> 4,8696 wstETH ($11.100) · deuda ~7.667 USDC · ~3,19x · HF 1,25 (liq. ETH ~$1.466, −20%) · <b style="color:var(--rosa)">rosa</b> 3,4000 wstETH ($7.824) · deuda ~5.298 USDC · ~3,12x · HF 1,27 (liq. ETH ~$1.451, −21%). Carry = L×3% − (L−1)×5,12%. Liquidación en precio de ETH con 1 wstETH ≈ 1,249 ETH. Aave v4 (rosa): 4,5556 ETH ($8.364) · deuda ~5.564 USDC · ~2,99x · HF 1,26 · liq. $1.454 (−21%) · borrow 3,57%, renta 1,56%, umbral 84%. Los datos de cabecera (LLTV, borrow, renta) son los de wstETH en Morpho.</p>
     </div>
 
     <!-- ETH · Aave v4 -->
