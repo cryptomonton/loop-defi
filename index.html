@@ -396,7 +396,7 @@
         <div class="stat"><div class="k">Loops liquidados</div><div class="v" id="s-nliq"></div></div>
       </div>
       <div class="simtbl"><table>
-        <thead><tr><th>Activo</th><th>Precio objetivo</th><th>Valor de tus activos</th><th>Deuda</th><th>Te queda tras repagar</th><th>Beneficio</th><th>Tokens que te quedan</th><th>HF mín.</th><th>Primera liquidación</th></tr></thead>
+        <thead><tr><th>Activo</th><th>Precio objetivo</th><th>Valor de tus activos</th><th>Deuda</th><th>Te queda tras repagar</th><th>Beneficio</th><th>Tokens que te quedan</th><th>Tokens extra ganados</th><th>HF mín.</th><th>Primera liquidación</th></tr></thead>
         <tbody id="s-asset"></tbody>
       </table></div>
       <p class="calc" id="s-note"></p>
@@ -410,7 +410,7 @@
           <tbody id="s-loops"></tbody>
         </table></div>
       </details>
-      <p class="calc"><b>Cómo leerlo:</b> «Valor de tus activos» es todo tu colateral al precio objetivo; «Te queda tras repagar» es ese valor menos la deuda, es decir, lo que tendrías si cerraras todo; «Beneficio» es la diferencia entre lo que te queda al objetivo y lo que te quedaría hoy. Cada loop se calcula por separado, porque cada uno liquida a su propio precio: la liquidación de BTC en Naranja llega antes que la de Rosa. Al tocar el umbral se supone liquidación completa con su penalización (4,38% en Morpho 86%, ~5% supuesto en Aave) y queda un resto pequeño. El wstETH se valora como ETH × 1,248 (ratio aproximado). Los precios son aproximados y editables, y Aave usa su propio oráculo (cbBTC ~2% por debajo de Morpho) y su liquidación se muestra en precio Aave; ignora comisiones y deslizamiento. Tokens netos = lo que te queda tras vender colateral y repagar la deuda, en unidades del activo (en ETH para wstETH y Aave). Aportado = colateral que depositaste sin un préstamo previo en ese mercado, según el historial de Morpho de Rosa y Naranja; parte pudo financiarse con préstamos sin compra inmediata (~$5.800 en Naranja, ~$1.500 en Rosa); incluye el wstETH añadido el 13 y el 14 nov y el cbBTC añadido a Naranja el 14 nov. En cbBTC de Rosa se descuentan ~0,054 cbBTC retirados en julio (estimación). Sin dato para Aave.</p>
+      <p class="calc"><b>Cómo leerlo:</b> «Valor de tus activos» es todo tu colateral al precio objetivo; «Te queda tras repagar» es ese valor menos la deuda, es decir, lo que tendrías si cerraras todo; «Beneficio» es la diferencia entre lo que te queda al objetivo y lo que te quedaría hoy, medida en dólares. «Tokens extra ganados» son los tokens netos de más que tendrías frente a cerrar hoy, valorados al precio objetivo; el resto del beneficio es la subida de precio de los tokens que ya tenías. Cada loop se calcula por separado, porque cada uno liquida a su propio precio: la liquidación de BTC en Naranja llega antes que la de Rosa. Al tocar el umbral se supone liquidación completa con su penalización (4,38% en Morpho 86%, ~5% supuesto en Aave) y queda un resto pequeño. El wstETH se valora como ETH × 1,248 (ratio aproximado). Los precios son aproximados y editables, y Aave usa su propio oráculo (cbBTC ~2% por debajo de Morpho) y su liquidación se muestra en precio Aave; ignora comisiones y deslizamiento. Tokens netos = lo que te queda tras vender colateral y repagar la deuda, en unidades del activo (en ETH para wstETH y Aave). Aportado = colateral que depositaste sin un préstamo previo en ese mercado, según el historial de Morpho de Rosa y Naranja; parte pudo financiarse con préstamos sin compra inmediata (~$5.800 en Naranja, ~$1.500 en Rosa); incluye el wstETH añadido el 13 y el 14 nov y el cbBTC añadido a Naranja el 14 nov. En cbBTC de Rosa se descuentan ~0,054 cbBTC retirados en julio (estimación). Sin dato para Aave.</p>
     </div>
 
   </div>
@@ -496,19 +496,21 @@
       var a=AM[r.lp.a],pf=r.lp.ap?r.lp.k:1,pt=px[a.k]*(1+sh[a.k]/100);
       r.e0=Math.round(r.eq0);r.e1=Math.round(r.eq1);
       r.va1=Math.round(r.liq?r.eq1:r.v0*(1+sh[a.k]/100));r.d1=r.liq?0:r.lp.d;
+      r.vx=r.eq1-(r.eq0/(px[a.k]*pf))*pt*pf;
       r.k0=rd(r.eq0/(px[a.k]*pf),a.t);r.k1=rd(r.eq1/(pt*pf),a.t);
     });
-    var tc=sum(R,'carry'),nl=R.filter(function(r){return r.liq}).length,t0=0,t1=0,tv=0,td=0,rows='';
+    var tc=sum(R,'carry'),nl=R.filter(function(r){return r.liq}).length,t0=0,t1=0,tv=0,td=0,tx=0,rows='';
     A.forEach(function(a){
       var rs=R.filter(function(r){return r.lp.a===a.k}),e0=sum(rs,'e0'),e1=sum(rs,'e1'),g=e1-e0,va=sum(rs,'va1'),dd=sum(rs,'d1');
       var k0=rd(sum(rs,'k0'),a.t),k1=rd(sum(rs,'k1'),a.t);
       var mh=Math.min.apply(null,rs.map(function(r){return r.hf1}));
       var f=rs.reduce(function(b,r){return r.lpx>b.lpx?r:b},rs[0]);
-      t0+=e0;t1+=e1;tv+=va;td+=dd;
-      rows+='<tr><td>'+a.n+'</td><td>'+usd(px[a.k]*(1+sh[a.k]/100),a.d)+' ('+pc(sh[a.k])+')</td><td>'+usd(va)+'</td><td>'+usd(dd)+'</td><td><b>'+usd(e1)+'</b><small>hoy '+usd(e0)+'</small></td><td class="'+cls(g)+'">'+usd(g)+'<small>'+pc(e0>0?g/e0*100:0)+'</small></td><td><b>'+tk(k1,a)+'</b><small>hoy '+tk(k0,a)+'</small></td><td class="'+hfc(mh)+'">'+hft(mh)+'</td><td>'+usd(f.lpx*(f.lp.ap?f.lp.k:1),a.d)+' ('+pc((f.lpx/px[a.k]-1)*100)+') \u00b7 '+f.lp.n.split(' \u00b7 ')[1].split(' ')[0]+'</td></tr>';
+      var vx=sum(rs,'vx'),kx=k1-k0;
+      t0+=e0;t1+=e1;tv+=va;td+=dd;tx+=vx;
+      rows+='<tr><td>'+a.n+'</td><td>'+usd(px[a.k]*(1+sh[a.k]/100),a.d)+' ('+pc(sh[a.k])+')</td><td>'+usd(va)+'</td><td>'+usd(dd)+'</td><td><b>'+usd(e1)+'</b><small>hoy '+usd(e0)+'</small></td><td class="'+cls(g)+'">'+usd(g)+'<small>'+pc(e0>0?g/e0*100:0)+'</small></td><td><b>'+tk(k1,a)+'</b><small>hoy '+tk(k0,a)+'</small></td><td class="'+cls(kx)+'"><b>'+(kx>0?'+':kx<0?'\u2212':'')+tk(Math.abs(kx),a)+'</b><small>\u2248 '+usd(vx)+'</small></td><td class="'+hfc(mh)+'">'+hft(mh)+'</td><td>'+usd(f.lpx*(f.lp.ap?f.lp.k:1),a.d)+' ('+pc((f.lpx/px[a.k]-1)*100)+') \u00b7 '+f.lp.n.split(' \u00b7 ')[1].split(' ')[0]+'</td></tr>';
     });
     var pl=t1-t0,pp=t0>0?pl/t0*100:0;
-    rows+='<tr class="tot"><td>Total</td><td></td><td>'+usd(tv)+'</td><td>'+usd(td)+'</td><td>'+usd(t1)+'<small>hoy '+usd(t0)+'</small></td><td class="'+cls(pl)+'">'+usd(pl)+'<small>'+pc(pp)+'</small></td><td></td><td></td><td></td></tr>';
+    rows+='<tr class="tot"><td>Total</td><td></td><td>'+usd(tv)+'</td><td>'+usd(td)+'</td><td>'+usd(t1)+'<small>hoy '+usd(t0)+'</small></td><td class="'+cls(pl)+'">'+usd(pl)+'<small>'+pc(pp)+'</small></td><td></td><td class="'+cls(tx)+'">\u2248 '+usd(tx)+'</td><td></td><td></td></tr>';
     $('s-asset').innerHTML=rows;
     $('s-va').textContent=usd(tv);$('s-dt').textContent=usd(td);
     $('s-eq0').textContent='hoy '+usd(t0);$('s-eq1').textContent=usd(t1);
